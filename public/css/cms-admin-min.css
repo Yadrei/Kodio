@@ -1,0 +1,112 @@
+.btn-blue {
+	background-color: #005dc1;
+	color: #ffffff;
+}
+
+.btn-dark-blue {
+	background-color: #003874;
+	color: #ffffff;
+}
+
+.btn-light-blue {
+	background-color: #007bff;
+	color: #ffffff;
+}
+
+.btn-light-blue:hover, .btn-dark-blue:hover {
+	background-color: #4da3ff;
+	color: #ffffff;
+}
+
+.nav-link {
+	color: #343A40;
+}
+
+.nav-link:hover {
+	color: #4da3ff;
+	text-decoration: none;
+}
+
+header {
+	background-color: #003874;
+	height: 75px;
+}
+
+header span, header button {
+	line-height: 75px;
+}
+
+h1 {
+	color: #003874;
+	border-bottom: 2px solid #003874;
+}
+
+.red {
+	color: #FF1245;
+}
+
+.green {
+	color: #32CD32;
+}
+
+.orange {
+	color: #FF5612;
+}
+
+.disabled {
+	color: #BCD4E6;
+}
+
+.offcanvas-size-xl {
+    --bs-offcanvas-width: min(95vw, 600px) !important;
+}
+
+.table-responsive a {
+	text-decoration: none;
+}
+
+/*
+table form {
+	display : inline;
+}
+
+.form-check-input:checked {
+    background-color: #FBB03B;
+    border-color: #FBB03B;
+}
+
+.page-item.active .page-link {
+	background-color : #FBB03B;
+	border-color : #FBB03B;
+}
+
+.page-link {
+	color : #FBB03B;
+}
+
+.page-link:hover {
+	color : #343A40;
+}
+
+#content {
+	height : 400px;
+}
+
+.tab-content {
+	border-left : 1px solid #dee2e6;
+	border-right: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.image {
+	position:  relative;
+}
+
+.del-icon {
+	position: absolute;
+}
+
+.del-icon button a {
+	color: red;
+}
+*/
