@@ -7,7 +7,7 @@
 	    @Dernière modification: 25/11/2023
   	*/
 
-	define("BASE_URL_LOCAL", "/Eclipse/");
+	define("BASE_URL_LOCAL", "/Kodio/");
 	define("BASE_URL_ONLINE", "/");
 
 	if ($_SERVER['SERVER_NAME'] === 'localhost')
