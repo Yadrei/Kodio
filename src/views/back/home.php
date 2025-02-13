@@ -19,7 +19,7 @@
 			</div>
 			<div class="card-body">
 			<?php 
-				echo '<p class="card-text">Vous avez <a href="#">'.$contentCount.' contenus</a> non publiés</p>';
+				echo '<p class="card-text">Vous avez <a href="content">'.$contentCount.' contenus</a> non publiés</p>';
 			?>
 			</div>
 		</div>
