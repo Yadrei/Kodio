@@ -9,18 +9,20 @@
 
 	class AdminController 
 	{
-		private $settingManager, $userManager, $permissionManager;
+		private $settingManager, $userManager, $permissionManager, $contentLangManager;
 
 		public function __construct()
 		{
 			$this->settingManager = new SettingManager();
 	        $this->userManager = new UserManager();
 	        $this->permissionManager = new PermissionManager();
+			$this->contentLangManager = new Content_LangManager();
 		}
 
 		public function Home() 
 		{
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
+			$contentCount = $this->contentLangManager->CountContentUnpublished();
 			
 			require_once 'src/views/back/home.php';
 		}
