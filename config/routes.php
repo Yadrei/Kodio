@@ -3,8 +3,8 @@
 		Fichier de configuration des routes du CMS
 	    @Author Yves P.
 	    @Version 1.0
-	    @Date création: 04/10/2020
-	    @Dernière modification: 01/01/2024
+	    @Date création: 04/10/2023
+	    @Dernière modification: 15/02/2025
   	*/
 
 	// Définition des routes et de leurs correspondances aux contrôleurs et actions
@@ -29,6 +29,7 @@
         BASE_URL."preview/{language}/{slug}" => ['controller' => 'ContentsController', 'action' => 'Preview'],
 	    BASE_URL."private" => ['controller' => 'AdminController', 'action' => 'LoginPage'],
 	    BASE_URL."private/maintenance" => ['controller' => 'SettingsController', 'action' => 'Maintenance'],
+		BASE_URL."private/cookies" => ['controller' => 'SettingsController', 'action' => 'Cookies'],
 	    BASE_URL."private/login" => ['controller' => 'AdminController', 'action' => 'Login'],
 	    BASE_URL."private/logout" => ['controller' => 'AdminController', 'action' => 'Logout'],
 	    BASE_URL."private/home" => ['controller' => 'AdminController', 'action' => 'Home'],

@@ -1,5 +1,15 @@
 <?php
 	ob_start();
+
+	// Verif si cookies activé"s ou non
+	if ($cookies) {
+		$textCookies = 'Les cookies sont activés';
+		$bgCookies = ' bg-success-subtle';
+	}
+	else {
+		$textCookies = 'Les cookies sont désactivés';
+		$bgCookies = 'bg-warning-subtle';
+	}
 ?>
 
 <h1>Dashboard</h1>
@@ -24,6 +34,30 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-4">
+		<div class="card <?php echo $bgCookies; ?>">
+			<div class="card-header">
+				<span class="me-2 feather-25" data-feather="aperture"></span> Cookies
+			</div>
+			<div class="card-body">
+				<?php
+					echo '<p class="card-text">'.$textCookies.'</p>';
+				?>
+			</div>
+		</div>
+	</div><!--
+	<div class="col-4">
+		<div class="card">
+			<div class="card-header">
+				<span class="me-2 feather-25" data-feather="message-square"></span> Commentaires
+			</div>
+			<div class="card-body">
+				<?php
+					echo '<p class="card-text">'.$textCommentaires.'</p>';
+				?>
+			</div>
+		</div>
+	</div>-->
 </div>
 
 <?php

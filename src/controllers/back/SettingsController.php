@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 18/09/2023
-	    @Dernière modification: 23/11/2023
+	    @Dernière modification: 15/02/2025
   	*/
 
 	class SettingsController 
@@ -25,6 +25,7 @@
 			$roles = $this->referenceDetailManager->getDetails("R_ROLE");
 
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
+			$cookies = (bool)$this->settingManager->CheckCookies();
 
 			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']); // Pour récupérer les permissions de l'utilisateur connecté
 
@@ -303,11 +304,29 @@
 				throw new Exception(NOT_ALLOWED);
 			
 			if (!isset($_POST['submit'])) {
-				header('Location: /Eclipse');
+				header('Location: /Kodio');
 				exit;
 			}
 
 			$this->settingManager->Maintenance(isset($_POST['maintenance']));
+
+			header("Location: ".BASE_URL."private/settings");
+			exit;
+		}
+
+		public function Cookies()
+		{
+			$permissionsLogged = $this->permissionManager->getPermissions(($_SESSION['id']));
+
+			if (!$permissionsLogged->getAllowUpdate())
+				throw new Exception(NOT_ALLOWED);
+			
+			if (!isset($_POST['submit'])) {
+				header('Location: /Kodio');
+				exit;
+			}
+
+			$this->settingManager->Cookies(isset($_POST['cookies']));
 
 			header("Location: ".BASE_URL."private/settings");
 			exit;

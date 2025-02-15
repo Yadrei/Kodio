@@ -41,7 +41,7 @@
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
 		<h4 class="text-secondary border-bottom">Commentaires</h4>
-		<form>
+		<form class="mb-3">
 			<div class="alert alert-warning" role="alert">
 			  Attention ! Cette fonctionnalité n'est pas encore implémentée actuellement !
 			</div>
@@ -49,7 +49,7 @@
 				<label class="form-check-label" for="maintenance">Activer les commentaires ?</label>
 				<?php if (false): ?>
 
-				<input class="form-check-input" type="checkbox" role="switch" name="maintenance" id="maintenance" checked="checked" aria-describedby="publicationHelp">
+				<input class="form-check-input" type="checkbox" role="switch" name="maintenance" id="maintenance" checked="checked" aria-describedby="maintenanceHelp">
 
 				<?php else: ?>
 
@@ -61,6 +61,25 @@
 				</div>
 			</div>
 			<button type="button" class="btn btn-light-blue" name="submit">Valider</button>
+		</form>
+		<h4 class="text-secondary border-bottom">Cookies</h4>
+		<form action="<?php echo BASE_URL ?>private/cookies" method="post">
+			<div class="form-check form-switch mb3">
+				<label class="form-check-label" for="cookies">Activer le bandeau de cookies ?</label>
+				<?php if ($cookies): ?>
+
+				<input class="form-check-input" type="checkbox" role="switch" name="cookies" id="cookies" checked="checked" aria-describedby="cookiesHelp">
+
+				<?php else: ?>
+
+				<input class="form-check-input" type="checkbox" role="switch" name="cookies" id="cookies" aria-describedby="cookiesHelp">
+
+				<?php endif ?>
+				<div id="cookiesHelp" class="form-text mb-3">
+					Affiche ou non un petit bandeau informatif sur le site pour indiquer aux visiteurs qu'aucuns cookies d'aucunes sortes ne sont utilisés.
+				</div>
+			</div>
+			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
 	</div>
 	<div class="tab-pane fade p-3" id="categories-pane" role="tabpanel" aria-labelledby="categories-pane" tabindex="0">

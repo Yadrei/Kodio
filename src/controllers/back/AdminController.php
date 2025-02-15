@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 21/10/2023
+	    @Dernière modification: 15/02/2025
   	*/
 
 	class AdminController 
@@ -22,6 +22,8 @@
 		public function Home() 
 		{
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
+			$cookies = (bool)$this->settingManager->CheckCookies();
+			//$commentaires = (bool)$this->settingManager->CheckCommentaires();
 			$contentCount = $this->contentLangManager->CountContentUnpublished();
 			
 			require_once 'src/views/back/home.php';
