@@ -29,6 +29,14 @@
 
 		}
 
+		public function CheckComments() {
+			$query = $this->db->prepare('SELECT VALUE value FROM SETTINGS WHERE R_SETTING = "COM"');
+
+			$query->execute();
+
+			return $query->fetchColumn();
+		}
+
 		public function CheckCookies() {
 			$query = $this->db->prepare('SELECT VALUE value FROM SETTINGS WHERE R_SETTING = "COOKIES"');
 
@@ -43,6 +51,14 @@
 			$query->execute();
 
 			return $query->fetchColumn();
+		}
+
+		public function Comments($comments) {
+			$query = $this->db->prepare('UPDATE SETTINGS SET VALUE = :comments WHERE R_SETTING = "COM"');
+
+			$query->bindParam(':comments', $comments, PDO::PARAM_STR);
+
+			$query->execute();
 		}
 
 		public function Cookies($cookies) {

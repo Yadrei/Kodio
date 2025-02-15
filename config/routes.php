@@ -29,6 +29,7 @@
         BASE_URL."preview/{language}/{slug}" => ['controller' => 'ContentsController', 'action' => 'Preview'],
 	    BASE_URL."private" => ['controller' => 'AdminController', 'action' => 'LoginPage'],
 	    BASE_URL."private/maintenance" => ['controller' => 'SettingsController', 'action' => 'Maintenance'],
+		BASE_URL."private/comments" => ['controller' => 'SettingsController', 'action' => 'Comments'],
 		BASE_URL."private/cookies" => ['controller' => 'SettingsController', 'action' => 'Cookies'],
 	    BASE_URL."private/login" => ['controller' => 'AdminController', 'action' => 'Login'],
 	    BASE_URL."private/logout" => ['controller' => 'AdminController', 'action' => 'Logout'],

@@ -26,6 +26,7 @@
 
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
 			$cookies = (bool)$this->settingManager->CheckCookies();
+			$comments = (bool)$this->settingManager->CheckComments();
 
 			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']); // Pour récupérer les permissions de l'utilisateur connecté
 
@@ -327,6 +328,24 @@
 			}
 
 			$this->settingManager->Cookies(isset($_POST['cookies']));
+
+			header("Location: ".BASE_URL."private/settings");
+			exit;
+		}
+
+		public function Comments()
+		{
+			$permissionsLogged = $this->permissionManager->getPermissions(($_SESSION['id']));
+
+			if (!$permissionsLogged->getAllowUpdate())
+				throw new Exception(NOT_ALLOWED);
+			
+			if (!isset($_POST['submit'])) {
+				header('Location: /Kodio');
+				exit;
+			}
+
+			$this->settingManager->Comments(isset($_POST['comments']));
 
 			header("Location: ".BASE_URL."private/settings");
 			exit;

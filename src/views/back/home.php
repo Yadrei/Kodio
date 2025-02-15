@@ -10,6 +10,16 @@
 		$textCookies = 'Les cookies sont désactivés';
 		$bgCookies = 'bg-warning-subtle';
 	}
+
+	// Verif si cookies activé"s ou non
+	if ($comments) {
+		$textComments = 'Les commentaires sont activés';
+		$bgComments = ' bg-danger-subtle';
+	}
+	else {
+		$textComments = 'Les commentaires sont désactivés';
+		$bgComments = 'bg-info-subtle';
+	}
 ?>
 
 <h1>Dashboard</h1>
@@ -45,19 +55,19 @@
 				?>
 			</div>
 		</div>
-	</div><!--
+	</div>
 	<div class="col-4">
-		<div class="card">
+		<div class="card <?php echo $bgComments; ?>">
 			<div class="card-header">
 				<span class="me-2 feather-25" data-feather="message-square"></span> Commentaires
 			</div>
 			<div class="card-body">
 				<?php
-					echo '<p class="card-text">'.$textCommentaires.'</p>';
+					echo '<p class="card-text">'.$textComments.'</p>';
 				?>
 			</div>
 		</div>
-	</div>-->
+	</div>
 </div>
 
 <?php

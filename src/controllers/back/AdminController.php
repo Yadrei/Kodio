@@ -23,7 +23,7 @@
 		{
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
 			$cookies = (bool)$this->settingManager->CheckCookies();
-			//$commentaires = (bool)$this->settingManager->CheckCommentaires();
+			$comments = (bool)$this->settingManager->CheckComments();
 			$contentCount = $this->contentLangManager->CountContentUnpublished();
 			
 			require_once 'src/views/back/home.php';
