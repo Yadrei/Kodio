@@ -4,7 +4,7 @@
 		@Author Yves Ponchelet
 		@Version 1.0
 		@Creation: 18/09/2023
-		@Last update: 13/02/2025
+		@Last update: 19/02/2025
 	*/
 
 	class Content_LangManager 
