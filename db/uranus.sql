@@ -295,6 +295,40 @@ INSERT INTO `CONTENT_LANG` (`FK_CONTENT`, `R_LANG`, `R_CAT`, `FK_AUTHOR`, `TITLE
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `COMMENTS`
+--
+
+CREATE TABLE `COMMENTS` (
+  `ID` int NOT NULL,
+  `NICKNAME` varchar(25) NOT NULL,
+  `FK_CONTENT` int NOT NULL,
+  `CONTENT` text NOT NULL,
+  `DTE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Index pour la table `COMMENTS`
+--
+ALTER TABLE `COMMENTS`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `CONST_COMMENT_CONTENT` (`FK_CONTENT`);
+
+--
+-- AUTO_INCREMENT pour la table `COMMENTS`
+--
+ALTER TABLE `COMMENTS`
+  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Contraintes pour la table `COMMENTS`
+--
+ALTER TABLE `COMMENTS`
+  ADD CONSTRAINT `CONST_COMMENT_CONTENT` FOREIGN KEY (`FK_CONTENT`) REFERENCES `CONTENT_LANG` (`ID`);
+COMMIT;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `MENU`
 --
 
