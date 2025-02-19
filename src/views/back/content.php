@@ -38,28 +38,36 @@
 				<td class="col-1">'.$content->getPublished().'</td>
 				<td class="col-1">'.$content->getDateCre().'</td>
 				<td class="col-1">'.$content->getDateMod().'</td>
-				<td class="col-2">
-                    <a href="'.BASE_URL.'preview/fr/'.$content->getSlug().'" class="m-1" target="_blank" data-toggle="tooltip" title="Prévisualiser" role="button"><span class="feather-15" data-feather="eye"></span></a>';
+				<td class="col-2">';
 
-					if ($permissionsLogged->getAllowUpdate()) {
+					if (mb_strtolower(mb_convert_encoding(trim($content->getCategory()), "UTF-8")) !== mb_strtolower("Système")) {
+						echo '<a href="'.BASE_URL.'preview/fr/'.$content->getSlug().'" class="m-1" target="_blank" data-toggle="tooltip" title="Prévisualiser" role="button"><span class="feather-15" data-feather="eye"></span></a>';
+
+						if ($permissionsLogged->getAllowUpdate()) {
+							echo '
+							<a href="#" class="m-1 changer-statut" data-content="'.$content->getId().'" data-toggle="tooltip" title="Publier / Dépublier" role="button"><span class="feather-15" data-feather="refresh-cw"></span></a>
+							<a href="'.BASE_URL.'private/content/manage/update/'.$content->getContentId().'" class="m-1" data-toggle="tooltip" title="Editer cette page" role="button"><span class="feather-15" data-feather="edit-2"></span></a>';
+						}
+						else {
+							echo '
+							<span class="feather-15 disabled m-1" data-feather="refresh-cw"></span>
+							<span class="feather-15 disabled m-1" data-feather="edit-2"></span>';
+						}
+						
+						if ($permissionsLogged->getAllowDelete())
+							echo '<a href="'.BASE_URL.'private/content/actions/delete/'.$content->getId().'" class="m-1" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
+						else
+							echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
+
 						echo '
-						<a href="#" class="m-1 changer-statut" data-content="'.$content->getId().'" data-toggle="tooltip" title="Publier / Dépublier" role="button"><span class="feather-15" data-feather="refresh-cw"></span></a>
-						<a href="'.BASE_URL.'private/content/manage/update/'.$content->getContentId().'" class="m-1" data-toggle="tooltip" title="Editer cette page" role="button"><span class="feather-15" data-feather="edit-2"></span></a>';
+						<a href="#histo-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Historique" role="button" aria-controls="histo-'.$content->getId().'"><span class="feather-15 orange" data-feather="archive"></span></a>
+						<a href="#comments-'.$content->getId().'" class="m-1" title="Voir les commentaires"><span class="feather-15" data-feather="message-square"></span></a>';
 					}
-					else {
-						echo '
-						<span class="feather-15 disabled m-1" data-feather="refresh-cw"></span>
-						<span class="feather-15 disabled m-1" data-feather="edit-2"></span>';
-					}
-					
-					if ($permissionsLogged->getAllowDelete())
-						echo '<a href="'.BASE_URL.'private/content/actions/delete/'.$content->getId().'" class="m-1" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
 					else
-						echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
+						echo '&nbsp;';
 
 					echo '
-					<a href="#histo-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Historique" role="button" aria-controls="histo-'.$content->getId().'"><span class="feather-15 orange" data-feather="archive"></span></a>
-				</td>
+					</td>
 			</tr>';
 
 			if (count($translations[$content->getContentId()]) != 0) {
