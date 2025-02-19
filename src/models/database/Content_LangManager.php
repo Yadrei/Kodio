@@ -234,7 +234,7 @@
 			catch (Exception $e) {
 				$this->db->rollBack();
 		        
-		        throw new Exception("Erreur à la sauvegarde");
+		        throw new Exception("Erreur à la sauvegarde - ". $e);
 			}
 		}
 	}
