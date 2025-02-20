@@ -4,7 +4,7 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 19/02/2025
-		@Dernière modification: 19/02/2025
+		@Dernière modification: 20/02/2025
 	*/
 
 	class Comment 

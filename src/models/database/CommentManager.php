@@ -30,7 +30,7 @@
 
 		// Méthodes publiques
 		public function Delete($id) {
-			$query = $this->db->prepare('DELETE FROM TAGS WHERE ID = :id');
+			$query = $this->db->prepare('DELETE FROM COMMENTS WHERE ID = :id');
 
 			$query->bindParam(':id', $id, PDO::PARAM_INT);
 			$query->execute();
