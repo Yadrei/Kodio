@@ -4,7 +4,7 @@
 		@Author Yves Ponchelet
 		@Version 1.0
 		@Creation: 19/02/2025
-		@Last update: 19/02/2025
+		@Last update: 20/02/2025
 	*/
 
 	class CommentManager
@@ -45,10 +45,11 @@
 				throw new Exception($comment -> getErrors());
 		}
 
-		public function GetCommentFromContent($id) {
-			$query = 'SELECT ID id, NICKNAME nickname, CONTENT text FROM COMMENTS ORDER BY DTE';
+		public function GetCommentsFromContent($id) {
+			$query = 'SELECT ID id, NICKNAME nickname, CONTENT text, DTE dateComment FROM COMMENTS WHERE FK_CONTENT = :id ORDER BY DTE';
 
 		  	$query = $this->db->prepare($query);
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Comment');
 			$query->execute();
 

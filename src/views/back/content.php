@@ -61,7 +61,7 @@
 
 						echo '
 						<a href="#histo-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Historique" role="button" aria-controls="histo-'.$content->getId().'"><span class="feather-15 orange" data-feather="archive"></span></a>
-						<a href="#comments-'.$content->getId().'" class="m-1" title="Voir les commentaires"><span class="feather-15" data-feather="message-square"></span></a>';
+						<a href="#comments-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Voir les commentaires" role="button" aria-controls="#comments-'.$content->getId().'"><span class="feather-15" data-feather="message-square"></span></a>';
 					}
 					else
 						echo '&nbsp;';
@@ -126,7 +126,71 @@
 	</table>
 </div>
 
-<!-- Les off canvas -->
+<!-- Off Canvas pour les commentaires -->
+ <?php
+
+	foreach($listContent as $content) {
+		echo '
+	<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="comments-'.$content->getId().'" aria-labelledby="offcanvasExampleLabel">
+		<div class="offcanvas-header">
+	    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">Commentaires</h5>
+	    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<h6>'.$content->getTitle().'</h6>
+	    	<div class="table-responsive">
+	    		<table class="table table-sm align-middle">
+	    			<thead>
+	    				<tr class="d-flex">
+		    				<th class="col-5">Message</th>
+		    				<th class="col-3">Auteur</th>
+							<th class="col-2">Date</th>
+		    				<th class="col-2">Action</th>
+	    				</tr>
+	    			</thead>
+	    			<tbody>';
+	    		
+	    			foreach ($comments[$content->getContentId()] as $comment) {
+	    				echo '
+	    				<tr class="d-flex">
+	    					<td class="col-5">'.substr($comment->getText(), 0, 25).'...</td>
+	    					<td class="col-3">'.$comment->getNickname().'</td>
+							<td class="col-2">'.$comment->getDateComment().'</td>
+	    					<td class="col-2">
+	    						<a href="#detail-comment-'.$comment->getId().'" class="m-1" data-toggle="tooltip" title="Voir le commentaire complet" data-bs-toggle="modal" role="button"><span class="feather-15" data-feather="eye"></span></a>
+								<a href="'.BASE_URL.'private/comment/actions/delete/'.$comment->getId().'" class="m-1" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>
+	    					</td>
+	    				</tr>';
+	    			}
+	    				
+	    		echo '
+	    			</tbody>
+	    		</table>
+	    	</div>
+	  	</div>
+	</div>';
+
+		// Les modales pour afficher le détails des commentaires
+		foreach ($comments[$content->getContentId()] as $comment) {
+			echo '
+		<div class="modal fade" id="detail-comment-'.$comment->getId().'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-xl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Commentaire de '.$comment->getNickname().'</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>'.htmlspecialchars_decode($comment->getText()).'</p>
+					</div>
+				</div>
+			</div>
+		</div>';
+		}
+	}
+ ?>
+
+<!-- Les off canvas pour l'historique -->
 <?php
 	foreach($listContent as $content) {
 		echo '
@@ -169,7 +233,7 @@
 	    				}
 
 	    				echo '
-	    				<tr class="'.$table.'d-flex">
+	    				<tr class="'.$table.' d-flex">
 	    					<td class="col-5">'.$historique->getLanguage()->getLabel().'</td>
 	    					<td class="col-5">'.$historique->getDate().'</td>
 	    					<td class="col-2">

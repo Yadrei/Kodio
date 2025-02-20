@@ -9,7 +9,7 @@
 
 	class Comment 
 	{
-	    private $errors = [], $id, $nickname, $fKContent, $text, $date;
+	    private $errors = [], $id, $nickname, $fKContent, $text, $dateComment;
 
 	    // Constantes pour les erreurs
 		const INVALID_NICKNAME = "Le nickname n'est pas bon";
@@ -62,8 +62,8 @@
 				$this->text = $text;
 		}
 
-        public function setDate(DateTime $datePublication) {
-            $this->date = $datePublication;
+        public function setDateComment(DateTime $dateComment) {
+            $this->dateComment = $dateComment;
         }
 
 		// Getters
@@ -87,8 +87,8 @@
 			return $this->text;
 		}
 
-        public function getDate() {
-			return (new DateTime($this->date))->format("d/m/Y");
+        public function getDateComment() {
+			return (new DateTime($this->dateComment))->format("d/m/Y");
 		}
 	}	
 ?>

@@ -4,12 +4,12 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 01/01/2024
+	    @Dernière modification: 20/02/2025
   	*/
 
 	class ContentsController 
 	{
-		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $menuManager;
+		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $commentManager, $menuManager;
 
 		public function __construct()
 		{
@@ -20,6 +20,7 @@
 	        $this->referenceDetailManager = new Reference_DetailManager();
 	        $this->permissionManager = new PermissionManager();
 	        $this->tagManager = new TagManager();
+			$this->commentManager = new CommentManager();
             $this->menuManager = new MenuManager();
             $this->contentTagManager = new J_Content_TagManager();
 		}
@@ -35,6 +36,7 @@
 				$contentId = $content->getContentId();
 				$translations[$contentId] = $this->v_contentLangManager->getTranslations($contentId);
 				$historiques[$contentId] = $this->contentHistoManager->getHistorique($contentId);
+				$comments[$contentId] = $this->commentManager->GetCommentsFromContent($content->getId());
 			}
 
 			$pagination = new Pagination(BASE_URL."private/content/%s", $page, $count, $GLOBALS['options']);
