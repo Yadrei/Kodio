@@ -6,16 +6,16 @@
 <nav>
 	<ul class="nav nav-tabs" id="navCat" role="tablist">
 		<li class="nav-item" role="presentation">
-			<a href="#" class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-pane" type="button" role="tab" aria-controls="general-pane" aria-selected="true">Général</a>
+			<a href="#" class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-pane" role="tab" aria-controls="general-pane" aria-selected="true">Général</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a href="#" class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories-pane" type="button" role="tab" aria-controls="categories-pane" aria-selected="true">Catégories de contenu</a>
+			<a href="#" class="nav-link" id="categories-tab" data-bs-toggle="tab" data-bs-target="#categories-pane" role="tab" aria-controls="categories-pane" aria-selected="true">Catégories de contenu</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a href="#" class="nav-link" id="roles-tab" data-bs-toggle="tab" data-bs-target="#roles-pane" type="button" role="tab" aria-controls="roles-pane" aria-selected="true">Rôles</a>
+			<a href="#" class="nav-link" id="roles-tab" data-bs-toggle="tab" data-bs-target="#roles-pane" role="tab" aria-controls="roles-pane" aria-selected="true">Rôles</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a href="#" class="nav-link" id="languages-tab" data-bs-toggle="tab" data-bs-target="#languages-pane" type="button" role="tab" aria-controls="languages-pane" aria-selected="true">Langues</a>
+			<a href="#" class="nav-link" id="languages-tab" data-bs-toggle="tab" data-bs-target="#languages-pane" role="tab" aria-controls="languages-pane" aria-selected="true">Langues</a>
 		</li>
 	</ul>
 </nav>
@@ -56,7 +56,7 @@
 				<input class="form-check-input" type="checkbox" role="switch" name="comments" id="comments" aria-describedby="commentsHelp">
 
 				<?php endif ?>
-				<div id="maintenanceHelp" class="form-text">
+				<div id="commentsHelp" class="form-text">
 					Activer les commentaires permet aux visiteurs de commenter votre contenu. Ceux-ci n'auront pas besoin de s'inscrire pour pouvoir commenter. Celà peut être dangereux, vous pouvez être spammer par des robots.
 				</div>
 			</div>
@@ -87,11 +87,11 @@
 			if ($permissionsLogged->getAllowAdd()) {
 				echo '
 				<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addCategory">Ajouter une catégorie</button>
-				<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="addCategory-modal" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Ajouter une catégorie</h5>
+								<h5 class="modal-title" id="addCategory-modal">Ajouter une catégorie</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<form id="addCategory-form">
@@ -151,11 +151,11 @@
 			if ($permissionsLogged->getAllowAdd()) {
 				echo '
 				<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addRole">Ajouter un rôle</button>
-				<div class="modal fade" id="addRole" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal fade" id="addRole" tabindex="-1" aria-labelledby="addRole-modal" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Ajouter un rôle</h5>
+								<h5 class="modal-title" id="addRole-modal">Ajouter un rôle</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<form id="addRole-form">
@@ -218,11 +218,11 @@
 				  <span class="feather-20 me-4" data-feather="alert-triangle"></span><span>Attention ! Le système ne gère que l\'alphabet latin</span>
 				</div>
 				<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addLanguage">Ajouter une langue</button>
-				<div class="modal fade" id="addLanguage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal fade" id="addLanguage" tabindex="-1" aria-labelledby="addLanguage-modal" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">Ajouter une langue</h5>
+								<h5 class="modal-title" id="addLanguage-modal">Ajouter une langue</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<form id="addLanguage-form">
