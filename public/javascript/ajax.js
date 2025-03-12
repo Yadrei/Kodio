@@ -3,7 +3,7 @@
 	@Author Yves Ponchelet
 	@Version 0.1
 	@Creation date: 05/09/2023
-	@Last update: 17/11/2023
+	@Last update: 12/03/2025
 */
 
 $(document).ready(function() {
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/changeStatus', 
+            url: '/Kodio/private/ajax/changeStatus', 
             data: { id: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -47,7 +47,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addMenu', 
+            url: '/Kodio/private/ajax/addMenu', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -76,7 +76,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addLanguage', 
+            url: '/Kodio/private/ajax/addLanguage', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -102,7 +102,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/deleteLanguage', 
+            url: '/Kodio/private/ajax/deleteLanguage', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -130,7 +130,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addRole', 
+            url: '/Kodio/private/ajax/addRole', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -156,7 +156,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/deleteRole', 
+            url: '/Kodio/private/ajax/deleteRole', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -184,7 +184,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addCategory', 
+            url: '/Kodio/private/ajax/addCategory', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -210,7 +210,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/deleteCategory', 
+            url: '/Kodio/private/ajax/deleteCategory', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -241,7 +241,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addUser', 
+            url: '/Kodio/private/ajax/addUser', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -270,7 +270,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/newRole', 
+            url: '/Kodio/private/ajax/newRole', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -296,7 +296,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/newPassword', 
+            url: '/Kodio/private/ajax/newPassword', 
             data: { id: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -336,7 +336,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Eclipse/private/ajax/addTag', 
+            url: '/Kodio/private/ajax/addTag', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
