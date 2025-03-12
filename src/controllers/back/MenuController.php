@@ -57,7 +57,7 @@
 			if (!is_numeric($_POST['ordre']))
 				$response = array('status' => false, 'message' => NOT_NUMERIC);
 
-			if ($_POST['language'] == "DEFAULT")
+			if (empty($_POST['language']))
 				$response = array('status' => false, 'message' => NO_LANGUAGE);
 
 			$parent = (int)$_POST['parent'];

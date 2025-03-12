@@ -8,11 +8,11 @@
 	if ($permissionsLogged->getAllowAdd()) {
 		echo '
 		<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addMenu">Ajouter un élément de menu</button>
-		<div class="modal fade" id="addMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addMenu" tabindex="-1" aria-labelledby="addMenu-modal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Ajouter un menu</h5>
+						<h5 class="modal-title" id="addMenu-modal">Ajouter un menu</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form id="addMenu-form">
@@ -48,7 +48,7 @@
 							</div>
 							<div class="mb-3 form-floating">
 								<select class="form-select" name="language" id="language" required>
-									<option value="DEFAULT" selected>Choisir la langue</option>';
+									<option value="" selected disabled>Choisir la langue</option>';
 
 									foreach($langues as $langue) {
 										echo '
@@ -116,13 +116,13 @@
 			if ($langue->getClef() === "FR") {
 				echo '
 			<li class="nav-item" role="presentation">
-				<a href="#" class="nav-link active" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" type="button" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
+				<a href="#" class="nav-link active" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
 			</li>';
 			}
 			else {
 				echo '
 			<li class="nav-item" role="presentation">
-				<a href="#" class="nav-link" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" type="button" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
+				<a href="#" class="nav-link" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
 			</li>';
 			}
 			
@@ -200,11 +200,11 @@
 				// Modals pour édition
 				foreach($datas as $data) {
 				echo '
-				<div class="modal fade" id="edit-'.$data->getId().'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal fade" id="edit-'.$data->getId().'" tabindex="-1" aria-labelledby="editing-modal" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">'.$data->getLabel().'</h5>
+								<h5 class="modal-title" id="editing-modal">'.$data->getLabel().'</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<form action="'.BASE_URL.'private/menu/action/update" method="post">
