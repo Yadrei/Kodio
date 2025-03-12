@@ -99,7 +99,7 @@
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
 			$query->execute();
 
-			$users = $query->fetchAll();
+			$users = $query->fetchColumn();
 
 			$query->closeCursor();
 
@@ -111,6 +111,20 @@
 			}
 
 			return $users;
+		}
+
+		public function GetUserById($id) {
+			$query = $this->db->prepare('SELECT NICKNAME nickname FROM USERS WHERE ID = :id');
+
+			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+			$query->execute();
+
+			$user = $query->fetch();
+
+			$query->closeCursor();
+
+			return $user;
 		}
 
 		public function GetMail($id) {

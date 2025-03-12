@@ -3,7 +3,7 @@
 	<head>
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>Eclipse - Alpha 1.0</title>
+	    <title>Kodio</title>
 
 	    <!-- Inclusion des fichiers CSS de Bootstrap -->
 	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,15 +15,18 @@
 	</head>
 	<body class="d-flex flex-column min-vh-100">
 		<header>
-		    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<img src="<?php echo BASE_URL ?>public/images/logo/logo-admin.png" alt="" class="mt-5 mx-auto d-block" width="250" height="150">
+		    <nav class="navbar navbar-expand-lg navbar-light">
 		        <div class="container">
-		            <a class="navbar-brand" href="#">Logo</a>
 		            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 		                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		                <span class="navbar-toggler-icon"></span>
 		            </button>
 		            <div class="collapse navbar-collapse" id="navbarNav">
 		                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a href="#" class="nav-link">Home</a>
+							</li>
 		                	<?php
 		                		foreach ($mainMenu as $main) {
 		                			$hasSub = array_filter($subMenu, function($subItem) use ($main) {
@@ -56,6 +59,9 @@
 		                			}
 		                		}
 		                	?>
+							<li class="nav-item">
+								<a href="#" class="nav-link">Contact</a>
+							</li>
 		                </ul>
 		                <div class="navbar-text" id="choose-language">
 					    	<div class="dropdown">
@@ -83,7 +89,7 @@
 
 		<footer class="footer mt-auto py-3 bg-light">
 		    <div class="container text-center">
-		        <span class="text-muted">© 2023 Shoku Studio</span>
+		        <span class="text-muted">© 2025 Shoku Studio</span>
 		    </div>
 		</footer>
 

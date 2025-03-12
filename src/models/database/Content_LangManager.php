@@ -177,6 +177,13 @@
 
 			$query->closeCursor();
 
+			foreach ($listContents as $content) {
+				$manager = new UserManager();
+				$author = $manager->GetUserById($content->getAuthor());
+
+				$content->setAuthor($author);
+			}
+
 			return $listContents;
 		}
 
