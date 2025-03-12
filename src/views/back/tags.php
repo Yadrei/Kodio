@@ -8,22 +8,22 @@
 	if ($permissionsLogged->getAllowAdd()) {
 		echo '
 		<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addTag-modal">Ajouter une étiquette</button>
-		<div class="modal fade" id="addTag-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addTag-modal" tabindex="-1" aria-labelledby="add-modal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Ajouter une étiquette</h5>
+						<h5 class="modal-title" id="add-modal">Ajouter une étiquette</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form id="addTag-form">
 						<div class="modal-body">
 							<div class="mb-3 form-floating">
-								<input type="text" class="form-control" name="label" id="label" minlength="2" maxlength="20" required>
-								<label for="label">Libellé</label>
+								<input type="text" class="form-control" name="label" id="addLabel" minlength="2" maxlength="20" required>
+								<label for="addLabel">Libellé</label>
 							</div>
 							<div class="mb-3 form-floating">
-								<input type="color" class="form-control" name="color" id="color" required>
-								<label for="color">Couleur</label>
+								<input type="color" class="form-control" name="color" id="addColor">
+								<label for="addColor">Couleur</label>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -55,7 +55,7 @@
 					<td>
 						<form class="row row-cols-2-auto g-1" id="newColor" action="'.BASE_URL.'private/tags/action/updateColor" method="post">
 							<div class="col-2">
-								<input type="color" name="color" value="'.$tag->getColor().'" required>
+								<input type="color" name="color" value="'.$tag->getColor().'">
 							</div>
 							<div class="col-1">
 								<input type="hidden" name="id" value="'.$tag->getId().'">
@@ -92,22 +92,22 @@
 	// Modals pour édition
 	foreach($tags as $tag) {
 		echo '
-		<div class="modal fade" id="edit-'.$tag->getId().'" tabindex="-1" aria-labelledby="blabla" aria-hidden="true">
+		<div class="modal fade" id="edit-'.$tag->getId().'" tabindex="-1" aria-labelledby="update-modal" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Modifier le tag</h5>
+						<h5 class="modal-title" id="update-modal">Modifier le tag</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form action="'.BASE_URL.'private/tags/action/update" method="post">
 						<div class="modal-body">
 							<div class="mb-3 form-floating">
-								<input type="text" class="form-control" name="label" id="label" value="'.$tag->getLabel().'" minlength="2" maxlength="20" required>
-									<label for="label">Libellé</label>
+								<input type="text" class="form-control" name="label" id="updateLabel" value="'.$tag->getLabel().'" minlength="2" maxlength="20" required>
+									<label for="updateLabel">Libellé</label>
 							</div>
 							<div class="mb-3 form-floating">
-								<input type="color" class="form-control" name="color" id="color" value="'.$tag->getColor().'" required>
-								<label for="color">Couleur</label>
+								<input type="color" class="form-control" name="color" id="updateColor" value="'.$tag->getColor().'">
+								<label for="updateColor">Couleur</label>
 							</div>
 						</div>
 						<div class="modal-footer">
