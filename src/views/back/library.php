@@ -8,11 +8,11 @@
         if ($permissionsLogged->getAllowAdd()) {
             echo '
             <button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addImage-modal">Ajouter une image</button>
-            <div class="modal fade" id="addImage-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addImage-modal" tabindex="-1" aria-labelledby="image-modal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Ajouter une image</h5>
+                            <h5 class="modal-title" id="image-modal">Ajouter une image</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form id="addImage-form" action="'.BASE_URL.'private/library/addImage" method="post" enctype="multipart/form-data">
@@ -76,7 +76,7 @@
                                         </button>
                                         <a href="'.BASE_URL.'private/library/deleteImage/'.$entry.'" class="btn btn-sm btn-del-img">     
                                             <span class="me-2 red" data-feather="x"></span>
-                                        </button>
+                                        </a>
                                     </figcaption>
                                 </figure>
                             </div>';
