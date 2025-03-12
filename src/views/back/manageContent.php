@@ -23,13 +23,13 @@
 			if ($langue->getClef() === "FR") {
 				echo '
 			<li class="nav-item" role="presentation">
-				<a href="#" class="nav-link active" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" type="button" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
+				<a href="#" class="nav-link active" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
 			</li>';
 			}
 			else {
 				echo '
 			<li class="nav-item" role="presentation">
-				<a href="#" class="nav-link" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" type="button" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
+				<a href="#" class="nav-link" id="'.$langue->getClef().'-tab" data-bs-toggle="tab" data-bs-target="#'.$langue->getClef().'-pane" role="tab" aria-controls="'.$langue->getClef().'-pane" aria-selected="true">'.$langue->getLabel().'</a>
 			</li>';
 			}
 			
@@ -126,7 +126,7 @@
 				<div class="form-check form-switch">
 					<label class="form-check-label" for="publication-'.$langue->getClef().'">Publier la page ?</label>
 					<input type="checkbox" class="form-check-input" role="switch" name="publication['.$langue->getClef().']" id="publication-'.$langue->getClef().'" aria-describedby="publicationHelp" '.($checked ? 'checked' : '').'>
-					<div class="form-text" id="metaDescriptionHelp">
+					<div class="form-text" id="publicationHelp">
 						Publier la page signifie qu\'elle sera visible sur le site par les visiteurs. Si le bouton n\'est pas activé la page reste privée et personne ne peut la voir.
 					</div>
 					<input type="hidden" name="language['.$langue->getClef().']" id="language-'.$langue->getClef().'" value="'.$langue->getClef().'">
@@ -180,7 +180,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="datePublication">Date de publication</label>
-            <input type="datetime-local" class="form-control w-25" name="datePublication" id="datePublication-'.$langue->getClef().'">
+            <input type="datetime-local" class="form-control w-25" name="datePublication" id="datePublication">
         </div>
     </div>
 	<button type="submit" class="btn btn-light-blue mt-3"><?php echo ($action === "add") ? "Enregistrer" : "Mettre à jour"; ?></button>

@@ -61,7 +61,7 @@
 
 						echo '
 						<a href="#histo-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Historique" role="button" aria-controls="histo-'.$content->getId().'"><span class="feather-15 orange" data-feather="archive"></span></a>
-						<a href="#comments-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Voir les commentaires" role="button" aria-controls="#comments-'.$content->getId().'"><span class="feather-15" data-feather="message-square"></span></a>';
+						<a href="#comments-'.$content->getId().'" class="m-1" data-bs-toggle="offcanvas" title="Voir les commentaires" role="button" aria-controls="comments-'.$content->getId().'"><span class="feather-15" data-feather="message-square"></span></a>';
 					}
 					else
 						echo '&nbsp;';
@@ -131,9 +131,9 @@
 
 	foreach($listContent as $content) {
 		echo '
-	<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="comments-'.$content->getId().'" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="comments-'.$content->getId().'" aria-labelledby="offCanvasComments-'.$content->getId().'">
 		<div class="offcanvas-header">
-	    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">Commentaires</h5>
+	    	<h5 class="offcanvas-title" id="offCanvasComments-'.$content->getId().'">Commentaires</h5>
 	    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
@@ -173,11 +173,11 @@
 		// Les modales pour afficher le détails des commentaires
 		foreach ($comments[$content->getContentId()] as $comment) {
 			echo '
-		<div class="modal fade" id="detail-comment-'.$comment->getId().'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="detail-comment-'.$comment->getId().'" tabindex="-1" aria-labelledby="detailComment-'.$comment->getId().'-modal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-xl">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Commentaire de '.$comment->getNickname().'</h5>
+						<h5 class="modal-title" id="detailComment-'.$comment->getId().'-modal">Commentaire de '.$comment->getNickname().'</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
@@ -194,9 +194,9 @@
 <?php
 	foreach($listContent as $content) {
 		echo '
-	<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="histo-'.$content->getId().'" aria-labelledby="offcanvasExampleLabel">
+	<div class="offcanvas offcanvas-end offcanvas-size-xl" tabindex="-1" id="histo-'.$content->getId().'" aria-labelledby="offCanvasHisto-'.$content->getId().'">
 		<div class="offcanvas-header">
-	    	<h5 class="offcanvas-title" id="offcanvasExampleLabel">Historique</h5>
+	    	<h5 class="offcanvas-title" id="offCanvasHisto-'.$content->getId().'">Historique</h5>
 	    	<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 		</div>
 		<div class="offcanvas-body">
@@ -260,18 +260,18 @@
 		// Les modales pour afficher le détails des historiques
 		foreach ($historiques[$content->getContentId()] as $historique) {
 			echo '
-		<div class="modal fade" id="detail-histo-'.$historique->getId().'" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="detail-histo-'.$historique->getId().'" tabindex="-1" aria-labelledby="detailHisto-'.$historique->getId().'-modal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered modal-xl">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">'.$historique->getTitle().'</h5>
+						<h5 class="modal-title" id="detailHisto-'.$historique->getId().'-modal">'.$historique->getTitle().'</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
 						<h6>'.$historique->getMetaTitle().'</h6>
 				        <p>'.$historique->getMetaDescription().'</p>
 				        <hr>
-				        <p>'.(!is_null($historique->getContent()) ? htmlspecialchars_decode($historique->getContent()) : null).'</p>
+				        '.(!is_null($historique->getContent()) ? htmlspecialchars_decode($historique->getContent()) : null).'
 				    </div>
 				</div>
 			</div>
