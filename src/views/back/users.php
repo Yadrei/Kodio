@@ -12,11 +12,11 @@
 			<button type="button" class="btn-close close" data-dismiss="alert" aria-label="Fermer"></button>
 			<span id="alert-text"></span>
 		</div>
-		<div class="modal fade" id="addUser-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="addUser-modal" tabindex="-1" aria-labelledby="user-modal" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Ajouter un utilisateur</h5>
+						<h5 class="modal-title" id="user-modal">Ajouter un utilisateur</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form id="addUser-form">
@@ -35,7 +35,7 @@
 							</div>
 							<div class="mb-3 form-floating">
 								<select class="form-select" name="addUser-role" id="addUser-role" required>
-									<option value="DEFAULT" selected>Choisir un rôle</option>';
+									<option value="" selected disabled>Choisir un rôle</option>';
 
 									foreach($references as $ref)
 									{
@@ -84,7 +84,7 @@
 						<form class="row row-cols-2-auto g-1" id="newRole">
 							<div class="col-10">
 								<select class="form-select form-select-sm" name="updatedRole" id="updatedRole" required>
-									<option value="DEFAULT" selected>Choisir un nouveau rôle</option>';
+									<option value="" selected disabled>Choisir un nouveau rôle</option>';
 									foreach($references as $ref)
 									{
 										echo '

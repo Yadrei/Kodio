@@ -78,9 +78,6 @@
 			if (empty($role))
 				$response = array('status' => false, 'message' => ROLE_EMPTY);
 
-			if ($role === "DEFAULT")
-				$response = array('status' => false, 'message' => ROLE_DEFAULT);
-
 			if (empty($response)) {
 				$user = new User (
 				[
@@ -182,9 +179,6 @@
 
 			if (empty($role))
 				$response = array('status' => false, 'message' => ROLE_EMPTY);
-
-			if ($role === "DEFAULT")
-				$response = array('status' => false, 'message' => ROLE_DEFAULT);
 
 			if ($role === "S_ADMIN" && ($_SESSION['role'] != "WEB" && $_SESSION['role'] != "S_ADMIN"))
 				$response = array('status' => false, 'message' => ROLE_S_ADMIN);
