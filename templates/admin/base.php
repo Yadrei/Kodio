@@ -54,7 +54,7 @@
 	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/langs/fr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/langs/fr.min.js"></script>
 
         <script>
             $('.editor').trumbowyg({
