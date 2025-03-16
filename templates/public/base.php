@@ -25,7 +25,7 @@
 		            <div class="collapse navbar-collapse" id="navbarNav">
 		                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item">
-								<a href="#" class="nav-link">Home</a>
+								<a href="<?php echo BASE_URL.strtolower($currentLanguage->GetClef()); ?>/home" class="nav-link">Accueil</a>
 							</li>
 		                	<?php
 		                		foreach ($mainMenu as $main) {
@@ -60,7 +60,7 @@
 		                		}
 		                	?>
 							<li class="nav-item">
-								<a href="#" class="nav-link">Contact</a>
+								<a href="<?php echo BASE_URL.strtolower($currentLanguage->GetClef()); ?>/contact" class="nav-link">Contact</a>
 							</li>
 		                </ul>
 						<?php
@@ -70,7 +70,7 @@
 					    	<div class="dropdown">
 								<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $currentLanguage->GetClef(); ?></button>
 							  	<ul class="dropdown-menu">';
-								
+
 							  		foreach($otherLanguages as $language) {
 							  			echo '
 									<li><a href="'.BASE_URL.strtolower($language->getclef()).'" class="dropdown-item">'.$language->GetClef().'</a></li>';
