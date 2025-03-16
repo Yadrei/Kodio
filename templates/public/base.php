@@ -98,13 +98,13 @@
 		    <div class="container">
 		        <span class="text-muted text-left">© 2025 Shoku Studio</span>
 				<div class="float-end">
-					<a href="#">
+					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="facebook"></span>
 					</a>
-					<a href="#">
+					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="twitter"></span>
 					</a>
-					<a href="#">
+					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="instagram"></span>
 					</a>
 				</div>
