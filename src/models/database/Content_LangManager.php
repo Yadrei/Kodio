@@ -167,7 +167,7 @@
 		}
 
 		public function GetContentByLanguage($language) {
-			$query = $this->db->prepare('SELECT ID id, FK_CONTENT contentId, R_LANG language, R_CAT category, FK_AUTHOR author, TITLE title, CONTENT content, META_TITLE metaTitle, META_DESCRIPTION metaDescription, SLUG slug, IS_PUBLISHED published FROM CONTENT_LANG WHERE R_LANG = :language AND R_CAT NOT IN ("SYSTEM", "MENU") AND IS_PUBLISHED IS TRUE');
+			$query = $this->db->prepare('SELECT ID id, FK_CONTENT contentId, R_LANG language, R_CAT category, FK_AUTHOR author, TITLE title, CONTENT content, HEADING_IMAGE image, META_TITLE metaTitle, META_DESCRIPTION metaDescription, SLUG slug, IS_PUBLISHED published FROM CONTENT_LANG WHERE R_LANG = :language AND R_CAT NOT IN ("SYSTEM", "MENU") AND IS_PUBLISHED IS TRUE');
 
 		  	$query->bindParam(':language', $language, PDO::PARAM_STR);
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Content_Lang');
