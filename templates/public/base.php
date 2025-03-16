@@ -16,7 +16,7 @@
 	<body class="d-flex flex-column min-vh-100">
 		<header>
 			<img src="<?php echo BASE_URL ?>public/images/logo/logo-admin.png" alt="" class="mt-5 mx-auto d-block" width="250" height="150">
-		    <nav class="navbar navbar-expand-lg navbar-light">
+		    <nav class="navbar navbar-expand-lg navbar-light text-uppercase">
 		        <div class="container border-secondary border-top border-bottom">
 		            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 		                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,8 +95,19 @@
 		</main>
 
 		<footer class="footer mt-auto py-3 bg-light">
-		    <div class="container text-center">
-		        <span class="text-muted">© 2025 Shoku Studio</span>
+		    <div class="container">
+		        <span class="text-muted text-left">© 2025 Shoku Studio</span>
+				<div class="float-end">
+					<a href="#">
+						<span class="mx-2 text-secondary" data-feather="facebook"></span>
+					</a>
+					<a href="#">
+						<span class="mx-2 text-secondary" data-feather="twitter"></span>
+					</a>
+					<a href="#">
+						<span class="mx-2 text-secondary" data-feather="instagram"></span>
+					</a>
+				</div>
 		    </div>
 		</footer>
 
