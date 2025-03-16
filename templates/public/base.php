@@ -23,7 +23,7 @@
 		                <span class="navbar-toggler-icon"></span>
 		            </button>
 		            <div class="collapse navbar-collapse" id="navbarNav">
-		                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+		                <ul class="navbar-nav me-auto mb-2 mb-lg-0 py-2">
 							<li class="nav-item">
 								<a href="<?php echo BASE_URL.strtolower($currentLanguage->GetClef()); ?>/home" class="nav-link">Accueil</a>
 							</li>
@@ -43,7 +43,7 @@
 		                				foreach ($hasSub as $sub) {
 		                					echo '
 		                					<li>
-		                						<a href="#" class="dropdown-item">'.$sub->getLabel().'</a>
+		                						<a href="'.BASE_URL.'/#" class="dropdown-item">'.$sub->getLabel().'</a>
 		                					</li>';
 		                				}
 
@@ -88,16 +88,18 @@
 		</header>
 
 		<!-- Espace Contenu -->
-		<main class="container mt-5">
-			<div class="row">
-				<div class="col-9">
+		<main class="container mt-5 clearfix">
+			<aside class="col-3 px-4 shadow rounded rounded-4 float-end">
+				<h6 class="text-center text-uppercase text-secondary border-bottom border-2 p-3">A propos</h6>
+				<img src="<?php echo BASE_URL; ?>/public/images/profil.jpg" class="img-thumbnail img-fluid rounded-circle w-50 mx-auto d-block my-3" alt="Image de profil de l'utilisateur du blog">
+				<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut libero nulla. Donec a malesuada elit, pulvinar porttitor dolor.</small></p>
+			</aside>
+			<div class="row gx-5">
+				<div class="col-11">
 					<?php
 						echo $content;
 					?>
 				</div>
-				<aside class="col-3">
-					<h6>A propos</h6>
-				</aside>
 			</div>
 		</main>
 
