@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 14/08/2023
-	    @Dernière modification: 23/10/2023
+	    @Dernière modification: 16/03/2025
   	*/
 
 	class HomeController 
@@ -19,6 +19,7 @@
 		}
 
 		public function Index($language = 'FR') {
+			$countLanguages = $this->referenceDetailManager->CountLanguages();
 			$currentLanguage = $this->referenceDetailManager->GetLangue(strtoupper($language));
 			$otherLanguages = $this->referenceDetailManager->GetTranslations(strtoupper($language));
 			$contentsList = $this->contentManager->GetContentByLanguage(strtoupper($language));

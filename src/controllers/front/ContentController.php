@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 08/10/2023
-	    @Dernière modification: 21/10/2023
+	    @Dernière modification: 16/03/2025
   	*/
 
 	class ContentController 
@@ -19,6 +19,7 @@
 		}
 
 		public function Index($language, $slug) {
+			$countLanguages = $this->referenceDetailManager->CountLanguages();
 			$currentLanguage = $this->referenceDetailManager->getLangue(strtoupper($language));
 			$otherLanguages = $this->referenceDetailManager->getTranslations(strtoupper($language));
 			$mainMenu = $this->menuManager->GetMainMenuByLang($language);

@@ -2,7 +2,8 @@
 	ob_start();
 ?>
 
-<h1 class="my-3"><?php echo htmlspecialchars_decode($content->getTitle()); ?></h1>
+<img src="../public/images/heading/<?php echo $content->getImage(); ?>" class="img-fluid rounded-4" alt="...">
+<h1 class="text-secondary my-5"><?php echo htmlspecialchars_decode($content->getTitle()); ?></h1>
 <?php echo htmlspecialchars_decode($content->getContent()); ?>
 
 <?php

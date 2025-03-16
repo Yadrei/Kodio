@@ -4,7 +4,7 @@
 		@Author Yves Ponchelet
 		@Version 1.0
 		@Creation: 10/09/2023
-		@Last update: 04/10/2023
+		@Last update: 16/03/2025
 	*/
 
 	class Reference_DetailManager 
@@ -37,6 +37,14 @@
 			$query->closeCursor();
 
 			return $references;
+		}
+
+		public function CountLanguages() {
+			$query = $this->db->prepare('SELECT COUNT(*) FROM REFERENCES_D WHERE FK_REF = "R_LANG"');
+
+			$query->execute();
+
+			return $query->fetchColumn();
 		}
 
 		public function getLangue($key) {

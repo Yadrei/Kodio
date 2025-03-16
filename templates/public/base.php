@@ -63,18 +63,25 @@
 								<a href="#" class="nav-link">Contact</a>
 							</li>
 		                </ul>
-		                <div class="navbar-text" id="choose-language">
+						<?php
+							if ($countLanguages > 1) {
+								echo '
+						<div class="navbar-text" id="choose-language">
 					    	<div class="dropdown">
 								<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $currentLanguage->GetClef(); ?></button>
-							  	<ul class="dropdown-menu">
-							  		<?php
-							  			foreach($otherLanguages as $language) {
-							  				echo '<li><a href="'.BASE_URL.strtolower($language->getclef()).'" class="dropdown-item">'.$language->GetClef().'</a></li>';
-							  			}
-							    	?>
+							  	<ul class="dropdown-menu">';
+								
+							  		foreach($otherLanguages as $language) {
+							  			echo '
+									<li><a href="'.BASE_URL.strtolower($language->getclef()).'" class="dropdown-item">'.$language->GetClef().'</a></li>';
+							  		}
+
+							    echo '
 							  	</ul>
 							</div>
-					    </div>
+					    </div>';
+							}
+		                ?>
 		            </div>
 		        </div>
 		    </nav>
