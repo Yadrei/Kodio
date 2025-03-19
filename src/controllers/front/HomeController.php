@@ -9,13 +9,14 @@
 
 	class HomeController 
 	{
-		private $contentManager, $menuManager, $referenceDetailManager;
+		private $contentManager, $menuManager, $referenceDetailManager, $settingManager;
 
 		public function __construct()
 		{
 			$this->menuManager = new MenuManager();
 			$this->contentManager = new Content_LangManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
+			$this->settingManager = new SettingManager();
 		}
 
 		public function Index($language = 'FR') {
@@ -25,6 +26,7 @@
 			$contentsList = $this->contentManager->GetContentByLanguage(strtoupper($language));
 			$mainMenu = $this->menuManager->GetMainMenuByLang(strtoupper($language));
 			$subMenu = $this->menuManager->GetSubMenuByLang(strtoupper($language));
+			$cookies = (bool)$this->settingManager->CheckCookies();
 
 		    require_once 'src/views/front/home.php';
 		}

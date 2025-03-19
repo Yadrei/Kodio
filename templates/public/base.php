@@ -106,6 +106,27 @@
 		<footer class="footer mt-auto py-3 bg-light">
 		    <div class="container">
 		        <span class="text-muted text-left">© 2025 Shoku Studio</span>
+				<?php
+					if ($cookies) {
+						echo '
+				<span> - <a href="#cookies" class="text-secondary" data-bs-toggle="modal">Politique de confidentialité & cookies</a></span>
+				<div class="modal fade" id="cookies" tabindex="-1">
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header border-bottom-0">
+								<h5 class="modal-title text-secondary">Confidentialité & Cookies</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<p>Votre vie privée est notre priorité. Ce site ne collecte aucune donnée personnelle et n’utilise aucuns cookies, que ce soit pour le suivi, l’analyse ou la publicité.</p>
+								<p>Aucune adresse e-mail ni information sensible ne vous sera demandée, même pour laisser un commentaire. Votre navigation reste totalement privée, sans suivi ni stockage de données.</p>
+								<p>Profitez du site en toute tranquillité, sans collecte cachée ni trace laissée. 🚀</p>
+							</div>
+						</div>
+					</div>
+				</div>';
+					}
+				?>
 				<div class="float-end">
 					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="facebook"></span>
