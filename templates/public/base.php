@@ -68,7 +68,7 @@
 								echo '
 						<div class="navbar-text" id="choose-language">
 					    	<div class="dropdown">
-								<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $currentLanguage->GetClef(); ?></button>
+								<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">'.$currentLanguage->GetClef().'</button>
 							  	<ul class="dropdown-menu">';
 
 							  		foreach($otherLanguages as $language) {
@@ -118,7 +118,7 @@
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<p>Votre vie privée est notre priorité. Ce site ne collecte aucune donnée personnelle et n’utilise aucuns cookies, que ce soit pour le suivi, l’analyse ou la publicité.</p>
+								<p>Votre vie privée est notre priorité. Ce site ne collecte aucunes données personnelles et n’utilise aucuns cookies, que ce soit pour le suivi, l’analyse ou la publicité.</p>
 								<p>Aucune adresse e-mail ni information sensible ne vous sera demandée, même pour laisser un commentaire. Votre navigation reste totalement privée, sans suivi ni stockage de données.</p>
 								<p>Profitez du site en toute tranquillité, sans collecte cachée ni trace laissée. 🚀</p>
 							</div>
