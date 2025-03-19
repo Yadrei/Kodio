@@ -4,7 +4,7 @@
 		@Author Yves Ponchelet
 		@Version 1.0
 		@Creation: 19/02/2025
-		@Last update: 20/02/2025
+		@Last update: 19/03/2025
 	*/
 
 	class CommentManager
@@ -20,7 +20,7 @@
 			$query = $this->db->prepare('INSERT INTO COMMENTS (NICKNAME, FK_CONTENT, CONTENT, DTE) VALUES(:nickname, :content, :text, NOW())');
 
 			$query->bindValue(':nickname', $comment->getNickname(), PDO::PARAM_STR);
-			$query->bindValue(':content', $comment->getContent(), PDO::PARAM_INT);
+			$query->bindValue(':content', $comment->getFkContent(), PDO::PARAM_INT);
             $query->bindValue(':text', $comment->GetText(), PDO::PARAM_STR);
 
 			$query->execute();

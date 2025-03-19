@@ -4,12 +4,12 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 19/02/2025
-		@Dernière modification: 20/02/2025
+		@Dernière modification: 19/03/2025
 	*/
 
 	class Comment 
 	{
-	    private $errors = [], $id, $nickname, $fKContent, $text, $dateComment;
+	    private $errors = [], $id, $nickname, $fkContent, $text, $dateComment;
 
 	    // Constantes pour les erreurs
 		const INVALID_NICKNAME = "Le nickname n'est pas bon";
@@ -51,8 +51,8 @@
 				$this->nickname = $nickname;
 		}
 
-        public function setContent($content) {
-            $this->fKContent = $content;
+        public function setFkContent($content) {
+            $this->fkContent = $content;
         }
 
 		public function setText($text) {
@@ -79,7 +79,7 @@
 			return $this->nickname;
 		}
 
-        public function getContent() {
+        public function getFkContent() {
             return $this->fkContent;
         }
 
@@ -88,7 +88,7 @@
 		}
 
         public function getDateComment() {
-			return (new DateTime($this->dateComment))->format("d/m/Y");
+			return (new DateTime($this->dateComment))->format("d/m/Y à H:i:s");
 		}
 	}	
 ?>
