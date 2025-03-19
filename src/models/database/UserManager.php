@@ -99,7 +99,7 @@
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
 			$query->execute();
 
-			$users = $query->fetchColumn();
+			$users = $query->fetchAll();
 
 			$query->closeCursor();
 
