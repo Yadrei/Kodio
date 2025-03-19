@@ -17,7 +17,7 @@
 		<header>
 			<img src="<?php echo BASE_URL ?>public/images/logo/logo-admin.png" alt="" class="mt-5 mx-auto d-block" width="250" height="150">
 		    <nav class="navbar navbar-expand-lg navbar-light text-uppercase">
-		        <div class="container border-secondary border-top border-bottom">
+		        <div class="container border-secondary-subtle border-2 border-top border-bottom">
 		            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 		                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		                <span class="navbar-toggler-icon"></span>
