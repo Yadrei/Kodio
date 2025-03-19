@@ -9,7 +9,7 @@
 
 	class ContentController 
 	{
-		private $contentManager, $commentManager, $menuManager, $referenceDetailManager;
+		private $contentManager, $commentManager, $menuManager, $referenceDetailManager, $settingManager;
 
 		public function __construct()
 		{
@@ -17,6 +17,7 @@
 			$this->contentManager = new Content_LangManager();
 			$this->commentManager = new CommentManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
+			$this->settingManager = new SettingManager();
 		}
 
 		public function AddReaction() 
@@ -70,6 +71,8 @@
 			$subMenu = $this->menuManager->GetSubMenuByLang($language);
 			$content = $this->contentManager->GetContentBySlug($slug);
 			$comments = $this->commentManager->GetCommentsFromContent($content->getId());
+			$cookies = (bool)$this->settingManager->CheckCookies();
+			$com = (bool)$this->settingManager->CheckComments();
 
 		    require_once 'src/views/front/displayContent.php';
 		}

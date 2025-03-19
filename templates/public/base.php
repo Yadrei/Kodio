@@ -43,7 +43,7 @@
 		                				foreach ($hasSub as $sub) {
 		                					echo '
 		                					<li>
-		                						<a href="'.BASE_URL.'/#" class="dropdown-item">'.$sub->getLabel().'</a>
+		                						<a href="'.BASE_URL.strtolower($main->getlanguage()).'/'.$sub->getContent()->getSlug().'" class="dropdown-item">'.$sub->getLabel().'</a>
 		                					</li>';
 		                				}
 
