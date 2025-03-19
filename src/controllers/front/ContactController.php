@@ -4,18 +4,19 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 14/08/2023
-	    @Dernière modification: 16/03/2025
+	    @Dernière modification: 19/03/2025
   	*/
 
 	class ContactController 
 	{
-		private $contentManager, $menuManager, $referenceDetailManager;
+		private $contentManager, $menuManager, $referenceDetailManager, $settingManager;
 
 		public function __construct()
 		{
 			$this->menuManager = new MenuManager();
 			$this->contentManager = new Content_LangManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
+			$this->settingManager = new SettingManager();
 		}
 		
 		public function Index($language = 'FR') 
@@ -26,6 +27,7 @@
 			$contentsList = $this->contentManager->GetContentByLanguage(strtoupper($language));
 			$mainMenu = $this->menuManager->GetMainMenuByLang($language);
 			$subMenu = $this->menuManager->GetSubMenuByLang($language);
+			$cookies = (bool)$this->settingManager->CheckCookies();
 
 			switch (strtoupper($language))
 			{
