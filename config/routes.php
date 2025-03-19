@@ -57,6 +57,7 @@
         BASE_URL."private/library/deleteImage/{image}" => ['controller' => 'LibraryController', 'action' => 'DeleteImage'],
         BASE_URL."private/library/{folder}" => ['controller' => 'LibraryController', 'action' => 'Folder'],
 	    BASE_URL."private/settings" => ['controller' => 'SettingsController', 'action' => 'Index'],
+		BASE_URL."private/socials" => ['controller' => 'SettingsController', 'action' => 'Socials'],
 	    /* PARTIE PUBLIQUE
 	    ------------------
 	    */

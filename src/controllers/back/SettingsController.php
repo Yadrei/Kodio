@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 18/09/2023
-	    @Dernière modification: 15/02/2025
+	    @Dernière modification: 19/03/2025
   	*/
 
 	class SettingsController 
@@ -27,6 +27,9 @@
 			$maintenance = (bool)$this->settingManager->CheckMaintenance();
 			$cookies = (bool)$this->settingManager->CheckCookies();
 			$comments = (bool)$this->settingManager->CheckComments();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
 			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']); // Pour récupérer les permissions de l'utilisateur connecté
 
@@ -346,6 +349,26 @@
 			}
 
 			$this->settingManager->Comments(isset($_POST['comments']));
+
+			header("Location: ".BASE_URL."private/settings");
+			exit;
+		}
+
+		public function Socials()
+		{
+			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']);
+
+			if (!$permissionsLogged->getAllowUpdate())
+				throw new Exception(NOT_ALLOWED);
+
+			if (!isset($_POST['submit'])) {
+				header('Location: /Kodio');
+				exit;
+			}
+
+			foreach($_POST as $network => $url) {
+				$this->settingManager->UpdateSocials($network, $url);
+			}
 
 			header("Location: ".BASE_URL."private/settings");
 			exit;

@@ -40,11 +40,31 @@
 			</div>
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
+		<h4 class="text-secondary border-bottom">Réseaux sociaux</h4>
+		<form class="mb-3" action="<?php echo BASE_URL ?>private/socials" method="post">
+			<div class="row mb-3 ps-3">
+				<label class="col-sm-1 col-form-label" for="facebook">Facebook</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control form-control-sm" name="facebook" id="facebook" value="<?php echo $facebook->getValue(); ?>">
+				</div>
+			</div>
+			<div class="row mb-3 ps-3">
+				<label class="col-sm-1 col-form-label" for="twitter">Twitter</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control form-control-sm" name="twitter" id="twitter" value="<?php echo $twitter->getValue(); ?>">
+				</div>
+			</div>
+			<div class="row mb-3 ps-3">
+				<label class="col-sm-1 col-form-label" for="instagram">Instagram</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control form-control-sm" name="instagram" id="instagram" value="<?php echo $instagram->getValue(); ?>">
+				</div>
+			</div>
+			<p class="text-muted ms-3"><small>Laissez les champs vide si vous ne voulez pas les afficher</small></p>
+			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
+		</form>
 		<h4 class="text-secondary border-bottom">Commentaires</h4>
 		<form class="mb-3" action="<?php echo BASE_URL ?>private/comments" method="post">
-			<div class="alert alert-warning" role="alert">
-			  Attention ! Cette fonctionnalité n'est pas encore complètement implémentée ! Seul la gestion est effective
-			</div>
 			<div class="form-check form-switch mb-3">
 				<label class="form-check-label" for="comments">Activer les commentaires ?</label>
 				<?php if ($comments): ?>
@@ -63,7 +83,7 @@
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
 		<h4 class="text-secondary border-bottom">Cookies</h4>
-		<form action="<?php echo BASE_URL ?>private/cookies" method="post">
+		<form class="mb-3" action="<?php echo BASE_URL ?>private/cookies" method="post">
 			<div class="form-check form-switch mb3">
 				<label class="form-check-label" for="cookies">Activer le bandeau de cookies ?</label>
 				<?php if ($cookies): ?>
