@@ -27,6 +27,9 @@
 			$mainMenu = $this->menuManager->GetMainMenuByLang(strtoupper($language));
 			$subMenu = $this->menuManager->GetSubMenuByLang(strtoupper($language));
 			$cookies = (bool)$this->settingManager->CheckCookies();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
 		    require_once 'src/views/front/home.php';
 		}

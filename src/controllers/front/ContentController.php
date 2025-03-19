@@ -18,6 +18,9 @@
 			$this->commentManager = new CommentManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
 			$this->settingManager = new SettingManager();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
 		}
 
 		public function AddReaction() 

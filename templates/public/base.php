@@ -128,15 +128,29 @@
 					}
 				?>
 				<div class="float-end">
+					<?php
+						if (!empty($facebook->getValue())) {
+							echo '
 					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="facebook"></span>
-					</a>
+					</a>';
+						}
+
+						if (!empty($twitter->getValue())) {
+							echo '
 					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="twitter"></span>
-					</a>
+					</a>';
+						}
+
+						if (!empty($instagram->getValue())) {
+							echo '
 					<a href="#" class="text-decoration-none">
 						<span class="mx-2 text-secondary" data-feather="instagram"></span>
-					</a>
+					</a>';
+						}
+					?>
+					
 				</div>
 		    </div>
 		</footer>
