@@ -46,10 +46,12 @@
 				]);
 
 				try {
-					
 					$this->commentManager->Save($comment);
 
-				    header("Location: ".BASE_URL);
+					// Pour rediriger vers la page où on était
+					$content = $this->contentManager->GetContentById($contentId);
+
+				    header("Location: ".BASE_URL.strtolower($content->getLanguage()).'/'.$content->getSlug());
                 	exit;
 				}
 				catch (PDOException $e) {
