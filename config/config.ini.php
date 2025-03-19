@@ -120,6 +120,7 @@
 	define("TAG_LABEL_EMPTY", "Le libellé de l'étiquette ne poeut pas être vide");
 	define("TAG_LABEL_LENGTH", "Le libellé doit être compris entre 4 et 20 caractères");
 	define("TAG_SUCCESS", "Étiquette ajoutée avec succès");
+	define("TEXT_EMPTY", "Veuillez entrer un texte");
 	define("UNKNOWN_USER", "Utilisateur inconnu");
 	define("USER_SUCCESS", "Utilisateur ajouté avec succès");
 	define("WRONG_LENGTH_TRANSLATE", "Un des champs de traduction est trop court ou trop long"); // Attention, texte aussi à modifié légèrement dans controller backend 'Contents' en cas de traduction

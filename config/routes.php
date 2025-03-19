@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 04/10/2023
-	    @Dernière modification: 16/03/2025
+	    @Dernière modification: 19/03/2025
   	*/
 
 	// Définition des routes et de leurs correspondances aux contrôleurs et actions
@@ -65,6 +65,7 @@
 	    BASE_URL."{language}/home" => ['controller' => 'HomeController', 'action' => 'Index'],
 	    BASE_URL."{language}/contact" => ['controller' => 'ContactController', 'action' => 'Index'],
 	    BASE_URL."{language}/{slug}" => ['controller' => 'ContentController', 'action' => 'Index'],
+		BASE_URL."reaction/action/add"=> ['controller' => 'ContentController', 'action' => 'AddReaction'],
 	    BASE_URL."contact/send" => ['controller' => 'ContactController', 'action' => 'Send']
 	];
 ?>
