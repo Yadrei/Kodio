@@ -36,7 +36,7 @@
 		                			if (!empty($hasSub)) {
 		                				echo '
 		                			<li class="nav-item dropdown">
-		                				<a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.$main->getLabel().'
+		                				<a href="'.BASE_URL.'#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">'.$main->getLabel().'
 		                				</a>
 		                				<ul class="dropdown-menu">';
 
@@ -91,7 +91,7 @@
 		<main class="container mt-5 clearfix">
 			<aside class="col-3 px-4 shadow rounded rounded-4 float-end">
 				<h6 class="text-center text-uppercase text-secondary border-bottom border-2 p-3">A propos</h6>
-				<img src="<?php echo BASE_URL; ?>/public/images/profil.jpg" class="img-thumbnail img-fluid rounded-circle w-50 mx-auto d-block my-3" alt="Image de profil de l'utilisateur du blog">
+				<img src="<?php echo BASE_URL; ?>public/images/profil.jpg" class="img-thumbnail img-fluid rounded-circle w-50 mx-auto d-block my-3" alt="Image de profil de l'utilisateur du blog">
 				<p><small>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut libero nulla. Donec a malesuada elit, pulvinar porttitor dolor.</small></p>
 			</aside>
 			<div class="row gx-5">

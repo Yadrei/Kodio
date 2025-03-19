@@ -7,7 +7,7 @@
 		<div class="card mb-3 border border-0">
 			<div class="row g-0">
 				<div class="col-md-5">
-					<img src="'.BASE_URL.'public/images/heading/'.$content->getImage().'" class="img-fluid rounded-4" alt="...">
+					<img src="'.BASE_URL.$content->getImage().'" class="img-fluid rounded-4" alt="...">
 				</div>
 				<div class="col-md-7">
 					<div class="card-body">
