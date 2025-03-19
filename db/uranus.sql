@@ -85,7 +85,10 @@ INSERT INTO `REFERENCES_D` (`CLEF`, `FK_REF`, `LABEL`) VALUES
 ('MAINT', 'R_SETTING', 'Mode maintenance'),
 ('COM', 'R_SETTING', 'Activer les commentaires'),
 ('COOKIES', 'R_SETTING', 'Activer les cookies'),
-('WEB', 'R_ROLE', 'Webmaster');
+('WEB', 'R_ROLE', 'Webmaster'),
+('SOC_FB', 'R_SETTING', 'Facebook'),
+('SOC_TWT', 'R_SETTING', 'Twitter'),
+('SOC_INST', 'R_SETTING', 'Instagram');
 
 -- --------------------------------------------------------
 
@@ -435,7 +438,10 @@ ALTER TABLE `SETTINGS`
 INSERT INTO `SETTINGS` (`R_SETTING`, `VALUE`) VALUES
 ('MAINT', '0'),
 ('COM', '0'),
-('COOKIES', '0'),;
+('COOKIES', '0'),
+('SOC_FB', NULL),
+('SOC_INST', NULL),
+('SOC_TWT', NULL);
 
 -- --------------------------------------------------------
 
