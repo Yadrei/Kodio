@@ -53,7 +53,7 @@
 	// Fonctions globale de traitements divers
 	require_once 'config/functions.php';
 
-	loadEnv(__DIR__.'/.env'); // charge les variables avant toute autre logique
+	loadEnv(__DIR__.'/../.env'); // charge les variables avant toute autre logique
 
 	// Chargement automatique des classes
 	require_once 'config/autoload.php';
