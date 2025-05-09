@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 04/05/2020
-	    @Dernière modification: 25/11/2023
+	    @Dernière modification: 09/05/2025
   	*/
 
 	define("BASE_URL_LOCAL", "/Kodio/");
@@ -50,11 +50,13 @@
 	// Tableau pour les retours ajax
 	$response = array();
 
-	// Chargement automatique des classes
-	require_once 'config/autoload.php';
-
 	// Fonctions globale de traitements divers
 	require_once 'config/functions.php';
+
+	loadEnv(__DIR__.'/../.env'); // charge les variables avant toute autre logique
+
+	// Chargement automatique des classes
+	require_once 'config/autoload.php';
 
 	// PAGINATION - ADMIN
 	$itemsPerPages = 40;
