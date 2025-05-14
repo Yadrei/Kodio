@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour la page des utilisateurs de l'admin
 	    @Author Yves P.
-	    @Version 1.0
+	    @Version 1.1
 	    @Date création: 16/08/2023
-	    @Dernière modification: 04/10/2023
+	    @Dernière modification: 14/05/2025
   	*/
 
 	class UsersController 
@@ -142,10 +142,10 @@
 					$email = $this->userManager->GetMail($user->getId());
 
 					$content = '
-					<p>A new password has been generated for your account.</p>
-					<p>Password : '. $password.'</p>';
+					<p>Un nouveau mot de passe a été généré pour votre utilisateur.</p>
+					<p>Mot de passe : '. $password.'</p>';
 
-					$mail = new Mail($email, "Nouveau mot de passe", $content);
+					$mail = new Mail($email, '', '', 'Nouveau mot de passe', $content);
 
 					if ($mail->Send()) 
 						$response = array('status' => true, 'message' => PASSWORD_SUCCESS);
@@ -213,10 +213,10 @@
 				throw new Exception(NOT_ALLOWED);
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
-				throw new Exdeption(BAD_REQUEST_METHOD);
+				throw new Exception(BAD_REQUEST_METHOD);
 
 			if (!isset($_POST['user']))
-				throw new Exdeption(CRITICAL_ERROR);
+				throw new Exception(CRITICAL_ERROR);
 
 			$user = Sanitize($_POST['user']);
 
