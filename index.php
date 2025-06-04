@@ -4,7 +4,7 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 14/08/2023
-		@Dernière modification: 22/10/2023
+		@Dernière modification: 04/06/2025
 	*/
 	
 	session_start();
@@ -26,7 +26,7 @@
 	    // Convertir les segments dynamiques en expressions régulières
 	    $regexRouteUrl = preg_replace('/{([^}]+)}/', '([^/]+)', $routeUrl);
 	    $regexRouteUrl = str_replace('/', '\/', $regexRouteUrl);
-	    $regexRouteUrl = '/^' . $regexRouteUrl . '$/';
+	    $regexRouteUrl = '/^'.$regexRouteUrl.'\/?$/';
 
 	    // Vérifier si l'URL demandée correspond à la route actuelle
 	    if (preg_match($regexRouteUrl, $requestUri, $matches)) {
@@ -44,6 +44,16 @@
 		    $controllerName = $matchedRoute['controller'];
 		    $actionName = $matchedRoute['action'];
 
+			// Authentification requise
+			$authRequired = isset($matchedRoute['auth']) ? $matchedRoute['auth'] : true;
+
+			if ($authRequired && str_starts_with($requestUri, BASE_URL . "private")) {
+				if (!isset($_SESSION['isLog'])) {
+					header("Location: ".BASE_URL."private");
+					exit;
+				}
+			}
+
 		    // Instanciation du contrôleur et appel de l'action correspondante
 		    $controller = new $controllerName();
 
@@ -57,7 +67,7 @@
 		    echo 'Page not found';
 		    */
 
-		    var_dump(BASE_URL);
+		    var_dump("coucou".BASE_URL);
 		}
 	}
 	catch (Exception $e) {
