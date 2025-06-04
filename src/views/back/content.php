@@ -40,7 +40,7 @@
 				<td class="col-1">'.$content->getDateMod().'</td>
 				<td class="col-2">';
 
-					if (mb_strtolower(mb_convert_encoding(trim($content->getCategory()), "UTF-8")) !== mb_strtolower("Système")) {
+					if ($content->getCategory() !== "Système") {
 						echo '<a href="'.BASE_URL.'preview/fr/'.$content->getSlug().'" class="m-1" target="_blank" data-toggle="tooltip" title="Prévisualiser" role="button"><span class="feather-15" data-feather="eye"></span></a>';
 
 						if ($permissionsLogged->getAllowUpdate()) {
