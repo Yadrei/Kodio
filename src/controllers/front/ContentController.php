@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 08/10/2023
-	    @Dernière modification: 19/03/2025
+	    @Dernière modification: 04/06/2025
   	*/
 
 	class ContentController 
@@ -18,9 +18,6 @@
 			$this->commentManager = new CommentManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
 			$this->settingManager = new SettingManager();
-			$facebook = $this->settingManager->GetSocial("SOC_FB");
-			$twitter = $this->settingManager->GetSocial("SOC_TWT");
-			$instagram = $this->settingManager->GetSocial("SOC_INST");
 		}
 
 		public function AddReaction() 
@@ -76,6 +73,9 @@
 			$comments = $this->commentManager->GetCommentsFromContent($content->getId());
 			$cookies = (bool)$this->settingManager->CheckCookies();
 			$com = (bool)$this->settingManager->CheckComments();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
 		    require_once 'src/views/front/displayContent.php';
 		}
