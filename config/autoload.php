@@ -4,11 +4,11 @@
         @Author Yves P.
         @Version 1.1
         @Date création: 14/08/2023
-        @Dernière modification: 14/05/2025
+        @Dernière modification: 04/06/2025
     */
 
     spl_autoload_register(function ($className) {
-        $basePath = __DIR__ . '/src/';
+        $basePath = 'src/';
 
         $paths = [
             'controllers/ExceptionHandler.php', // chargement unique
@@ -28,9 +28,9 @@
         // Parcourir les chemins et charger le fichier correspondant à la classe
         foreach ($paths as $relativePath) {
             $file = $basePath . $relativePath;
+
             if (file_exists($file)) {
-                require_once $file;
-                break;
+                require_once $file;              
             }
         }
     });
