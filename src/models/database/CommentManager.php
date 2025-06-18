@@ -61,5 +61,20 @@
 
 			return $listComments;
 		}
+
+		public function ValidateComment($token) {
+			$query = $this->db->prepare('UPDATE COMMENTS SET R_STATUS = "APPROVED" WHERE TOKEN = :token AND R_STATUS = "PENDING"');
+
+			$query->bindValue(':token', $token, pdo::PARAM_STR);
+
+			if ($query->execute())
+				$rowCount = $query->rowCount();
+			else 
+				$rowCount = 0;
+
+			$query->closeCursor();
+
+			return $rowCount;
+		}
 	}
 ?>

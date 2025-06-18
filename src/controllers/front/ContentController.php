@@ -57,7 +57,7 @@
 				try {
 					$content = '
 					<p>Vous recevez ce message car vous avez poster un commentaire. Veuillez cliquer sur le lien ci-dessous afin de le valider</p>
-					<a href="'.BASE_URL.'/reaction/validate/'.$token.'">Je valide mon commentaire</a>';
+					<a href="'.BASE_URL.'reaction/validate/'.$token.'">Je valide mon commentaire</a>';
 
 					$mail = new Mail('Validation de commentaire', $content, $email, '', '');
 
@@ -97,6 +97,23 @@
 			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
 		    require_once 'src/views/front/displayContent.php';
+		}
+
+		public function ValidateReaction($token) {
+			$countLanguages = $this->referenceDetailManager->CountLanguages();
+			$currentLanguage = $this->referenceDetailManager->getLangue(strtoupper('fr'));
+			$otherLanguages = $this->referenceDetailManager->getTranslations(strtoupper('fr'));
+			$mainMenu = $this->menuManager->GetMainMenuByLang('fr');
+			$subMenu = $this->menuManager->GetSubMenuByLang('fr');
+			$cookies = (bool)$this->settingManager->CheckCookies();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
+			$rowCount = $this->commentManager->ValidateComment($token);
+
+			$message = ($rowCount === 1) ? "Commentaire validé" : "Lien invalide ou déjà utilisé";
+
+			require_once 'src/views/front/feedback.php';
 		}
 	}
 ?>
