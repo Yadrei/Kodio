@@ -69,7 +69,7 @@
 	      feather.replace()
 	    </script>
 
-	    <script src="<?php echo BASE_URL ?>public/javascript/ajax.js"></script>
-	    <script src="<?php echo BASE_URL ?>public/javascript/main.js"></script>
+	    <script src="<?php echo BASE_URL ?>public/js/ajax.js"></script>
+	    <script src="<?php echo BASE_URL ?>public/js/main.js"></script>
 	</body>
 </html>
