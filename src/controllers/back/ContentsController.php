@@ -4,12 +4,12 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 20/02/2025
+	    @Dernière modification: 18/06/2025
   	*/
 
 	class ContentsController 
 	{
-		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $commentManager, $menuManager;
+		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $commentManager, $menuManager, $settingManager;
 
 		public function __construct()
 		{
@@ -23,6 +23,7 @@
 			$this->commentManager = new CommentManager();
             $this->menuManager = new MenuManager();
             $this->contentTagManager = new J_Content_TagManager();
+			$this->settingManager = new SettingManager();
 		}
 
 		public function Index($page = 1) 
@@ -137,11 +138,16 @@
             if (!$permissionsLogged->getAllowAccess())
                 throw new Exception(NOT_ALLOWED);
 
+			$countLanguages = $this->referenceDetailManager->CountLanguages();
             $currentLanguage = $this->referenceDetailManager->getLangue(strtoupper($language));
             $otherLanguages = $this->referenceDetailManager->getTranslations(strtoupper($language));
             $mainMenu = $this->menuManager->GetMainMenuByLang($language);
             $subMenu = $this->menuManager->GetSubMenuByLang($language);
             $content = $this->contentLangManager->GetPreview($slug);
+			$cookies = (bool)$this->settingManager->CheckCookies();
+			$facebook = $this->settingManager->GetSocial("SOC_FB");
+			$twitter = $this->settingManager->GetSocial("SOC_TWT");
+			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
             require_once 'src/views/back/preview.php';
         }
