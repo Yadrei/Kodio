@@ -159,6 +159,46 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `PERMISSIONS`
+--
+
+CREATE TABLE `PERMISSIONS` (
+  `FK_USER` int(11) NOT NULL,
+  `ALLOW_ADMIN` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_ADD` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_UPDATE` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_DELETE` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Index pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD PRIMARY KEY (`FK_USER`),
+  ADD KEY `CONST_FK_USER_PK` (`FK_USER`);
+
+--
+-- Index pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD KEY `CONST_PERMISSIONS_USER` (`FK_USER`);
+
+--
+-- Contraintes pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD CONSTRAINT `CONST_PERMISSIONS_USER` FOREIGN KEY (`FK_USER`) REFERENCES `USERS` (`ID`);
+
+--
+-- Déchargement des données de la table `PERMISSIONS`
+--
+
+INSERT INTO `PERMISSIONS` (`FK_USER`, `ALLOW_ADMIN`, `ALLOW_ADD`, `ALLOW_UPDATE`, `ALLOW_DELETE`) VALUES
+(1, 1, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `CONTENT`
 --
 
@@ -366,46 +406,6 @@ ALTER TABLE `MENU`
 ALTER TABLE `MENU`
   ADD CONSTRAINT `CONST_MENU_LANGUAGE` FOREIGN KEY (`R_LANG`) REFERENCES `REFERENCES_D` (`CLEF`),
   ADD CONSTRAINT `CONST_PARENT_ID` FOREIGN KEY (`PARENT_ID`) REFERENCES `MENU` (`ID`);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `PERMISSIONS`
---
-
-CREATE TABLE `PERMISSIONS` (
-  `FK_USER` int(11) NOT NULL,
-  `ALLOW_ADMIN` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_ADD` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_UPDATE` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_DELETE` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Index pour la table `USERS`
---
-ALTER TABLE `USERS`
-  ADD PRIMARY KEY (`FK_USER`),
-  ADD KEY `CONST_FK_USER_PK` (`FK_USER`);
-
---
--- Index pour la table `PERMISSIONS`
---
-ALTER TABLE `PERMISSIONS`
-  ADD KEY `CONST_PERMISSIONS_USER` (`FK_USER`);
-
---
--- Contraintes pour la table `PERMISSIONS`
---
-ALTER TABLE `PERMISSIONS`
-  ADD CONSTRAINT `CONST_PERMISSIONS_USER` FOREIGN KEY (`FK_USER`) REFERENCES `USERS` (`ID`);
-
---
--- Déchargement des données de la table `PERMISSIONS`
---
-
-INSERT INTO `PERMISSIONS` (`FK_USER`, `ALLOW_ADMIN`, `ALLOW_ADD`, `ALLOW_UPDATE`, `ALLOW_DELETE`) VALUES
-(1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
