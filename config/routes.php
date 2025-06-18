@@ -68,6 +68,7 @@
 	    BASE_URL."{language}/contact" => ['controller' => 'ContactController', 'action' => 'Index', 'auth' => false],
 	    BASE_URL."{language}/{slug}" => ['controller' => 'ContentController', 'action' => 'Index', 'auth' => false],
 		BASE_URL."reaction/action/add"=> ['controller' => 'ContentController', 'action' => 'AddReaction', 'auth' => false],
+		BASE_URL."reaction/validate/{token}"=> ['controller' => 'ContentController', 'action' => 'ValidateReaction', 'auth' => false],
 	    BASE_URL."contact/send" => ['controller' => 'ContactController', 'action' => 'Send', 'auth' => false]
 	];
 ?>

@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour le contenu à afficher
 	    @Author Yves P.
-	    @Version 1.0
+	    @Version 1.2
 	    @Date création: 08/10/2023
-	    @Dernière modification: 04/06/2025
+	    @Dernière modification: 18/06/2025
   	*/
 
 	class ContentController 
@@ -25,35 +25,54 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
 
-			if (!isset($_POST['nickname']) || !isset($_POST['text']))
+			if (!isset($_POST['nickname']) || !isset($_POST['text']) || !isset($_POST['email']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
 			if (empty($_POST['nickname']))
 				$response = array('status' => false, 'message' => NICKNAME_EMPTY);
+
+			if (empty($_POST['email']))
+				$response = array('status' => false, 'message' => EMAIL_EMPTY);
 
 			if (empty($_POST['text']))
 			$response = array('status' => false, 'message' => TEXT_EMPTY);
 
 			$contentId = $_POST['contentId'];
 			$nickname = Sanitize($_POST['nickname']);
+			$email = Sanitize($_POST['email']);
 			$text = Sanitize($_POST['text']);
+
+			$token = bin2hex(random_bytes(32));
 
 			if (empty($response)) {
 				$comment = new Comment (
 				[
 					'nickname' => $nickname,
 					'fkContent' => $contentId,
-					'text' => $text
+					'text' => $text,
+					'status' => 'PENDING',
+					'token' => $token
 				]);
 
 				try {
-					$this->commentManager->Save($comment);
+					$content = '
+					<p>Vous recevez ce message car vous avez poster un commentaire. Veuillez cliquer sur le lien ci-dessous afin de le valider</p>
+					<a href="'.BASE_URL.'/reaction/validate/'.$token.'">Je valide mon commentaire</a>';
 
-					// Pour rediriger vers la page où on était
-					$content = $this->contentManager->GetContentById($contentId);
+					$mail = new Mail($email, '', '', 'Validation de commentaire', $content);
 
-				    header("Location: ".BASE_URL.strtolower($content->getLanguage()).'/'.$content->getSlug());
-                	exit;
+					if ($mail->Send()) {
+						$this->commentManager->Save($comment);
+						
+						// Pour rediriger vers la page où on était
+						$content = $this->contentManager->GetContentById($contentId);
+
+						header("Location: ".BASE_URL.strtolower($content->getLanguage()).'/'.$content->getSlug());
+						exit;
+					}
+					else {
+						throw new Exception("Erreur");
+					}
 				}
 				catch (PDOException $e) {
 					$response = array('success' => false, 'message' => $e->getMessage());
