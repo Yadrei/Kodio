@@ -59,11 +59,11 @@
 					<p>Vous recevez ce message car vous avez poster un commentaire. Veuillez cliquer sur le lien ci-dessous afin de le valider</p>
 					<a href="'.BASE_URL.'/reaction/validate/'.$token.'">Je valide mon commentaire</a>';
 
-					$mail = new Mail($email, '', '', 'Validation de commentaire', $content);
+					$mail = new Mail('Validation de commentaire', $content, $email, '', '');
 
 					if ($mail->Send()) {
 						$this->commentManager->Save($comment);
-						
+
 						// Pour rediriger vers la page où on était
 						$content = $this->contentManager->GetContentById($contentId);
 
