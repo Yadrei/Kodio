@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 17/11/2023
-	    @Dernière modification: 23/11/2023
+	    @Dernière modification: 18/06/2025
   	*/
 
 	class TagsController 
@@ -156,7 +156,7 @@
 			}	
 		}
 
-		public function UpdateColor()
+		public function UpdateTextColor()
 		{
 			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']);
 
@@ -164,31 +164,31 @@
 				throw new Exception(NOT_ALLOWED);
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
-				throw new Exception(AD_REQUEST_METHOD);
+				throw new Exception(BAD_REQUEST_METHOD);
 
 			if (!isset($_POST['id']))
 				throw new Exception(ID_NOT_FOUND);
 
-			if (!isset($_POST['color']))
+			if (!isset($_POST['textColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
 			$id = Sanitize($_POST['id']);
-			$color = Sanitize($_POST['color']);
+			$textColor = Sanitize($_POST['textColor']);
 
-			if (empty($color))
+			if (empty($textColor))
 				throw new Exception(TAG_COLOR);
 
-			if (strlen($color) == 6)
-				$color = '#'.$color;
+			if (strlen($textColor) == 6)
+				$textColor = '#'.$textColor;
 
 			$tag = new Tag (
 				[
 					'id' => $id,
-					'color' => $color
+					'textColor' => $textColor
 				]);
 
 			try {
-				$this->tagManager->SaveColor($tag);
+				$this->tagManager->SaveTextColor($tag);
 
 				header("Location: ".BASE_URL."private/tags");
 				exit;

@@ -4,16 +4,16 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 17/11/2023
-		@Dernière modification: 17/11/2023
+		@Dernière modification: 18/06/2025
 	*/
 
 	class Tag 
 	{
-	    private $errors = [], $id, $label, $color;
+	    private $errors = [], $id, $label, $textColor;
 
 	    // Constantes pour les erreurs
 		const INVALID_LABEL = "Le libellé n'est pas bon";
-		const INVALID_COLOR = "Veuillez indiquer une couleur";
+		const INVALID_TEXT_COLOR = "Veuillez indiquer une couleur de texte";
 
 	    public function __construct($values = []) {
 			if (!empty($values))
@@ -36,7 +36,7 @@
 		}
 
 		public function isValid() {
-			return !(empty($this->label) || empty($this->color));
+			return !(empty($this->label) || empty($this->textColor));
 		}
 
 		// Setters
@@ -51,11 +51,11 @@
 				$this->label = $label;
 		}
 
-		public function setColor($color) {
-			if (!is_string($color) || empty($color))
-				$this->errors[] = self::INVALID_COLOR;
+		public function setTextColor($textColor) {
+			if (!is_string($textColor) || empty($textColor))
+				$this->errors[] = self::INVALID_TEXT_COLOR;
 			else
-				$this->color = $color;
+				$this->textColor = $textColor;
 		}
 
 		// Getters
@@ -71,8 +71,8 @@
 			return $this->label;
 		}
 
-		public function getColor() {
-			return $this->color;
+		public function getTextColor() {
+			return $this->textColor;
 		}
 	}	
 ?>

@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 04/10/2023
-	    @Dernière modification: 04/06/2025
+	    @Dernière modification: 18/06/2025
   	*/
 
 	// Définition des routes et de leurs correspondances aux contrôleurs et actions
@@ -47,7 +47,7 @@
 	    BASE_URL."private/content/manage/update/{id}" => ['controller' => 'ContentsController', 'action' => 'ManageUpdate'],
 	    BASE_URL."private/tags" => ['controller' => 'TagsController', 'action' => 'Index'],
 	    BASE_URL."private/tags/action/delete/{id}" => ['controller' => 'TagsController', 'action' => 'Delete'],
-	    BASE_URL."private/tags/action/updateColor" => ['controller' => 'TagsController', 'action' => 'UpdateColor'],
+	    BASE_URL."private/tags/action/updateTextColor" => ['controller' => 'TagsController', 'action' => 'UpdateTextColor'],
 	    BASE_URL."private/tags/action/update" => ['controller' => 'TagsController', 'action' => 'Update'],
 	    BASE_URL."private/users" => ['controller' => 'UsersController', 'action' => 'Index'],
 	    BASE_URL."private/users/{page}" => ['controller' => 'UsersController', 'action' => 'Index'], // Pagination
