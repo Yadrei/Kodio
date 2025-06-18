@@ -45,8 +45,8 @@ ALTER TABLE `REFERENCES_T`
 INSERT INTO `REFERENCES_T` (`REF`, `LABEL`) VALUES
 ('R_CAT', 'Catégories de contenu'),
 ('R_LANG', 'Langues disponibles'),
-('R_ROLE', 'R&ocirc;les pour les utilisateurs'),
-('R_SETTING', 'Param&egrave;tres'),
+('R_ROLE', 'Rôles pour les utilisateurs'),
+('R_SETTING', 'Paramètres'),
 ('R_STATUS', 'Statuts possibles');
 
 -- --------------------------------------------------------
@@ -79,10 +79,10 @@ ALTER TABLE `REFERENCES_D`
 --
 
 INSERT INTO `REFERENCES_D` (`CLEF`, `FK_REF`, `LABEL`) VALUES
-('SYSTEM', 'R_CAT', 'Syst&egrave;me'),
-('MENU', 'R_CAT', 'Page li&eacute;e au menu'),
+('SYSTEM', 'R_CAT', 'Système'),
+('MENU', 'R_CAT', 'Page liée au menu'),
 ('PAGE', 'R_CAT', 'Page simple'),
-('FR', 'R_LANG', 'Fran&ccedil;ais'),
+('FR', 'R_LANG', 'Français'),
 ('MAINT', 'R_SETTING', 'Mode maintenance'),
 ('COM', 'R_SETTING', 'Activer les commentaires'),
 ('COOKIES', 'R_SETTING', 'Activer les cookies'),
@@ -142,14 +142,14 @@ INSERT INTO `USERS` (`NICKNAME`, `EMAIL`, `PASSWORD_PUBLIC`, `PASSWORD_ADMIN`, `
 DELIMITER $$
 CREATE TRIGGER `CHECK_ROLE_AJOUT` BEFORE INSERT ON `USERS` FOR EACH ROW IF (NEW.R_ROLE like "WEB") THEN
 	SIGNAL SQLSTATE '45000'
-    SET MESSAGE_TEXT = "Impossible de donner le r&ocirc;le 'WEB' car un utilisateur le possède déjà";
+    SET MESSAGE_TEXT = "Impossible de donner le rôle 'WEB' car un utilisateur le possède déjà";
 END IF
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `CHECK_ROLE_UPDATE` BEFORE UPDATE ON `USERS` FOR EACH ROW IF (NEW.R_ROLE LIKE "WEB" AND NEW.NICKNAME NOT LIKE "Yves") THEN
 	SIGNAL SQLSTATE '45000'
-    SET MESSAGE_TEXT = "Impossible de mettre le r&ocirc;le 'WEB' à un autre utilisateur";
+    SET MESSAGE_TEXT = "Impossible de mettre le rôle 'WEB' à un autre utilisateur";
 END IF
 $$
 DELIMITER ;
