@@ -119,12 +119,13 @@
 			if (!isset($_POST['id']))
 				throw new Exception(ID_NOT_FOUND);
 
-			if (!isset($_POST['label']) || !isset($_POST['color']))
+			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
 			$id = Sanitize($_POST['id']);
 			$label = Sanitize($_POST['label']);
-			$color = Sanitize($_POST['color']);
+			$textColor = Sanitize($_POST['textColor']);
+			$bgColor = Sanitize($_POST['bgColor']);
 
 			if (empty($label))
 				throw new Exception(TAG_LABEL_EMPTY);
@@ -132,17 +133,21 @@
 			if (strlen($label) < 2 || strlen($label) > 20)
 				throw new Exception(TAG_LABEL_LENGTH);
 
-			if (empty($color))
+			if (empty($textColor) || empty($bgColor))
 				throw new Exception(TAG_COLOR);
 
-			if (strlen($color) == 6)
-				$color = '#'.$color;
+			if (strlen($textColor) == 6)
+				$textColor = '#'.$textColor;
+
+			if (strlen($bgColor) == 6)
+				$bgColor = '#'.$bgColor;
 
 			$tag = new Tag (
 			[
 				'id' => $id,
 				'label' => $label,
-				'color' => $color
+				'textColor' => $textColor,
+				'bgColor' => $bgColor
 			]);
 
 			try {
@@ -189,6 +194,48 @@
 
 			try {
 				$this->tagManager->SaveTextColor($tag);
+
+				header("Location: ".BASE_URL."private/tags");
+				exit;
+			}
+			catch (PDOException $e) {
+			    throw new Exception($e->getMessage());
+			}	
+		}
+
+		public function UpdateBgColor()
+		{
+			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']);
+
+			if (!$permissionsLogged->getAllowUpdate())
+				throw new Exception(NOT_ALLOWED);
+
+			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+				throw new Exception(BAD_REQUEST_METHOD);
+
+			if (!isset($_POST['id']))
+				throw new Exception(ID_NOT_FOUND);
+
+			if (!isset($_POST['bgColor']))
+				throw new Exception(FIELD_NOT_FOUND);
+
+			$id = Sanitize($_POST['id']);
+			$bgColor = Sanitize($_POST['bgColor']);
+
+			if (empty($bgColor))
+				throw new Exception(TAG_COLOR);
+
+			if (strlen($bgColor) == 6)
+				$bgColor = '#'.$bgColor;
+
+			$tag = new Tag (
+				[
+					'id' => $id,
+					'bgColor' => $bgColor
+				]);
+
+			try {
+				$this->tagManager->SaveBgColor($tag);
 
 				header("Location: ".BASE_URL."private/tags");
 				exit;

@@ -460,7 +460,8 @@ CREATE TABLE `TAGS`
 (
   `ID` int NOT NULL,
   `LABEL` varchar(20) NOT NULL,
-  `COLOR` varchar(7) NOT NULL
+  `TXT_COLOR` varchar(7) NOT NULL,
+  `BG_COLOR` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

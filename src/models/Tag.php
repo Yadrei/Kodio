@@ -9,11 +9,12 @@
 
 	class Tag 
 	{
-	    private $errors = [], $id, $label, $textColor;
+	    private $errors = [], $id, $label, $textColor, $bgColor;
 
 	    // Constantes pour les erreurs
 		const INVALID_LABEL = "Le libellé n'est pas bon";
 		const INVALID_TEXT_COLOR = "Veuillez indiquer une couleur de texte";
+		const INVALID_BG_COLOR = "Veuillez indiquer une couleur de background";
 
 	    public function __construct($values = []) {
 			if (!empty($values))
@@ -58,6 +59,13 @@
 				$this->textColor = $textColor;
 		}
 
+		public function setBgColor($bgColor) {
+			if (!is_string($bgColor) || empty($bgColor))
+				$this->errors[] = self::INVALID_BG_COLOR;
+			else
+				$this->bgColor = $bgColor;
+		}
+
 		// Getters
 		public function getErrors() {
 			return $this->errors;
@@ -73,6 +81,10 @@
 
 		public function getTextColor() {
 			return $this->textColor;
+		}
+
+		public function getBgColor() {
+			return $this->bgColor;
 		}
 	}	
 ?>

@@ -48,6 +48,7 @@
 	    BASE_URL."private/tags" => ['controller' => 'TagsController', 'action' => 'Index'],
 	    BASE_URL."private/tags/action/delete/{id}" => ['controller' => 'TagsController', 'action' => 'Delete'],
 	    BASE_URL."private/tags/action/updateTextColor" => ['controller' => 'TagsController', 'action' => 'UpdateTextColor'],
+		BASE_URL."private/tags/action/updateBgColor" => ['controller' => 'TagsController', 'action' => 'UpdateBgColor'],
 	    BASE_URL."private/tags/action/update" => ['controller' => 'TagsController', 'action' => 'Update'],
 	    BASE_URL."private/users" => ['controller' => 'UsersController', 'action' => 'Index'],
 	    BASE_URL."private/users/{page}" => ['controller' => 'UsersController', 'action' => 'Index'], // Pagination
