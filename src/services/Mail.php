@@ -2,14 +2,14 @@
 	/* 
 		Classe gérant la création et l'envoi de mails
 	    @Author Yves P.
-	    @Version 1.1
+	    @Version 1.5
 	    @Date création : 09/04/2021
-	    @Dernière modification : 14/05/2025
+	    @Dernière modification : 16/05/2025
   	*/
 
-	require '../libs/PHPMailer/PHPMailer.php';
-	require '../libs/PHPMailer/SMTP.php';
-	require '../libs/PHPMailer/Exception.php';
+	require_once __DIR__.'/../libs/PHPMailer/PHPMailer.php';
+	require_once __DIR__.'/../libs/PHPMailer/SMTP.php';
+	require_once __DIR__.'/../libs/PHPMailer/Exception.php';
 	  
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
@@ -17,7 +17,7 @@
 	Class Mail {
 		protected $mailer;
 
-		public function __construct($to = '', $replyTo = '', $replyToName = '', $subject, $body) {	
+		public function __construct($subject, $body, $to = '', $replyTo = '', $replyToName = '', ) {	
 			$this->mailer = new PHPMailer(true);
 			
 			// Pour l'encodage des caractères spéciaux
