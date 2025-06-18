@@ -46,7 +46,8 @@ INSERT INTO `REFERENCES_T` (`REF`, `LABEL`) VALUES
 ('R_CAT', 'Catégories de contenu'),
 ('R_LANG', 'Langues disponibles'),
 ('R_ROLE', 'R&ocirc;les pour les utilisateurs'),
-('R_SETTING', 'Param&egrave;tres');
+('R_SETTING', 'Param&egrave;tres'),
+('R_STATUS', 'Statuts possibles');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,9 @@ INSERT INTO `REFERENCES_D` (`CLEF`, `FK_REF`, `LABEL`) VALUES
 ('WEB', 'R_ROLE', 'Webmaster'),
 ('SOC_FB', 'R_SETTING', 'Facebook'),
 ('SOC_TWT', 'R_SETTING', 'Twitter'),
-('SOC_INST', 'R_SETTING', 'Instagram');
+('SOC_INST', 'R_SETTING', 'Instagram'),
+('PENDING', 'R_STATUS', 'En attente de validation')
+('APPROVED', 'R_STATUS', 'Validé');
 
 -- --------------------------------------------------------
 
