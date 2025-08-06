@@ -1,33 +1,37 @@
 <?php
-	/* 
-		Autoload pour les différenets classes
-    	@Author Yves P.
-	    @Version 1.0
-	    @Date création: 14/08/2023
-	    @Dernière modification: 27/09/2023
+    /*
+        Autoload pour les différentes classes
+        @Author Yves P.
+        @Version 1.1
+        @Date création: 14/08/2023
+        @Dernière modification: 04/06/2025
     */
 
-	spl_autoload_register(function ($className) {
-		$exceptionPathFile = 'src/controllers/ExceptionHandler.php';
-	    $frontFilePath = 'src/controllers/front/'.$className.'.php';
-	    $backFilePath = 'src/controllers/back/'.$className.'.php';
-	    $genericFilePath = 'src/models/'.$className.'.php';
-	    $databaseFilePath = 'src/models/database/'.$className.'.php';
-	    
-	    if (file_exists($exceptionPathFile))
-	    	require_once($exceptionPathFile);
-	    
-	    if (file_exists($frontFilePath)) {
-	        require_once $frontFilePath;
-	    }
-	    elseif (file_exists($backFilePath)) {
-	    	require_once $backFilePath;
-	    }
-	    elseif (file_exists($genericFilePath)) {
-	    	require_once $genericFilePath;
-	    }
-	    elseif(file_exists($databaseFilePath)) {
-			require_once $databaseFilePath;
-		}
-	});
+    spl_autoload_register(function ($className) {
+        $basePath = 'src/';
+
+        $paths = [
+            'controllers/ExceptionHandler.php', // chargement unique
+            'controllers/front/' . $className . '.php',
+            'controllers/back/' . $className . '.php',
+            'models/' . $className . '.php',
+            'models/database/' . $className . '.php',
+            'services/' . $className . '.php', // ← ajouté pour Mail
+        ];
+
+        // Charger ExceptionHandler explicitement si présent
+        $exceptionHandlerPath = $basePath . 'controllers/ExceptionHandler.php';
+        if (file_exists($exceptionHandlerPath)) {
+            require_once $exceptionHandlerPath;
+        }
+
+        // Parcourir les chemins et charger le fichier correspondant à la classe
+        foreach ($paths as $relativePath) {
+            $file = $basePath . $relativePath;
+
+            if (file_exists($file)) {
+                require_once $file;              
+            }
+        }
+    });
 ?>

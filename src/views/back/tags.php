@@ -22,8 +22,12 @@
 								<label for="addLabel">Libellé</label>
 							</div>
 							<div class="mb-3 form-floating">
-								<input type="color" class="form-control" name="color" id="addColor">
-								<label for="addColor">Couleur</label>
+								<input type="color" class="form-control" name="textColor" id="addTextColor">
+								<label for="addTextColor">Couleur du texte</label>
+							</div>
+							<div class="mb-3 form-floating">
+								<input type="color" class="form-control" name="bgColor" id="addBgColor">
+								<label for="addBgColor">Couleur du background</label>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -41,7 +45,8 @@
 		<thead>
 			<tr>
 				<th scope="col">Label</th>
-				<th scope="col">Couleur</th>
+				<th scope="col">Couleur texte</th>
+				<th scope="col">Couleur background</th>
 				<th scope="col">Actions</th>
 			</tr>
 		</thead>
@@ -53,13 +58,26 @@
 				<tr>
 					<td>'.$tag->getLabel().'</td>
 					<td>
-						<form class="row row-cols-2-auto g-1" id="newColor" action="'.BASE_URL.'private/tags/action/updateColor" method="post">
+						<form class="row row-cols-2-auto g-1" id="newTextColor" action="'.BASE_URL.'private/tags/action/updateTextColor" method="post">
 							<div class="col-2">
-								<input type="color" name="color" value="'.$tag->getColor().'">
+								<input type="color" name="textColor" value="'.$tag->getTextColor().'">
 							</div>
 							<div class="col-1">
 								<input type="hidden" name="id" value="'.$tag->getId().'">
-								<button type="'.($permissionsLogged->getAllowUpdate() ? 'submit' : 'button').'" class="btn btn-sm" name="changeTagColor" id="changeTagColor" data-toggle="tooltip" title="Valider la nouvelle couleur">
+								<button type="'.($permissionsLogged->getAllowUpdate() ? 'submit' : 'button').'" class="btn btn-sm" name="changeTextColor" id="changeTextColor" data-toggle="tooltip" title="Valider la nouvelle couleur">
+									<span class="feather-15 '.($permissionsLogged->getAllowUpdate() ? 'green' : 'disabled').'" data-feather="check"></span>
+								</button>
+							</div>
+						</form>
+					</td>
+					<td>
+						<form class="row row-cols-2-auto g-1" id="newBgColor" action="'.BASE_URL.'private/tags/action/updateBgColor" method="post">
+							<div class="col-2">
+								<input type="color" name="bgColor" value="'.$tag->getBgColor().'">
+							</div>
+							<div class="col-1">
+								<input type="hidden" name="id" value="'.$tag->getId().'">
+								<button type="'.($permissionsLogged->getAllowUpdate() ? 'submit' : 'button').'" class="btn btn-sm" name="changerbGColor" id="changerbGColor" data-toggle="tooltip" title="Valider la nouvelle couleur">
 									<span class="feather-15 '.($permissionsLogged->getAllowUpdate() ? 'green' : 'disabled').'" data-feather="check"></span>
 								</button>
 							</div>
@@ -106,8 +124,12 @@
 									<label for="updateLabel">Libellé</label>
 							</div>
 							<div class="mb-3 form-floating">
-								<input type="color" class="form-control" name="color" id="updateColor" value="'.$tag->getColor().'">
-								<label for="updateColor">Couleur</label>
+								<input type="color" class="form-control" name="textColor" id="updateTextColor" value="'.$tag->getTextColor().'">
+								<label for="updateColor">Couleur texte</label>
+							</div>
+							<div class="mb-3 form-floating">
+								<input type="color" class="form-control" name="bgColor" id="updateBgColor" value="'.$tag->getbGColor().'">
+								<label for="updateColor">Couleur background</label>
 							</div>
 						</div>
 						<div class="modal-footer">

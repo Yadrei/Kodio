@@ -2,14 +2,14 @@
 	/* 
 		Classe Comment qui représente la table COMMENTS en base de données
 		@Author Yves P.
-		@Version 1.0
+		@Version 1.2
 		@Date Création: 19/02/2025
-		@Dernière modification: 19/03/2025
+		@Dernière modification: 18/06/2025
 	*/
 
 	class Comment 
 	{
-	    private $errors = [], $id, $nickname, $fkContent, $text, $dateComment;
+	    private $errors = [], $id, $nickname, $fkContent, $text, $status, $dateComment, $token;
 
 	    // Constantes pour les erreurs
 		const INVALID_NICKNAME = "Le nickname n'est pas bon";
@@ -55,11 +55,19 @@
             $this->fkContent = $content;
         }
 
+		public function setStatus($status) {
+			$this->status = $status;
+		}
+
 		public function setText($text) {
 			if (!is_string($text) || empty($text))
 				$this->errors[] = self::INVALID_TEXT;
 			else
 				$this->text = $text;
+		}
+
+		public function setToken($token) {
+			$this->token = $token;
 		}
 
         public function setDateComment(DateTime $dateComment) {
@@ -83,12 +91,20 @@
             return $this->fkContent;
         }
 
+		public function getStatus() {
+			return $this->status;
+		}
+
 		public function getText() {
 			return $this->text;
 		}
 
         public function getDateComment() {
 			return (new DateTime($this->dateComment))->format("d/m/Y à H:i:s");
+		}
+
+		public function getToken() {
+			return $this->token;
 		}
 	}	
 ?>

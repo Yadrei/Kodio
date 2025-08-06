@@ -20,6 +20,7 @@
 	</ul>
 </nav>
 <div class="tab-content border border-top-0" id="tabForms">
+	<!-- Tab général -->
 	<div class="tab-pane fade show active p-3" id="general-pane" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
 		<h4 class="text-secondary border-bottom">Maintenance</h4>
 		<form class="mb-3" action="<?php echo BASE_URL ?>private/maintenance" method="post">
@@ -102,6 +103,7 @@
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
 	</div>
+	<!-- Tab Catégories -->
 	<div class="tab-pane fade p-3" id="categories-pane" role="tabpanel" aria-labelledby="categories-pane" tabindex="0">
 		<?php
 			if ($permissionsLogged->getAllowAdd()) {
@@ -166,6 +168,7 @@
 			</table>
 		</div>
 	</div>
+	<!-- Tab roles -->
 	<div class="tab-pane fade p-3" id="roles-pane" role="tabpanel" aria-labelledby="roles-tab" tabindex="0">
 		<?php
 			if ($permissionsLogged->getAllowAdd()) {
@@ -230,6 +233,7 @@
 			</table>
 		</div>
 	</div>
+	<!-- Tab Langues -->
 	<div class="tab-pane fade p-3" id="languages-pane" role="tabpanel" aria-labelledby="languages-tab" tabindex="0">
 		<?php
 			if ($permissionsLogged->getAllowAdd()) {

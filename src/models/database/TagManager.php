@@ -4,7 +4,7 @@
 		@Author Yves Ponchelet
 		@Version 1.0
 		@Creation: 17/11/2023
-		@Last update: 23/11/2023
+		@Last update: 18/06/2025
 	*/
 
 	class TagManager
@@ -17,10 +17,11 @@
 
 		// Méthodes privées
 		private function Add(Tag $tag) {
-			$query = $this->db->prepare('INSERT INTO TAGS (LABEL, COLOR) VALUES(:label, :color)');
+			$query = $this->db->prepare('INSERT INTO TAGS (LABEL, TXT_COLOR, BG_COLOR) VALUES(:label, :textColor, :bgColor)');
 
 			$query->bindValue(':label', $tag->getLabel(), PDO::PARAM_STR);
-			$query->bindValue(':color', $tag->getColor(), PDO::PARAM_STR);
+			$query->bindValue(':textColor', $tag->getTextColor(), PDO::PARAM_STR);
+			$query->bindValue(':bgColor', $tag->getBgColor(), PDO::PARAM_STR);
 
 			$query->execute();
 
@@ -29,17 +30,24 @@
 
 		private function Update(Tag $tag) {
 			if (!is_null($tag->getLabel())) {
-				$query = $this->db->prepare('UPDATE TAGS SET LABEL = :label, COLOR = :color WHERE ID = :id');
+				$query = $this->db->prepare('UPDATE TAGS SET LABEL = :label, TXT_COLOR = :textColor, BG_COLOR = :bgColor WHERE ID = :id');
 
 				$query->bindValue(':id', $tag->getId(), PDO::PARAM_INT);
 				$query->bindValue(':label', $tag->getLabel(), PDO::PARAM_STR);
-				$query->bindValue(':color', $tag->getColor(), PDO::PARAM_STR);
-			}
-			else {
-				$query = $this->db->prepare('UPDATE TAGS SET COLOR = :color WHERE ID = :id');
+				$query->bindValue(':textColor', $tag->getTextColor(), PDO::PARAM_STR);
+				$query->bindValue(':bgColor', $tag->getBgColor(), PDO::PARAM_STR);
+			} 
+			else if (!is_null($tag->getTextColor())){
+				$query = $this->db->prepare('UPDATE TAGS SET TXT_COLOR = :textColor WHERE ID = :id');
 
 				$query->bindValue(':id', $tag->getId(), PDO::PARAM_INT);
-				$query->bindValue(':color', $tag->getColor(), PDO::PARAM_STR);
+				$query->bindValue(':textColor', $tag->getTextColor(), PDO::PARAM_STR);
+			} 
+			else if (!is_null($tag->getBgColor())){
+				$query = $this->db->prepare('UPDATE TAGS SET BG_COLOR = :bgColor WHERE ID = :id');
+
+				$query->bindValue(':id', $tag->getId(), PDO::PARAM_INT);
+				$query->bindValue(':bgColor', $tag->getBgColor(), PDO::PARAM_STR);
 			}
 
 			$query->execute();
@@ -64,7 +72,14 @@
 				throw new Exception($tag -> getErrors());
 		}
 
-		public function SaveColor(Tag $tag) {
+		public function SaveTextColor(Tag $tag) {
+			if (!$tag->isNew())
+				$this->Update($tag);
+			else
+				throw new Exception('ERROR');
+		}
+
+		public function SaveBgColor(Tag $tag) {
 			if (!$tag->isNew())
 				$this->Update($tag);
 			else
@@ -72,7 +87,7 @@
 		}
 
 		public function GetAllTags() {
-			$query = 'SELECT ID id, LABEL label, COLOR color FROM TAGS ORDER BY LABEL';
+			$query = 'SELECT ID id, LABEL label, TXT_COLOR textColor, BG_COLOR bgColor FROM TAGS ORDER BY LABEL';
 
 		  	$query = $this->db->prepare($query);
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Tag');

@@ -1,12 +1,23 @@
 /*
 	AJAX
 	@Author Yves Ponchelet
-	@Version 0.1
+	@Version 1.1
 	@Creation date: 05/09/2023
-	@Last update: 12/03/2025
+	@Last update: 18/06/2025
 */
 
 $(document).ready(function() {
+    // Récupère le chemin de base dynamique
+    function getBasePath() {
+        const parts = window.location.pathname.split('/').filter(Boolean);
+        if (parts.length > 0) {
+            return '/' + parts[0] + '/';
+        }
+        return '/';
+    }
+
+    const BASE_PATH = getBasePath();
+
     // Mettre à jour le statut d'un contenu
     $('.changer-statut').click(function(event) {
         // Empêcher le comportement par défaut du lien (pour éviter le rechargement de la page)
@@ -16,7 +27,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/changeStatus', 
+            url: 'ajax/changeStatus', 
             data: { id: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -47,7 +58,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addMenu', 
+            url: 'ajax/addMenu', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -76,7 +87,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addLanguage', 
+            url: 'ajax/addLanguage', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -102,7 +113,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/deleteLanguage', 
+            url: 'ajax/deleteLanguage', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -130,7 +141,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addRole', 
+            url: 'ajax/addRole', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -156,7 +167,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/deleteRole', 
+            url: 'ajax/deleteRole', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -184,7 +195,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addCategory', 
+            url: 'ajax/addCategory', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -210,7 +221,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/deleteCategory', 
+            url: 'ajax/deleteCategory', 
             data: { key: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -241,7 +252,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addUser', 
+            url: 'ajax/addUser', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -270,7 +281,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/newRole', 
+            url: 'ajax/newRole', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -296,7 +307,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/newPassword', 
+            url: 'ajax/newPassword', 
             data: { id: parametre }, // Envoyez le paramètre au serveur
             dataType: "json",
             success: function(response) {
@@ -331,12 +342,13 @@ $(document).ready(function() {
 
         var formData = {
             label: $('input[name=label]').val(),
-            color: $('input[name=color]').val(),
+            textColor: $('input[name=textColor]').val(),
+            bgColor: $('input[name=bgColor]').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: '/Kodio/private/ajax/addTag', 
+            url: 'ajax/addTag', 
             data: formData, // Envoyez les paramètres au serveur
             dataType: "json",
             success: function(response) {
@@ -344,11 +356,11 @@ $(document).ready(function() {
                     location.reload();
                 } 
                 else {
-                    alert(response.message);
+                    alert("ici: " + response.message);
                 }
             },
             error: function(error) {
-                alert(error);
+                alert("erreur: " + error);
             }
         });
     });

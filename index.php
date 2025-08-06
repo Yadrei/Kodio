@@ -4,64 +4,89 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 14/08/2023
-		@Dernière modification: 22/10/2023
+		@Dernière modification: 04/06/2025
 	*/
 	
 	session_start();
-	
-	// Chargement automatique des classes
-	require_once 'config/config.ini.php';
 
-	//set_exception_handler(['ExceptionHandler', 'handleException']);
+	try {		
+		// Chargement automatique des classes
+		require_once 'config/config.ini.php';
 
-	$routes = include 'config/routes.php';
+		//set_exception_handler(['ExceptionHandler', 'handleException']);
 
-	// Récupération de l'URL demandée
-	$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+		$routes = include 'config/routes.php';
 
-	// Vérification si la route existe en parcourant les routes
-	$matchedRoute = null;
+		// Récupération de l'URL demandée
+		$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-	foreach ($routes as $routeUrl => $routeInfo) {
-	    // Convertir les segments dynamiques en expressions régulières
-	    $regexRouteUrl = preg_replace('/{([^}]+)}/', '([^/]+)', $routeUrl);
-	    $regexRouteUrl = str_replace('/', '\/', $regexRouteUrl);
-	    $regexRouteUrl = '/^' . $regexRouteUrl . '$/';
+		// Nettoyage de l'URL par rapport à BASE_URL
+		$uriSansBase = substr($requestUri, strlen(BASE_URL));
 
-	    // Vérifier si l'URL demandée correspond à la route actuelle
-	    if (preg_match($regexRouteUrl, $requestUri, $matches)) {
-	        $matchedRoute = $routeInfo;
+		// 1. Gestion spécifique pour /private/* non définies : 404 direct
+		if (str_starts_with($uriSansBase, "private")) {
+			$privateRouteExists = false;
+			foreach ($routes as $routeUrl => $routeInfo) {
+				if (str_starts_with($routeUrl, BASE_URL."private")) {
+					// Création regex pour la route
+					$regexRouteUrl = preg_replace('/{([^}]+)}/', '([^/]+)', $routeUrl);
+					$regexRouteUrl = str_replace('/', '\/', $regexRouteUrl);
+					$regexRouteUrl = '/^'.$regexRouteUrl.'\/?$/';
 
-	        // Stocker les valeurs des paramètres dynamiques dans un tableau
-        	$params = array_slice($matches, 1);
+					if (preg_match($regexRouteUrl, $requestUri)) {
+						$privateRouteExists = true;
+						break;
+					}
+				}
+			}
 
-	        break;
-	    }
-	}
+			if (!$privateRouteExists) {
+				// Route /private/* inconnue => 404
+				header("Location: ".BASE_URL."private/home");
+				exit;
+			}
+		}
 
-	try {
+		// 2. Recherche normale dans les routes
+		$matchedRoute = null;
+		foreach ($routes as $routeUrl => $routeInfo) {
+			$regexRouteUrl = preg_replace('/{([^}]+)}/', '([^/]+)', $routeUrl);
+			$regexRouteUrl = str_replace('/', '\/', $regexRouteUrl);
+			$regexRouteUrl = '/^'.$regexRouteUrl.'\/?$/';
+
+			if (preg_match($regexRouteUrl, $requestUri, $matches)) {
+				$matchedRoute = $routeInfo;
+				$params = array_slice($matches, 1);
+				break;
+			}
+		}
+
 		if ($matchedRoute !== null) {
 		    $controllerName = $matchedRoute['controller'];
 		    $actionName = $matchedRoute['action'];
 
+			// Authentification requise
+			$authRequired = isset($matchedRoute['auth']) ? $matchedRoute['auth'] : true;
+
+			if ($authRequired && str_starts_with($requestUri, BASE_URL . "private")) {
+				if (!isset($_SESSION['isLog'])) {
+					header("Location: ".BASE_URL."private");
+					exit;
+				}
+			}
+
 		    // Instanciation du contrôleur et appel de l'action correspondante
 		    $controller = new $controllerName();
 
-		    // Passer les paramètres dynamiques au contrôleur
-        	call_user_func_array([$controller, $actionName], $params);
-		} 
-		else {
-			/*
-		    // Gestion de la page 404
+		    call_user_func_array([$controller, $actionName], $params);
+		} else {
+		    // Route non trouvée (hors private), 404 ou redirection possible ici
 		    header('HTTP/1.0 404 Not Found');
-		    echo 'Page not found';
-		    */
-
-		    var_dump(BASE_URL);
+		    
+		    exit;
 		}
 	}
 	catch (Exception $e) {
-		echo $e;
-		//ExceptionHandler::HandleException($e);
+		ExceptionHandler::HandleException($e);
 	}
 ?>

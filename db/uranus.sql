@@ -45,8 +45,9 @@ ALTER TABLE `REFERENCES_T`
 INSERT INTO `REFERENCES_T` (`REF`, `LABEL`) VALUES
 ('R_CAT', 'Catégories de contenu'),
 ('R_LANG', 'Langues disponibles'),
-('R_ROLE', 'R&ocirc;les pour les utilisateurs'),
-('R_SETTING', 'Param&egrave;tres');
+('R_ROLE', 'Rôles pour les utilisateurs'),
+('R_SETTING', 'Paramètres'),
+('R_STATUS', 'Statuts possibles');
 
 -- --------------------------------------------------------
 
@@ -78,17 +79,19 @@ ALTER TABLE `REFERENCES_D`
 --
 
 INSERT INTO `REFERENCES_D` (`CLEF`, `FK_REF`, `LABEL`) VALUES
-('SYSTEM', 'R_CAT', 'Syst&egrave;me'),
-('MENU', 'R_CAT', 'Page li&eacute;e au menu'),
+('SYSTEM', 'R_CAT', 'Système'),
+('MENU', 'R_CAT', 'Page liée au menu'),
 ('PAGE', 'R_CAT', 'Page simple'),
-('FR', 'R_LANG', 'Fran&ccedil;ais'),
+('FR', 'R_LANG', 'Français'),
 ('MAINT', 'R_SETTING', 'Mode maintenance'),
 ('COM', 'R_SETTING', 'Activer les commentaires'),
 ('COOKIES', 'R_SETTING', 'Activer les cookies'),
 ('WEB', 'R_ROLE', 'Webmaster'),
 ('SOC_FB', 'R_SETTING', 'Facebook'),
 ('SOC_TWT', 'R_SETTING', 'Twitter'),
-('SOC_INST', 'R_SETTING', 'Instagram');
+('SOC_INST', 'R_SETTING', 'Instagram'),
+('PENDING', 'R_STATUS', 'En attente de validation')
+('APPROVED', 'R_STATUS', 'Validé');
 
 -- --------------------------------------------------------
 
@@ -139,14 +142,14 @@ INSERT INTO `USERS` (`NICKNAME`, `EMAIL`, `PASSWORD_PUBLIC`, `PASSWORD_ADMIN`, `
 DELIMITER $$
 CREATE TRIGGER `CHECK_ROLE_AJOUT` BEFORE INSERT ON `USERS` FOR EACH ROW IF (NEW.R_ROLE like "WEB") THEN
 	SIGNAL SQLSTATE '45000'
-    SET MESSAGE_TEXT = "Impossible de donner le r&ocirc;le 'WEB' car un utilisateur le possède déjà";
+    SET MESSAGE_TEXT = "Impossible de donner le rôle 'WEB' car un utilisateur le possède déjà";
 END IF
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `CHECK_ROLE_UPDATE` BEFORE UPDATE ON `USERS` FOR EACH ROW IF (NEW.R_ROLE LIKE "WEB" AND NEW.NICKNAME NOT LIKE "Yves") THEN
 	SIGNAL SQLSTATE '45000'
-    SET MESSAGE_TEXT = "Impossible de mettre le r&ocirc;le 'WEB' à un autre utilisateur";
+    SET MESSAGE_TEXT = "Impossible de mettre le rôle 'WEB' à un autre utilisateur";
 END IF
 $$
 DELIMITER ;
@@ -155,6 +158,46 @@ CREATE TRIGGER `PERMISSIONS_USER` AFTER INSERT ON `USERS` FOR EACH ROW INSERT IN
 VALUES (NEW.ID, FALSE, FALSE, FALSE, FALSE)
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `PERMISSIONS`
+--
+
+CREATE TABLE `PERMISSIONS` (
+  `FK_USER` int(11) NOT NULL,
+  `ALLOW_ADMIN` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_ADD` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_UPDATE` tinyint(1) NOT NULL DEFAULT '0',
+  `ALLOW_DELETE` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Index pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD PRIMARY KEY (`FK_USER`),
+  ADD KEY `CONST_FK_USER_PK` (`FK_USER`);
+
+--
+-- Index pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD KEY `CONST_PERMISSIONS_USER` (`FK_USER`);
+
+--
+-- Contraintes pour la table `PERMISSIONS`
+--
+ALTER TABLE `PERMISSIONS`
+  ADD CONSTRAINT `CONST_PERMISSIONS_USER` FOREIGN KEY (`FK_USER`) REFERENCES `USERS` (`ID`);
+
+--
+-- Déchargement des données de la table `PERMISSIONS`
+--
+
+INSERT INTO `PERMISSIONS` (`FK_USER`, `ALLOW_ADMIN`, `ALLOW_ADD`, `ALLOW_UPDATE`, `ALLOW_DELETE`) VALUES
+(1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -308,7 +351,9 @@ CREATE TABLE `COMMENTS` (
   `NICKNAME` varchar(25) NOT NULL,
   `FK_CONTENT` int NOT NULL,
   `CONTENT` text NOT NULL,
-  `DTE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `R_STATUS` varchar(10) NOT NULL,
+  `DTE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TOKEN` char(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -329,6 +374,10 @@ ALTER TABLE `COMMENTS`
 --
 ALTER TABLE `COMMENTS`
   ADD CONSTRAINT `CONST_COMMENT_CONTENT` FOREIGN KEY (`FK_CONTENT`) REFERENCES `CONTENT_LANG` (`ID`);
+COMMIT;
+
+ALTER TABLE `COMMENTS`
+  ADD CONSTRAINT `CONST_COMMENT_STATUS` FOREIGN KEY (`R_STATUS`) REFERENCES `REFERENCES_D` (`CLEF`);
 COMMIT;
 
 -- --------------------------------------------------------
@@ -366,39 +415,6 @@ ALTER TABLE `MENU`
 ALTER TABLE `MENU`
   ADD CONSTRAINT `CONST_MENU_LANGUAGE` FOREIGN KEY (`R_LANG`) REFERENCES `REFERENCES_D` (`CLEF`),
   ADD CONSTRAINT `CONST_PARENT_ID` FOREIGN KEY (`PARENT_ID`) REFERENCES `MENU` (`ID`);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `PERMISSIONS`
---
-
-CREATE TABLE `PERMISSIONS` (
-  `FK_USER` int(11) NOT NULL,
-  `ALLOW_ADMIN` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_ADD` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_UPDATE` tinyint(1) NOT NULL DEFAULT '0',
-  `ALLOW_DELETE` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Index pour la table `PERMISSIONS`
---
-ALTER TABLE `PERMISSIONS`
-  ADD KEY `CONST_PERMISSIONS_USER` (`FK_USER`);
-
---
--- Contraintes pour la table `PERMISSIONS`
---
-ALTER TABLE `PERMISSIONS`
-  ADD CONSTRAINT `CONST_PERMISSIONS_USER` FOREIGN KEY (`FK_USER`) REFERENCES `USERS` (`ID`);
-
---
--- Déchargement des données de la table `PERMISSIONS`
---
-
-INSERT INTO `PERMISSIONS` (`FK_USER`, `ALLOW_ADMIN`, `ALLOW_ADD`, `ALLOW_UPDATE`, `ALLOW_DELETE`) VALUES
-(1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -453,7 +469,8 @@ CREATE TABLE `TAGS`
 (
   `ID` int NOT NULL,
   `LABEL` varchar(20) NOT NULL,
-  `COLOR` varchar(7) NOT NULL
+  `TXT_COLOR` varchar(7) NOT NULL,
+  `BG_COLOR` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

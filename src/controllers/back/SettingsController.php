@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour la page de paramètres de l'admin
 	    @Author Yves P.
-	    @Version 1.0
+	    @Version 1.1
 	    @Date création: 18/09/2023
-	    @Dernière modification: 19/03/2025
+	    @Dernière modification: 16/08/2025
   	*/
 
 	class SettingsController 
@@ -155,7 +155,7 @@
 			if (empty($response)) {
 				$role = new Reference_Detail (
 				[
-					'clef' => $key,
+					'clef' => strtoupper($key),
 					'ref' => 'R_ROLE',
 					'label' => $role,
 				]);

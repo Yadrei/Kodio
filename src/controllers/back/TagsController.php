@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 17/11/2023
-	    @Dernière modification: 23/11/2023
+	    @Dernière modification: 18/06/2025
   	*/
 
 	class TagsController 
@@ -54,11 +54,12 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
 
-			if (!isset($_POST['label']) || !isset($_POST['color']))
+			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
 			$label = Sanitize($_POST['label']);
-			$color = Sanitize($_POST['color']);
+			$textColor = Sanitize($_POST['textColor']);
+			$bgColor = Sanitize($_POST['bgColor']);
 
 			if (empty($label))
 				$response = array('status' => false, 'message' => TAG_LABEL_EMPTY);
@@ -66,17 +67,21 @@
 			if (strlen($label) < 2 || strlen($label) > 20)
 				$response = array('status' => false, 'message' => TAG_LABEL_LENGTH);
 
-			if (empty($color))
+			if (empty($textColor) || empty($bgColor))
 				$response = array('status' => false, 'message' => TAG_COLOR);
 
-			if (strlen($color) == 6)
-				$color = '#'.$color;
+			if (strlen($textColor) == 6)
+				$textColor = '#'.$textColor;
+
+			if (strlen($bgColor) == 6)
+				$bgColor = '#'.$bgColor;
 
 			if (empty($response)) {
 				$tag = new Tag (
 				[
 					'label' => $label,
-					'color' => $color
+					'textColor' => $textColor,
+					'bgColor' => $bgColor
 				]);
 
 				try {
@@ -119,12 +124,13 @@
 			if (!isset($_POST['id']))
 				throw new Exception(ID_NOT_FOUND);
 
-			if (!isset($_POST['label']) || !isset($_POST['color']))
+			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
 			$id = Sanitize($_POST['id']);
 			$label = Sanitize($_POST['label']);
-			$color = Sanitize($_POST['color']);
+			$textColor = Sanitize($_POST['textColor']);
+			$bgColor = Sanitize($_POST['bgColor']);
 
 			if (empty($label))
 				throw new Exception(TAG_LABEL_EMPTY);
@@ -132,17 +138,21 @@
 			if (strlen($label) < 2 || strlen($label) > 20)
 				throw new Exception(TAG_LABEL_LENGTH);
 
-			if (empty($color))
+			if (empty($textColor) || empty($bgColor))
 				throw new Exception(TAG_COLOR);
 
-			if (strlen($color) == 6)
-				$color = '#'.$color;
+			if (strlen($textColor) == 6)
+				$textColor = '#'.$textColor;
+
+			if (strlen($bgColor) == 6)
+				$bgColor = '#'.$bgColor;
 
 			$tag = new Tag (
 			[
 				'id' => $id,
 				'label' => $label,
-				'color' => $color
+				'textColor' => $textColor,
+				'bgColor' => $bgColor
 			]);
 
 			try {
@@ -156,7 +166,7 @@
 			}	
 		}
 
-		public function UpdateColor()
+		public function UpdateTextColor()
 		{
 			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']);
 
@@ -164,31 +174,73 @@
 				throw new Exception(NOT_ALLOWED);
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
-				throw new Exception(AD_REQUEST_METHOD);
+				throw new Exception(BAD_REQUEST_METHOD);
 
 			if (!isset($_POST['id']))
 				throw new Exception(ID_NOT_FOUND);
 
-			if (!isset($_POST['color']))
+			if (!isset($_POST['textColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
 			$id = Sanitize($_POST['id']);
-			$color = Sanitize($_POST['color']);
+			$textColor = Sanitize($_POST['textColor']);
 
-			if (empty($color))
+			if (empty($textColor))
 				throw new Exception(TAG_COLOR);
 
-			if (strlen($color) == 6)
-				$color = '#'.$color;
+			if (strlen($textColor) == 6)
+				$textColor = '#'.$textColor;
 
 			$tag = new Tag (
 				[
 					'id' => $id,
-					'color' => $color
+					'textColor' => $textColor
 				]);
 
 			try {
-				$this->tagManager->SaveColor($tag);
+				$this->tagManager->SaveTextColor($tag);
+
+				header("Location: ".BASE_URL."private/tags");
+				exit;
+			}
+			catch (PDOException $e) {
+			    throw new Exception($e->getMessage());
+			}	
+		}
+
+		public function UpdateBgColor()
+		{
+			$permissionsLogged = $this->permissionManager->getPermissions($_SESSION['id']);
+
+			if (!$permissionsLogged->getAllowUpdate())
+				throw new Exception(NOT_ALLOWED);
+
+			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+				throw new Exception(BAD_REQUEST_METHOD);
+
+			if (!isset($_POST['id']))
+				throw new Exception(ID_NOT_FOUND);
+
+			if (!isset($_POST['bgColor']))
+				throw new Exception(FIELD_NOT_FOUND);
+
+			$id = Sanitize($_POST['id']);
+			$bgColor = Sanitize($_POST['bgColor']);
+
+			if (empty($bgColor))
+				throw new Exception(TAG_COLOR);
+
+			if (strlen($bgColor) == 6)
+				$bgColor = '#'.$bgColor;
+
+			$tag = new Tag (
+				[
+					'id' => $id,
+					'bgColor' => $bgColor
+				]);
+
+			try {
+				$this->tagManager->SaveBgColor($tag);
 
 				header("Location: ".BASE_URL."private/tags");
 				exit;

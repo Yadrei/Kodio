@@ -35,6 +35,11 @@ echo '
 			<input type="text" class="form-control" name="nickname" id="nickname" placeholder="Votre pseudo" required>
 			<label for="nickname">Votre pseudo</label>
 		</div>
+		<div class="form-floating mb-3">
+			<input type="text" class="form-control" name="email" id="email" placeholder="Votre email" aria-describedby="emailInfo" required>
+			<label for="email">Votre email</label>
+			<div id="emailInfo" class="form-text">Votre email n’est pas enregistré. Il sert uniquement à valider votre commentaire via un lien envoyé par e-mail.</div>
+		</div>
 		<div class="mb-3">
 			<textarea class="form-control" name="text" id="text" rows="5" placeholder="Votre texte (minimum 20 caractères)" minlength="20" required></textarea>
 		</div>
