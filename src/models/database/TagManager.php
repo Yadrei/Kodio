@@ -17,10 +17,11 @@
 
 		// Méthodes privées
 		private function Add(Tag $tag) {
-			$query = $this->db->prepare('INSERT INTO TAGS (LABEL, TXT_COLOR) VALUES(:label, :textColor)');
+			$query = $this->db->prepare('INSERT INTO TAGS (LABEL, TXT_COLOR, BG_COLOR) VALUES(:label, :textColor, :bgColor)');
 
 			$query->bindValue(':label', $tag->getLabel(), PDO::PARAM_STR);
 			$query->bindValue(':textColor', $tag->getTextColor(), PDO::PARAM_STR);
+			$query->bindValue(':bgColor', $tag->getBgColor(), PDO::PARAM_STR);
 
 			$query->execute();
 

@@ -22,8 +22,12 @@
 								<label for="addLabel">Libellé</label>
 							</div>
 							<div class="mb-3 form-floating">
-								<input type="color" class="form-control" name="color" id="addColor">
-								<label for="addColor">Couleur</label>
+								<input type="color" class="form-control" name="textColor" id="addTextColor">
+								<label for="addTextColor">Couleur du texte</label>
+							</div>
+							<div class="mb-3 form-floating">
+								<input type="color" class="form-control" name="bgColor" id="addBgColor">
+								<label for="addBgColor">Couleur du background</label>
 							</div>
 						</div>
 						<div class="modal-footer">
