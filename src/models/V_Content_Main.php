@@ -101,7 +101,10 @@
 		}
 
 		public function getPublished() {
-			return $this->published;
+			if ($this->published)
+				return 'Publié';
+			else
+				return 'Non publié';
 		}
 	}
 ?>
