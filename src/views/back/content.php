@@ -55,7 +55,7 @@
 						}
 						
 						if ($permissionsLogged->getAllowDelete())
-							echo '<a href="'.BASE_URL.'private/content/actions/delete/'.$content->getId().'" class="m-1" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
+							echo '<a href="'.BASE_URL.'private/content/action/delete/'.$content->getId().'" class="m-1" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
 						else
 							echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
 
