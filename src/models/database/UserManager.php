@@ -17,11 +17,11 @@
 
 		// Private methods
 		private function Add(User $user) {
-			$query = $this->db->prepare('INSERT INTO USERS (NICKNAME, EMAIL, PASSWORD_ADMIN, R_ROLE) VALUES (:nickname, :email, :passwordAdmin, :role)');
+			$query = $this->db->prepare('INSERT INTO USERS (NICKNAME, EMAIL, PASSWORD_HASH, R_ROLE) VALUES (:nickname, :email, passwordHash, :role)');
 
 			$query->bindValue(':nickname', $user -> getNickname(), PDO::PARAM_STR);
 			$query->bindValue(':email', $user -> getEmail(), PDO::PARAM_STR);
-			$query->bindValue(':passwordAdmin', $user -> getPasswordAdmin(), PDO::PARAM_STR);
+			$query->bindValue('passwordHash', $user -> getPasswordHash(), PDO::PARAM_STR);
 			$query->bindValue(':role', $user -> getRole(), PDO::PARAM_STR);
 
 			$query->execute();
@@ -30,7 +30,7 @@
 		}
 
 		public function Login(User $user) {
-			$query = $this->db->prepare('SELECT ID id, NICKNAME nickname, PASSWORD_ADMIN passwordAdmin, R_ROLE role FROM USERS WHERE UPPER(NICKNAME) = UPPER(:nickname)');
+			$query = $this->db->prepare('SELECT ID id, NICKNAME nickname, PASSWORD_HASH passwordHash, R_ROLE role FROM USERS WHERE UPPER(NICKNAME) = UPPER(:nickname)');
 
 			$query->bindValue(':nickname', $user->getNickname(), PDO::PARAM_STR);
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
@@ -46,11 +46,11 @@
 			    return false;
 		}
 
-		private function UpdatePasswordAdmin(User $user) {
-			$query = $this->db->prepare('UPDATE USERS SET PASSWORD_ADMIN = :passwordPublic WHERE ID = :id');
+		private function UpdatePasswordHash(User $user) {
+			$query = $this->db->prepare('UPDATE USERS SET PASSWORD_HASH = :passwordHash WHERE ID = :id');
 
 			$query->bindValue(':id', $user->getId(), PDO::PARAM_INT);
-			$query->bindValue(':passwordPublic', $user->getPasswordAdmin(), PDO::PARAM_STR);
+			$query->bindValue(':passwordHash', $user->getPasswordHash(), PDO::PARAM_STR);
 
 			$query->execute();
 		}
@@ -77,8 +77,8 @@
 			if ($user->isValid()) {
 				if ($user->isNew())
 					return $this->Add($user);
-				else if (!is_null($user->getId()) && !is_null($user->getPasswordAdmin()))
-					$this->UpdatePasswordAdmin($user);
+				else if (!is_null($user->getId()) && !is_null($user->getPasswordHash()))
+					$this->UpdatePasswordHash($user);
 				else if (!is_null($user->getId()) && !is_null($user->getRole()))
 					$this->UpdateRole($user);
 				else

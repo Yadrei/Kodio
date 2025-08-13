@@ -83,7 +83,7 @@
 				[
 					'nickname' => $nickname,
 					'email' => $email,
-					'passwordAdmin' => password_hash($password, PASSWORD_DEFAULT),
+					'passwordHash' => password_hash($password, PASSWORD_DEFAULT),
 					'role' => $role
 				]);
 
@@ -135,7 +135,7 @@
 		    	$user = new User (
 					[
 						'id' => $id,
-						'passwordAdmin' => password_hash($password, PASSWORD_DEFAULT)
+						'passwordHash' => password_hash($password, PASSWORD_DEFAULT)
 					]);
 
 		    	try {

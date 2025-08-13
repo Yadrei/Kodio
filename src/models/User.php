@@ -2,20 +2,19 @@
 	/* 
 		Classe utilisateur qui représente la table USERS en base de données
 		@Author Yves P.
-		@Version 1.0
+		@Version 1.1
 		@Date Création: 26/11/2021
-		@Dernière modification: 16/08/2023
+		@Dernière modification: 13/08/2025
 	*/
 
 	class User 
 	{
-	    private $errors = [], $id, $nickname, $email, $passwordPublic, $passwordAdmin, $role, $dateCre;
+	    private $errors = [], $id, $nickname, $email, $passwordHash, $role, $dateCre;
 
 	    // Constantes pour les erreurs
 		const INVALID_NICKNAME = "The nickname can't be empty or is not correct";
 		const INVALID_EMAIL = "The email is invalid";
-		const INVALID_PASSWORD_PUBLIC = "The password can't be empty";
-		const INVALID_PASSWORD_ADMIN = "The password admin can't be empty";
+		const INVALID_PASSWORD_HASH = "The password admin can't be empty";
 		const INVALID_ROLE = "The role is not valid";
 
 	    public function __construct($values = []) {
@@ -42,7 +41,7 @@
 			if (!empty($this->id))
 				return true;
 			else
-				return !(empty($this->nickname) || empty($this->email) || empty($this->passwordAdmin) || empty($this->role));
+				return !(empty($this->nickname) || empty($this->email) || empty($this->passwordHash) || empty($this->role));
 		}
 
 		// Setters
@@ -64,18 +63,11 @@
 				$this->email = $email;
 		}
 
-		public function setPasswordPublic($password) {
+		public function setPasswordHash($password) {
 			if (!is_string($password) || empty($password)) 
-				$this->errors[] = self::INVALID_PASSWORD_PUBLIC;
+				$this->errors[] = self::INVALID_PASSWORD_HASH;
 			else
-				$this->passwordPublic = $password;
-		}
-
-		public function setPasswordAdmin($password) {
-			if (!is_string($password) || empty($password)) 
-				$this->errors[] = self::INVALID_PASSWORD_ADMIN;
-			else
-				$this->passwordAdmin = $password;
+				$this->passwordHash = $password;
 		}
 
 		public function setRole($role) {
@@ -106,12 +98,8 @@
 			return $this->email;
 		}
 
-		public function getPasswordPublic() {
-			return $this->passwordPublic;
-		}
-
-		public function getPasswordAdmin() {
-			return $this->passwordAdmin;
+		public function getPasswordHash() {
+			return $this->passwordHash;
 		}
 
 		public function getRole() {

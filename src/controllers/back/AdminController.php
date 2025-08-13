@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 15/02/2025
+	    @Dernière modification: 13/08/2025
   	*/
 
 	class AdminController 
@@ -75,7 +75,7 @@
 			$userCon = new User (
 				[
 					'nickname' => $nickname,
-					'passwordAdmin' => $password
+					'passwordHash' => $password
 				]);
 
 			// On cherche après le même utilisateur
@@ -85,7 +85,7 @@
 				throw new Exception(UNKNOWN_USER);
 
 			// The user exists, we can continue and check the passwords !
-			if (password_verify($userCon->getPasswordAdmin(), $userDB->getPasswordAdmin())) {
+			if (password_verify($userCon->getPasswordHash(), $userDB->getPasswordHash())) {
 				$permissionsLogged = $this->permissionManager->getPermissions($userDB->getId());
 
 				if (!$permissionsLogged->getAllowAccess())
