@@ -83,10 +83,10 @@
 			</div>
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
 		</form>
-		<h4 class="text-secondary border-bottom">Cookies</h4>
+		<h4 class="text-secondary border-bottom">Cookies & confidentialité</h4>
 		<form class="mb-3" action="<?php echo BASE_URL ?>private/cookies" method="post">
 			<div class="form-check form-switch mb3">
-				<label class="form-check-label" for="cookies">Activer le bandeau de cookies ?</label>
+				<label class="form-check-label" for="cookies">Activer le lien vers la politique de confidentialité et de cookies</label>
 				<?php if ($cookies): ?>
 
 				<input class="form-check-input" type="checkbox" role="switch" name="cookies" id="cookies" checked="checked" aria-describedby="cookiesHelp">
@@ -97,7 +97,7 @@
 
 				<?php endif ?>
 				<div id="cookiesHelp" class="form-text mb-3">
-					Affiche ou non un petit bandeau informatif sur le site pour indiquer aux visiteurs qu'aucuns cookies d'aucunes sortes ne sont utilisés.
+					Affiche ou masque un lien ouvrant une popup indiquant aux visiteurs qu’aucun cookie, de quelque nature que ce soit, n’est utilisé sur le site.
 				</div>
 			</div>
 			<button type="submit" class="btn btn-light-blue" name="submit">Valider</button>
