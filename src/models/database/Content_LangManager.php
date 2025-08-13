@@ -35,11 +35,24 @@
             $query->bindValue(':image', $content->getImage(), PDO::PARAM_STR);
 			$query->bindValue(':metaTitle', $content->getMetaTitle(), PDO::PARAM_STR);
 			$query->bindValue(':metaDescription', $content->getMetaDescription(), PDO::PARAM_STR);
-            $query->bindValue(':datePublication', $content->getDatePublication()->format("Y-m-d H:i:s"), PDO::PARAM_STR);
+
+            // Gérer le NULL proprement
+			$datePub = $content->getDatePublication();
+
+			if ($datePub instanceof DateTimeInterface) 
+				$query->bindValue(':datePublication', $datePub->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+			 else 
+				$query->bindValue(':datePublication', null, PDO::PARAM_NULL);
+
 			$query->bindValue(':slug', $content->getSlug(), PDO::PARAM_STR);
 			$query->bindValue(':published', $content->getPublished(), PDO::PARAM_BOOL);
 
 			$query->execute();
+
+			$contentId = (int) $this->db->lastInsertId();
+
+			// Historique
+			(new Content_HManager($this->db))->LogFromContentLangId($contentId, 'ADD');
 
 			$query->closeCursor();
 		}
@@ -72,6 +85,9 @@
 			$query->execute();
 
             $this->mainId = $content->getContentId();
+
+			// Historique
+    		(new Content_HManager($this->db))->LogFromContentLangId((int)$content->getId(), 'UPDATE');
 		}
 
 		// Méthodes publiques
@@ -106,22 +122,35 @@
 			$result = $query->fetch(PDO::FETCH_ASSOC);
 
 
-			if ($result['R_LANG'] === 'FR') {
-				$query = $this->db->prepare('DELETE FROM CONTENT_LANG WHERE FK_CONTENT = :id');
+			$this->db->beginTransaction();
+			try {
+				$h = new Content_HManager($this->db);
 
-				$query->bindParam(':id', $result['FK_CONTENT'], PDO::PARAM_INT);
-				$query->execute();
+				if ($result['R_LANG'] === 'FR') {
+					// Historique de TOUTES les traductions
+					$h->LogAllByMainId((int)$result['FK_CONTENT'], 'DELETE');
 
-				$query = $this->db->prepare('DELETE FROM CONTENT WHERE ID = :id');
+					// suppression cascade logique
+					$q = $this->db->prepare('DELETE FROM CONTENT_LANG WHERE FK_CONTENT = :id');
+					$q->bindParam(':id', $result['FK_CONTENT'], PDO::PARAM_INT);
+					$q->execute();
 
-				$query->bindParam(':id', $result['FK_CONTENT'], PDO::PARAM_INT);
-				$query->execute();
-			}
-			else {
-				$query = $this->db->prepare('DELETE FROM CONTENT_LANG WHERE id = :id');
+					$q = $this->db->prepare('DELETE FROM CONTENT WHERE ID = :id');
+					$q->bindParam(':id', $result['FK_CONTENT'], PDO::PARAM_INT);
+					$q->execute();
+				} else {
+					// Historique de la version spécifique
+					$h->LogFromContentLangId((int)$id, 'DELETE');
 
-				$query->bindParam(':id', $id, PDO::PARAM_INT);
-				$query->execute();
+					$q = $this->db->prepare('DELETE FROM CONTENT_LANG WHERE ID = :id');
+					$q->bindParam(':id', $id, PDO::PARAM_INT);
+					$q->execute();
+				}
+
+				$this->db->commit();
+			} catch (\Throwable $e) {
+				if ($this->db->inTransaction()) $this->db->rollBack();
+				throw $e;
 			}
 		}
 
