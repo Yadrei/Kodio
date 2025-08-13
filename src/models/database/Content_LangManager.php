@@ -92,9 +92,13 @@
 
 		// Méthodes publiques
 		public function ChangeStatus($id) {
-			$query = $this->db->prepare('CALL CHANGE_CONTENT_STATUS(:id)');
+			$query = $this->db->prepare('
+				UPDATE CONTENT_LANG
+				SET IS_PUBLISHED = 1 - IS_PUBLISHED,
+					DATE_MOD = NOW()
+				WHERE ID = :id');
 
-			$query->bindParam(':id', $id, PDO::PARAM_INT);
+			$query->bindValue(':id', $id, PDO::PARAM_INT);
 			$query->execute();
 		}
 
