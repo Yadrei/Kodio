@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.1
 	    @Date création: 16/08/2023
-	    @Dernière modification: 14/05/2025
+	    @Dernière modification: 13/08/2025
   	*/
 
 	class UsersController 
@@ -95,7 +95,9 @@
 				*/
 
 				try {
-					$this->userManager->Save($user);
+					$userId = $this->userManager->Save($user);
+
+					$this->permissionManager->Add($userId);
 
 				    $response = array('status' => true, 'message' => USER_SUCCESS);
 

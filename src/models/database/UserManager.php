@@ -2,9 +2,9 @@
 	/*
 		Class Manager pour les relations avec la DB sur la table USERS
 		@Author Yves Ponchelet
-		@Version 1.0
+		@Version 1.1
 		@Creation: 26/11/2021
-		@Last update: 10/09/2023
+		@Last update: 13/08/2025
 	*/
 
 	class UserManager 
@@ -24,9 +24,9 @@
 			$query->bindValue(':passwordAdmin', $user -> getPasswordAdmin(), PDO::PARAM_STR);
 			$query->bindValue(':role', $user -> getRole(), PDO::PARAM_STR);
 
-			$lastId = $query->execute();
+			$query->execute();
 
-			return $lastId;
+			return (int) $this->db->lastInsertId();
 		}
 
 		public function Login(User $user) {
@@ -76,7 +76,7 @@
 		public function Save(User $user) {
 			if ($user->isValid()) {
 				if ($user->isNew())
-					$this->Add($user);
+					return $this->Add($user);
 				else if (!is_null($user->getId()) && !is_null($user->getPasswordAdmin()))
 					$this->UpdatePasswordAdmin($user);
 				else if (!is_null($user->getId()) && !is_null($user->getRole()))
