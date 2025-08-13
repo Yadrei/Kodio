@@ -24,7 +24,7 @@
 			<span class="ms-3">Connecté en tant que <?php echo $_SESSION['user'] ?></span>
 			<a href="logout" class="btn-light-blue px-4 float-end" role="button"><span class="align-middle">Logout</span></a>
 		</header>
-		<div class="row">
+		<div class="row g-0">
 			<div class="col-sm-2">
 				<nav class="vh-100">
 					<ul class="nav flex-column pt-5">
