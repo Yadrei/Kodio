@@ -178,10 +178,13 @@
 
             </div>
         </div>
+		<!--
         <div class="mb-3">
             <label class="form-label" for="datePublication">Date de publication</label>
             <input type="datetime-local" class="form-control w-25" name="datePublication" id="datePublication">
         </div>
+		-->
+		<input type="hidden" class="form-control w-25" name="datePublication" id="datePublication" value="">
     </div>
 	<button type="submit" class="btn btn-light-blue mt-3"><?php echo ($action === "add") ? "Enregistrer" : "Mettre à jour"; ?></button>
 </form>
