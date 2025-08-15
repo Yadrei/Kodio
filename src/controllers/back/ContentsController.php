@@ -182,7 +182,7 @@
 				Seul le français est obligatoire, comme c'est la langue de base. On commence donc par checker tous ces éléments là en premier
 			*/
 
-			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['cat']['FR']) || !isset($_POST['content']['FR']) || !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['language']['FR']))
+			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['category']) || !isset($_POST['content']['FR']) || !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['language']['FR']))
 				throw new Exception(ERROR_MAIN_LANGUAGE);
 
 			$author = Sanitize($_POST['author']);
@@ -208,9 +208,10 @@
 				}
             }
 
-			foreach ($values['cat'] as $value)
-				if ($value == "DEFAULT")
-						throw new Exception(CATEGORY_DEFAULT.': '.$language);
+			$category = Sanitize($_POST['category']);
+			
+			if ($category == "DEFAULT")
+				throw new Exception(CATEGORY_DEFAULT.': '.$language);
 
 			// On vérifie que les données sont correctes
 			$verifChamps = [
@@ -271,7 +272,7 @@
 					'id' => (isset($values['id'][$lang])) ? $values['id'][$lang] : null,
 					'contentId' => $contentId,
 					'language' => $values['language'][$lang],
-					'category' => $values['cat'][$lang],
+					'category' => $category,
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],

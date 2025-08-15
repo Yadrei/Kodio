@@ -73,41 +73,6 @@
 							<input type="text" class="form-control" name="title['.$langue->getClef().']" id="title-'.$langue->getClef().'" value="'.($data ? htmlspecialchars_decode($data->getTitle()) : '').'" minlength="4" maxlength="100" '.$required.'>
 						</div>
 						<div class="mb-3">
-							<label class="form-label" for="cat-'.$langue->getClef().'">Catégorie</label>
-							<select class="form-select" name="cat['.$langue->getClef().']" id="cat-'.$langue->getClef().'" '.$required.'>';
-
-								if ($action == "add") {
-									echo '
-									<option value="DEFAULT" selected>Choisissez une catégorie</option>';
-
-									foreach ($categories as $cat)
-											echo '
-										<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
-								}
-								else {
-									if ($data) {
-										foreach ($categories as $cat)
-										{
-											if ($cat->getClef() == $data->getCategory())
-												echo '<option value="'.$cat->getClef().'" selected>'.$cat->getLabel().'</option>';
-											else
-												echo '<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
-										}
-									}
-									else {
-										echo '
-										<option value="DEFAULT" selected>Choisissez une catégorie</option>';
-
-										foreach ($categories as $cat)
-												echo '
-											<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
-									}
-								}
-									
-							echo '
-							</select>
-						</div>
-						<div class="mb-3">
 							<label class="form-label" for="content-'.$langue->getClef().'">Texte</label>
 							<textarea class="form-control editor" name="content['.$langue->getClef().']" id="content-'.$langue->getClef().'">'.($data ? htmlspecialchars_decode($data->getContent()) : '').'</textarea>
 						</div>
@@ -147,6 +112,40 @@
 		</div>
 		<div class="col-4">
 			<div class="border rounded p-2">
+				<div class="mb-3">
+					<label class="form-label" for="category">Catégorie</label>
+					<select class="form-select" name="category" id="category" required>';
+					<?php
+						if ($action == "add") {
+							echo '
+							<option value="DEFAULT" selected>Choisissez une catégorie</option>';
+
+							foreach ($categories as $cat)
+									echo '
+								<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
+						}
+						else {
+							if ($data) {
+								foreach ($categories as $cat)
+								{
+									if ($cat->getClef() == $data->getCategory())
+										echo '<option value="'.$cat->getClef().'" selected>'.$cat->getLabel().'</option>';
+									else
+										echo '<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
+								}
+							}
+							else {
+								echo '
+								<option value="DEFAULT" selected>Choisissez une catégorie</option>';
+
+								foreach ($categories as $cat)
+										echo '
+									<option value="'.$cat->getClef().'">'.$cat->getLabel().'</option>';
+							}
+						}
+					?>
+					</select>
+				</div>
 				<div class="mb-3">
 					<label class="form-label" for="images" >Image d'entête</label>
 					<input type="file" class="form-control" name="images[]" id="images" accept="image/*">
