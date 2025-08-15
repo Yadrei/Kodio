@@ -9,16 +9,16 @@
         <meta name="theme-color" content="#ffffff">
         <meta name="author" content="Shoku Studio">
 
-        <link rel="icon" href="public/images/favicons/favicon.ico">
-        <link rel="icon" type="image/png" sizes="32x32" href="public/images/favicons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="public/images/favicons/favicon-16x16.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="public/images/favicons/apple-touch-icon.png">
-        <link rel="manifest" href="public/images/favicons/site.webmanifest">
+        <link rel="icon" href="<?php echo BASE_URL ?>public/images/favicons/favicon.ico">
+        <link rel="icon" type="image/png" sizes="32x32" href="<?php echo BASE_URL ?>public/images/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="<?php echo BASE_URL ?>public/images/favicons/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL ?>public/images/favicons/apple-touch-icon.png">
+        <link rel="manifest" href="<?php echo BASE_URL ?>public/images/favicons/site.webmanifest">
         <link rel="canonical" href="https://www.shoku.be">
 
         <meta property="og:title" content="Création de sites web personnalisés à Huy - Shoku Studio">
         <meta property="og:description" content="Des sites web rapides, légers, respectueux de votre vie privée, conçus pour s’adapter à vos besoins spécifiques.">
-        <meta property="og:image" content="https://www.shoku.be/public/images/logos/logo.png">
+        <meta property="og:image" content="https://www.shoku.be/<?php echo BASE_URL ?>public/images/logos/logo.png">
         <meta property="og:url" content="https://www.shoku.be">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="fr_BE">

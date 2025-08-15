@@ -106,6 +106,29 @@ INSERT INTO `CONTENT_LANG` (`ID`, `FK_CONTENT`, `R_LANG`, `R_CAT`, `FK_AUTHOR`, 
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `CONTENT_LANG_SEO`
+--
+
+CREATE TABLE `CONTENT_LANG_SEO` (
+  `ID` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `FK_CONTENT_LANG` INT NOT NULL,
+  `META_TITLE` VARCHAR(80) NOT NULL,
+  `META_DESCRIPTION` VARCHAR(200) NOT NULL,
+  `CANONICAL_URL` VARCHAR(255) NULL,
+  `ROBOTS_INDEX` TINYINT(1) NOT NULL DEFAULT 1,   -- 1=index, 0=noindex
+  `ROBOTS_FOLLOW` TINYINT(1) NOT NULL DEFAULT 1,  -- 1=follow, 0=nofollow
+  `OG_TITLE` VARCHAR(100) NULL,
+  `OG_DESCRIPTION` VARCHAR(200) NULL,
+  `OG_IMAGE` VARCHAR(255) NULL,
+  `TW_CARD` VARCHAR(20) NULL,          -- summary, summary_large_image
+  `SCHEMA_TYPE` VARCHAR(50) NULL,      -- Article, WebPage, Product, etc.
+  `SCHEMA_JSON` JSON NULL              -- optional: JSON-LD précompilé
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `J_CONTENT_TAGS`
 --
 
@@ -360,6 +383,13 @@ ALTER TABLE `CONTENT_LANG`
   ADD KEY `CONST_CONTENT_CATEGORY` (`R_CAT`),
   ADD KEY `CONST_CONTENT_AUTHOR` (`FK_AUTHOR`),
   ADD KEY `IDX_SLUG` (`SLUG`);
+
+--
+-- Index pour la table `CONTENT_LANG_SEO`
+--
+ALTER TABLE `CONTENT_LANG_SEO`
+  UNIQUE KEY UQ_SEO (FK_CONTENT_LANG),
+  CONSTRAINT CONST_SEO_CONTENT_LANG FOREIGN KEY (FK_CONTENT_LANG) REFERENCES CONTENT_LANG(ID)
 
 --
 -- Index pour la table `J_CONTENT_TAGS`
