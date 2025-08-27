@@ -32,7 +32,7 @@
 		}
 
 		public function isValid() {
-			return !(empty($this->metaTitle) || empty($this->metaDescription) || empty($this->robotsIndex) || empty($this->robotsFollow));
+			return !(empty($this->metaTitle) || empty($this->metaDescription));
 		}
 
 		// Setters

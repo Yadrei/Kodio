@@ -56,6 +56,7 @@
 					$data = null;
 					$checked = null;
 					$contentPublished = null;
+					$schemaType = 'WebPage';
 
 					if (isset($contents)) {
 						foreach ($contents as $contentLang) {
@@ -65,6 +66,18 @@
 								$data = $contentLang;
 								break; // Une fois trouvées, on sort de la boucle
 							}
+						}
+
+						if (!empty($seo[$data->getId()])) {
+							$seoId = $seo[$data->getId()]->getId();
+							$metaTitle = $seo[$data->getId()]->getMetaTitle();
+							$metaDescription = $seo[$data->getId()]->getMetaDescription();
+							$robotsIndex = $seo[$data->getId()]->getRobotsIndex();
+							$robotsFollow = $seo[$data->getId()]->getRobotsFollow();
+							$title = $seo[$data->getId()]->getTitle();
+							$description = $seo[$data->getId()]->getDescription();
+							$schemaType = $seo[$data->getId()]->getSchemaType();
+							$schemaDescription = $seo[$data->getId()]->getSchemaDescription();
 						}
 					}
 
@@ -91,14 +104,14 @@
 							<p>Remplissez ces champs pour que votre page soit bien présentée dans les résultats de recherche et lors des partages sur les réseaux sociaux. C\'est important pour apparaitre naturellement dans les premiers résultats de recherche.</p>
 							<div class="mb-3">
 								<label class="form-label" for="metaTitle-'.$langue->getClef().'">Meta titre</label>
-								<input type="text" class="form-control" name="metaTitle['.$langue->getClef().']" id="metaTitle-'.$langue->getClef().'" value="'.($data ? htmlspecialchars_decode($data->getMetaTitle()) : '').'" minlength="10" maxlength="50" aria-describedby="metaTitleHelp" '.$required.'>
+								<input type="text" class="form-control" name="metaTitle['.$langue->getClef().']" id="metaTitle-'.$langue->getClef().'" value="'.htmlspecialchars_decode($metaTitle ?? '').'" minlength="10" maxlength="50" aria-describedby="metaTitleHelp" '.$required.'>
 								<div class="form-text" id="metaTitleHelp">
 									Ceci est important pour le référencement naturel de la page sur les moteurs de recherches. Soyez bref et concis, avec des mots-clés principaux si possible. Cela doit faire maximum 50 caractères
 								</div>
 							</div>
 							<div class="mb-3">
 								<label class="form-label" for="metaDescription-'.$langue->getClef().'">Meta description</label>
-								<textarea class="form-control" name="metaDescription['.$langue->getClef().']" id="metaDescription-'.$langue->getClef().'" rows="2" minlength="10" maxlength="200" aria-describedby="metaDescriptionHelp" '.$required.'>'.($data ? htmlspecialchars_decode($data->getMetaDescription()) : '').'</textarea>
+								<textarea class="form-control" name="metaDescription['.$langue->getClef().']" id="metaDescription-'.$langue->getClef().'" rows="2" minlength="10" maxlength="200" aria-describedby="metaDescriptionHelp" '.$required.'>'.htmlspecialchars_decode($metaDescription ?? '').'</textarea>
 								<div class="form-text" id="metaDescriptionHelp">
 									Ceci est important pour le référencement naturel de la page sur les moteurs de recherche. Il s\'agit d\'un court résumé du contenu de la page, soyez concis. Cela doit faire maximum 200 caractères, environ 150-160 étant le mieux pour s\'assurer une bonne lisibilité sur tous les moteurs de recherche.
 								</div>
@@ -109,7 +122,7 @@
 										<legend>Robots</legend>
 										<div class="form-check form-switch">
 											<label class="form-check-label" for="robotsIndex-'.$langue->getClef().'">Index</label>
-											<input type="checkbox" class="form-check-input" role="switch" name="robotsIndex['.$langue->getClef().']" id="robotsIndex-'.$langue->getClef().'" aria-describedby="robotsIndexHelp" '.($checked ? 'checked' : '').'>
+											<input type="checkbox" class="form-check-input" role="switch" name="robotsIndex['.$langue->getClef().']" id="robotsIndex-'.$langue->getClef().'" aria-describedby="robotsIndexHelp" '.(($robotsIndex ?? 0) ? 'checked' : '').'>
 											<div class="form-text" id="robotsIndexHelp">
 												Autoriser ou non Google et les autres moteurs à afficher cette page dans les résultats de recherche.
 											</div>
@@ -117,7 +130,7 @@
 										</div>
 										<div class="form-check form-switch">
 											<label class="form-check-label" for="robotsFollow-'.$langue->getClef().'">Follow</label>
-											<input type="checkbox" class="form-check-input" role="switch" name="robotsFollow['.$langue->getClef().']" id="robotsFollow-'.$langue->getClef().'" aria-describedby="robotsFollowHelp" '.($checked ? 'checked' : '').'>
+											<input type="checkbox" class="form-check-input" role="switch" name="robotsFollow['.$langue->getClef().']" id="robotsFollow-'.$langue->getClef().'" aria-describedby="robotsFollowHelp" '.(($robotsFollow ?? 0) ? 'checked' : '').'>
 											<div class="form-text" id="robotsFollowHelp">
 												Autoriser ou non les moteurs à suivre les liens présents sur cette page vers d’autres pages.
 											</div>
@@ -130,11 +143,11 @@
 										<legend>Réseaux sociaux</legend>
 										<div class="mb-3">
 											<label class="form-label" for="ogTitle['.$langue->getClef().']">Titre</label>
-											<input type="text" class="form-control" name="ogTitle['.$langue->getClef().']" id="ogTitle['.$langue->getClef().']">
+											<input type="text" class="form-control" name="ogTitle['.$langue->getClef().']" id="ogTitle['.$langue->getClef().']" value="'.htmlspecialchars_decode($title ?? '').'">
 										</div>
 										<div class="mb-3">
 											<label class="form-label" for="ogDescription['.$langue->getClef().']">Description</label>
-											<textarea class="form-control" name="ogDescription['.$langue->getClef().']" id="ogDescription['.$langue->getClef().']"></textarea>
+											<textarea class="form-control" name="ogDescription['.$langue->getClef().']" id="ogDescription['.$langue->getClef().']">'.htmlspecialchars_decode($description ?? '').'</textarea>
 										</div>
 									</fieldset>
 								</div>
@@ -146,33 +159,40 @@
 										<label class="form-label" for="schemaType['.$langue->getClef().']">Type</label>
 										<select class="form-select" name="schemaType['.$langue->getClef().']" id="schemaType['.$langue->getClef().']">
 											<optgroup label="Pages">
-												<option value="WebPage" selected>Page web</option>
-												<option value="FAQPage">Page de Foire Aux Questions</option>
-												<option value="ContactPage">Page de contact</option>
+												<option value="WebPage"' . ($schemaType === 'WebPage' ? ' selected' : '') . '>Page web</option>
+												<option value="FAQPage"' . ($schemaType === 'FAQPage' ? ' selected' : '') . '>Page de Foire Aux Questions</option>
+												<option value="ContactPage"' . ($schemaType === 'ContactPage' ? ' selected' : '') . '>Page de contact</option>
+											</optgroup>
 											<optgroup label="Editorial">
-												<option value="Article">Article</option>
-												<option value="NewsArticle">News d\'actualité</option>
-												<option value="BlogPosting">Article de blog</option>
+												<option value="Article"' . ($schemaType === 'Article' ? ' selected' : '') . '>Article</option>
+												<option value="NewsArticle"' . ($schemaType === 'NewsArticle' ? ' selected' : '') . '>News d\'actualité</option>
+												<option value="BlogPosting"' . ($schemaType === 'BlogPosting' ? ' selected' : '') . '>Article de blog</option>
+											</optgroup>
 											<optgroup label="Guides">
-												<option value="HowTo">Guide pas-à-pas</option>
-												<option value="ItemList">Liste structurée</option>
+												<option value="HowTo"' . ($schemaType === 'HowTo' ? ' selected' : '') . '>Guide pas-à-pas</option>
+												<option value="ItemList"' . ($schemaType === 'ItemList' ? ' selected' : '') . '>Liste structurée</option>
+											</optgroup>
 										</select>
 									</div>
 									<div class="mb-3">
 										<label class="form-label" for="schemaDescription['.$langue->getClef().']">Description</label>
-										<textarea class="form-control" name="schemaDescription['.$langue->getClef().']" id="schemaDescription['.$langue->getClef().']"></textarea>
+										<textarea class="form-control" name="schemaDescription['.$langue->getClef().']" id="schemaDescription['.$langue->getClef().']">'.htmlspecialchars_decode($schemaDescription ?? '').'</textarea>
 									</div>
 								</fieldset>
 								<div class="form-text">
 									Permet d’ajouter des informations cachées pour Google (et autres moteurs), afin d’expliquer clairement le contenu de la page. Ça aide à améliorer l’affichage dans les résultats de recherche (ex. étoiles, avis, prix, événements, etc.).
-								</div>
+								</div>';
+
+								if ($action === "update")
+									echo '<input type="hidden" name="seoId['.$langue->getClef().']" value="'.($seoId ?? '').'">';
+
+							echo '
 							</div>
 						</div>
 					</div>';
 
-					if ($action === "update" && !is_null($data)) {
+					if ($action === "update" && !is_null($data)) 
 						echo '<input type="hidden" name="id['.$langue->getClef().']" value="'.$data->getId().'">';
-					}
 				}
 			?>
 			</div>

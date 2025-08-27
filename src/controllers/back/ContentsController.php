@@ -4,12 +4,23 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 18/06/2025
+	    @Dernière modification: 27/08/2025
   	*/
 
 	class ContentsController 
 	{
-		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $commentManager, $menuManager, $settingManager;
+		private $v_contentMainManager, 
+				$v_contentLangManager, 
+				$contentLangManager, 
+				$contentHistoManager, 
+				$contentSEOManager,
+				$referenceDetailManager, 
+				$permissionManager, 
+				$tagManager, 
+				$contentTagManager, 
+				$commentManager, 
+				$menuManager, 
+				$settingManager;
 
 		public function __construct()
 		{
@@ -17,6 +28,7 @@
 			$this->v_contentLangManager = new V_Content_LangManager();
 	        $this->contentLangManager = new Content_LangManager();
 	        $this->contentHistoManager = new Content_HManager();
+			$this->contentSEOManager = new Content_Lang_SEOManager();
 	        $this->referenceDetailManager = new Reference_DetailManager();
 	        $this->permissionManager = new PermissionManager();
 	        $this->tagManager = new TagManager();
@@ -123,6 +135,12 @@
             $tags = $this->tagManager->getAllTags();
             $relatedTags = $this->contentTagManager->GetRelatedTags($contentId);
 
+			foreach ($contents as $content) {
+				$id = $content->getId();
+
+				$seo[$id] = $this->contentSEOManager->GetSEOByFkContentLang($id);
+			}
+
 			$action = 'update';
 
 			require_once 'src/views/back/manageContent.php';
@@ -183,8 +201,7 @@
 			*/
 
 			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['category']) || !isset($_POST['content']['FR']) || !isset($_POST['language']['FR']) 
-				|| !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['robotsIndex']['FR']) || !isset($_POST['robotsFollow']['FR'])
-				|| !isset($_POST['ogTitle']['FR']) || !isset($_POST['ogDescription']['FR']) || !isset($_POST['schemaType']['FR']) || !isset($_POST['schemaDescription']['FR']))
+				|| !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['ogTitle']['FR']) || !isset($_POST['ogDescription']['FR']) || !isset($_POST['schemaType']['FR']) || !isset($_POST['schemaDescription']['FR']))
 				throw new Exception(ERROR_MAIN_LANGUAGE);
 
 			$author = Sanitize($_POST['author']);

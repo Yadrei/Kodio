@@ -107,7 +107,7 @@
 			return $seo;
 		}
 
-		public function GetSEOByFkContentId($id) {
+		public function GetSEOByFkContentLang($id) {
 		  	$sql = "SELECT 
                         ID id, 
                         FK_CONTENT_LANG fkContentLang, 
