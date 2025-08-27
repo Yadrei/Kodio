@@ -4,8 +4,16 @@
 		@Author Yves P.
 		@Version 1.0
 		@Date Création: 14/08/2023
-		@Dernière modification: 04/06/2025
+		@Dernière modification: 27/08/2025
 	*/
+	
+	// Configuration sessions sécurisées
+	ini_set('session.use_strict_mode', 1);
+	ini_set('session.cookie_httponly', 1);
+	ini_set('session.cookie_samesite', 'Strict');
+
+	if ($_SERVER['SERVER_NAME'] !== 'localhost')
+		ini_set('session.cookie_secure', 1);
 	
 	session_start();
 
