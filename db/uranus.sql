@@ -120,7 +120,6 @@ CREATE TABLE `CONTENT_LANG_SEO` (
   `OG_TITLE` VARCHAR(100) NULL,
   `OG_DESCRIPTION` VARCHAR(200) NULL,
   `OG_IMAGE` VARCHAR(255) NULL,
-  `TW_CARD` VARCHAR(20) NULL,          -- summary, summary_large_image
   `SCHEMA_TYPE` VARCHAR(50) NULL,      -- Article, WebPage, Product, etc.
   `SCHEMA_JSON` JSON NULL              -- optional: JSON-LD précompilé
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
