@@ -17,11 +17,11 @@
 
 		// Private methods
 		private function Add(User $user) {
-			$query = $this->db->prepare('INSERT INTO USERS (NICKNAME, EMAIL, PASSWORD_HASH, R_ROLE) VALUES (:nickname, :email, passwordHash, :role)');
+			$query = $this->db->prepare('INSERT INTO USERS (NICKNAME, EMAIL, PASSWORD_HASH, R_ROLE) VALUES (:nickname, :email, :passwordHash, :role)');
 
 			$query->bindValue(':nickname', $user -> getNickname(), PDO::PARAM_STR);
 			$query->bindValue(':email', $user -> getEmail(), PDO::PARAM_STR);
-			$query->bindValue('passwordHash', $user -> getPasswordHash(), PDO::PARAM_STR);
+			$query->bindValue(':passwordHash', $user -> getPasswordHash(), PDO::PARAM_STR);
 			$query->bindValue(':role', $user -> getRole(), PDO::PARAM_STR);
 
 			$query->execute();
