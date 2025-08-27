@@ -9,7 +9,7 @@
 
 	class Content_Lang_SEO
 	{
-		private $id, $fkContentLang, $metaTitle, $metaDescription, $url, $robotsIndex, $robotsFollow, $title, $description, $image, $type, $json;
+		private $id, $fkContentLang, $metaTitle, $metaDescription, $url, $robotsIndex, $robotsFollow, $title, $description, $image, $schemaType, $schemaDescription;
 
 		public function __construct($values = []) {
 			if (!empty($values))
@@ -32,7 +32,7 @@
 		}
 
 		public function isValid() {
-			return !(empty($this->metaTitle) || empty($this->metaDescription) || empty($this->url));
+			return !(empty($this->metaTitle) || empty($this->metaDescription) || empty($this->robotsIndex) || empty($this->robotsFollow));
 		}
 
 		// Setters
@@ -76,12 +76,12 @@
             $this->image = $image;
         }
 
-		public function setType($type) {
-			$this->type = $type;
+		public function setSchemaType($schemaType) {
+			$this->schemaType = $schemaType;
 		}
 
-		public function setJson(DateTime $json) {
-			$this->json = $json;
+		public function setSchemaDescription($schemaDescription) {
+			$this->schemaDescription = $schemaDescription;
 		}
 
 		// Getters
@@ -125,12 +125,12 @@
             return $this->image;
         }
 
-		public function getType() {
-			return $this->type;
+		public function getSchemaType() {
+			return $this->schemaType;
 		}
 
-		public function getJson() {
-			return $this->json;
+		public function getSchemaDescription() {
+			return $this->schemaDescription;
 		}
 	}
 ?>

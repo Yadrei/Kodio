@@ -55,6 +55,8 @@
 			(new Content_HManager($this->db))->LogFromContentLangId($contentId, 'ADD');
 
 			$query->closeCursor();
+
+			return $contentId;
 		}
 
 		private function Update(Content_Lang $content) {
@@ -88,6 +90,8 @@
 
 			// Historique
     		(new Content_HManager($this->db))->LogFromContentLangId((int)$content->getId(), 'UPDATE');
+
+			return $content->getId();
 		}
 
 		// Méthodes publiques
@@ -254,13 +258,15 @@
 			try {
 				$this->db->beginTransaction();
 
+				$savedContentIds = [];
+
 				foreach ($values as $content) 
 				{
 					if ($content->isValid()) {
-						if ($content->isNew())
-							$this->Add($content);
+						if ($content->isNew()) 
+							$savedContentIds[$content->getLanguage()] = $this->Add($content);
 						else 
-							$this->Update($content);
+							$savedContentIds[$content->getLanguage()] = $this->Update($content);
 					}
 					else
 						throw new Exception('Erreur !!');
@@ -269,7 +275,10 @@
 				$this->db->commit();
 				$this->contentId = null;
 
-                return $this->mainId;
+                return [
+					'mainId'=>$this->mainId,
+					'contentLangIds'=>$savedContentIds
+				];
 			} 
 			catch (Exception $e) {
 				$this->db->rollBack();

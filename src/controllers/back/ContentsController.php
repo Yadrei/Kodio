@@ -182,7 +182,9 @@
 				Seul le français est obligatoire, comme c'est la langue de base. On commence donc par checker tous ces éléments là en premier
 			*/
 
-			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['category']) || !isset($_POST['content']['FR']) || !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['language']['FR']))
+			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['category']) || !isset($_POST['content']['FR']) || !isset($_POST['language']['FR']) 
+				|| !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['robotsIndex']['FR']) || !isset($_POST['robotsFollow']['FR'])
+				|| !isset($_POST['ogTitle']['FR']) || !isset($_POST['ogDescription']['FR']) || !isset($_POST['schemaType']['FR']) || !isset($_POST['schemaDescription']['FR']))
 				throw new Exception(ERROR_MAIN_LANGUAGE);
 
 			$author = Sanitize($_POST['author']);
@@ -287,7 +289,12 @@
 				$contents[] = $object;
 			}
 
-			$mainId = $this->contentLangManager->Save($contents);
+			// Sauvegarder les contenus et récupérer les IDs
+			$result = $this->contentLangManager->Save($contents);
+			
+			// Le résultat contient maintenant mainId et contentLangIds
+			$mainId = $result['mainId'];
+			$contentLangIds = $result['contentLangIds'];
 
             // Sauvegarde des tags liés au contenu
             if (!is_null($tags)) {
@@ -297,7 +304,37 @@
 
                 $this->contentTagManager->Save($tags);
             }
-			
+
+			// NOUVEAU : Sauvegarde des données SEO pour chaque langue
+			if (!empty($contentLangIds)) {
+				$seoManager = new Content_Lang_SEOManager();
+				$seoObjects = [];
+
+				foreach ($contentLangIds as $lang => $contentLangId) {						
+					$seoObject = new Content_Lang_SEO([
+						'id' => (isset($_POST['seoId'][$lang])) ? $_POST['seoId'][$lang] : null,
+						'fkContentLang' => $contentLangId,
+						'metaTitle' => Sanitize($_POST['metaTitle'][$lang]),
+						'metaDescription' => Sanitize($_POST['metaDescription'][$lang]),
+						'url' => null,
+						'robotsIndex' => (isset($_POST['robotsIndex'][$lang])) ? 1 : 0,
+						'robotsFollow' => (isset($_POST['robotsFollow'][$lang])) ? 1 : 0,
+						'title' => Sanitize($_POST['ogTitle'][$lang]),
+						'description' => Sanitize($_POST['ogDescription'][$lang]),
+						'image' => null,
+						'schemaType' => Sanitize($_POST['schemaType'][$lang]),
+						'schemaDescription' => Sanitize($_POST['schemaDescription'][$lang])
+					]);
+
+					$seoObjects[] = $seoObject;
+				}
+
+				// Sauvegarder tous les objets SEO
+				if (!empty($seoObjects)) {
+					$seoManager->Save($seoObjects);
+				}
+			}
+	
             if (isset($values['id']['FR'])) {
                 header("Location: ".BASE_URL."private/content/manage/update/".$contentId);
                 exit;

@@ -54,11 +54,13 @@
 
 					// Recherche des données correspondantes à la langue de l'onglet qu'on génère
 					$data = null;
+					$checked = null;
 					$contentPublished = null;
 
 					if (isset($contents)) {
 						foreach ($contents as $contentLang) {
 							if ($contentLang->getLanguage() === $langue->getClef()) {
+								$checked = $contentLang->getPublished();
 								$contentPublished = $contentLang->getPublished();
 								$data = $contentLang;
 								break; // Une fois trouvées, on sort de la boucle
@@ -106,16 +108,16 @@
 									<fieldset>
 										<legend>Robots</legend>
 										<div class="form-check form-switch">
-											<label class="form-check-label" for="robots-index-'.$langue->getClef().'">Index</label>
-											<input type="checkbox" class="form-check-input" role="switch" name="robots-index['.$langue->getClef().']" id="robots-index-'.$langue->getClef().'" aria-describedby="robotsIndexHelp" '.($checked ? 'checked' : '').'>
+											<label class="form-check-label" for="robotsIndex-'.$langue->getClef().'">Index</label>
+											<input type="checkbox" class="form-check-input" role="switch" name="robotsIndex['.$langue->getClef().']" id="robotsIndex-'.$langue->getClef().'" aria-describedby="robotsIndexHelp" '.($checked ? 'checked' : '').'>
 											<div class="form-text" id="robotsIndexHelp">
 												Autoriser ou non Google et les autres moteurs à afficher cette page dans les résultats de recherche.
 											</div>
 											<input type="hidden" name="language['.$langue->getClef().']" id="language-'.$langue->getClef().'" value="'.$langue->getClef().'">
 										</div>
 										<div class="form-check form-switch">
-											<label class="form-check-label" for="robots-follow-'.$langue->getClef().'">Follow</label>
-											<input type="checkbox" class="form-check-input" role="switch" name="robots-follow['.$langue->getClef().']" id="robots-follow-'.$langue->getClef().'" aria-describedby="robotsFollowHelp" '.($checked ? 'checked' : '').'>
+											<label class="form-check-label" for="robotsFollow-'.$langue->getClef().'">Follow</label>
+											<input type="checkbox" class="form-check-input" role="switch" name="robotsFollow['.$langue->getClef().']" id="robotsFollow-'.$langue->getClef().'" aria-describedby="robotsFollowHelp" '.($checked ? 'checked' : '').'>
 											<div class="form-text" id="robotsFollowHelp">
 												Autoriser ou non les moteurs à suivre les liens présents sur cette page vers d’autres pages.
 											</div>
@@ -127,12 +129,12 @@
 									<fieldset>
 										<legend>Réseaux sociaux</legend>
 										<div class="mb-3">
-											<label class="form-label">Titre</label>
-											<input type="text" class="form-control" name="og_title">
+											<label class="form-label" for="ogTitle['.$langue->getClef().']">Titre</label>
+											<input type="text" class="form-control" name="ogTitle['.$langue->getClef().']" id="ogTitle['.$langue->getClef().']">
 										</div>
 										<div class="mb-3">
-											<label class="form-label">Description</label>
-											<textarea class="form-control" name="og_description"></textarea>
+											<label class="form-label" for="ogDescription['.$langue->getClef().']">Description</label>
+											<textarea class="form-control" name="ogDescription['.$langue->getClef().']" id="ogDescription['.$langue->getClef().']"></textarea>
 										</div>
 									</fieldset>
 								</div>
@@ -141,10 +143,10 @@
 								<fieldset>
 									<legend>Schéma</legend>
 									<div class="mb-3">
-										<label class="form-label">Type</label>
-										<select class="form-select" name="schema-type">
+										<label class="form-label" for="schemaType['.$langue->getClef().']">Type</label>
+										<select class="form-select" name="schemaType['.$langue->getClef().']" id="schemaType['.$langue->getClef().']">
 											<optgroup label="Pages">
-												<option value="WebPage">Page web</option>
+												<option value="WebPage" selected>Page web</option>
 												<option value="FAQPage">Page de Foire Aux Questions</option>
 												<option value="ContactPage">Page de contact</option>
 											<optgroup label="Editorial">
@@ -157,8 +159,8 @@
 										</select>
 									</div>
 									<div class="mb-3">
-										<label class="form-label">Description</label>
-										<textarea class="form-control" name="og_description"></textarea>
+										<label class="form-label" for="schemaDescription['.$langue->getClef().']">Description</label>
+										<textarea class="form-control" name="schemaDescription['.$langue->getClef().']" id="schemaDescription['.$langue->getClef().']"></textarea>
 									</div>
 								</fieldset>
 								<div class="form-text">

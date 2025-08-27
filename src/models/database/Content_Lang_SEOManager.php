@@ -17,10 +17,9 @@
 
 		// Méthodes privées
 		private function Add(Content_Lang_SEO $content) {
-
             $sql = "INSERT INTO CONTENT_LANG_SEO 
-                        (FK_CONTENT_LANG, META_TITLE, META_DESCRIPTION, CANONICAL_URL, ROBOTS_INDEX, ROBOTS_FOLLOW, OG_TITLE, OG_DESCRIPTION, OG_IMAGE, SCHEMA_TYPE, SCHEMA_JSON) 
-                    VALUES(:fkContentLang, :metaTitle, :metaDescription, :url, :robotsIndex, :robotsFollow, :title, :description, :image, :type, :json)";
+                        (FK_CONTENT_LANG, META_TITLE, META_DESCRIPTION, CANONICAL_URL, ROBOTS_INDEX, ROBOTS_FOLLOW, OG_TITLE, OG_DESCRIPTION, OG_IMAGE, SCHEMA_TYPE, SCHEMA_DESCRIPTION) 
+                    VALUES(:fkContentLang, :metaTitle, :metaDescription, :url, :robotsIndex, :robotsFollow, :title, :description, :image, :schemaType, :schemaDescription)";
 
 			$query = $this->db->prepare($sql);
 
@@ -32,9 +31,9 @@
             $query->bindValue(':robotsFollow', $content->getRobotsFollow(), PDO::PARAM_INT);
             $query->bindValue(':title', $content->GetTitle(), PDO::PARAM_STR);
             $query->bindValue(':description', $content->getDescription(), PDO::PARAM_STR);
-            $query->bindValue('image', $content->getImage(), PDO::PARAM_STR);
-            $query->bindValue('type', $content->getType(), PDO::PARAM_STR);
-            $query->bindValue('json', $content->getJson(), PDO::PARAM_STR);
+            $query->bindValue(':image', $content->getImage(), PDO::PARAM_STR);
+            $query->bindValue(':schemaType', $content->getSchemaType(), PDO::PARAM_STR);
+            $query->bindValue(':schemaDescription', $content->getSchemaDescription(), PDO::PARAM_STR);
 
 			$query->execute();
 
@@ -52,8 +51,8 @@
                         OG_TITLE = :title,
                         OG_DESCRIPTION = :description,
                         OG_IMAGE = :image,
-                        SCHEMA_TYPE = :type,
-                        SCHEMA_JSON = :json
+                        SCHEMA_TYPE = :schemaType,
+                        SCHEMA_DESCRIPTION = :schemaDescription
                      WHERE ID = :id";
 
             $query = $this->db->prepare($sql);
@@ -68,8 +67,8 @@
             $query->bindValue(':title', $content->GetTitle(), PDO::PARAM_STR);
             $query->bindValue(':description', $content->getDescription(), PDO::PARAM_STR);
             $query->bindValue(':image', $content->getImage(), PDO::PARAM_STR);
-            $query->bindValue(':type', $content->getType(), PDO::PARAM_STR);
-            $query->bindValue(':json', $content->getJson(), PDO::PARAM_STR);
+            $query->bindValue(':schemaType', $content->getSchemaType(), PDO::PARAM_STR);
+            $query->bindValue(':schemaDescription', $content->getSchemaDescription(), PDO::PARAM_STR);
 
 
 			$query->execute();
@@ -90,8 +89,8 @@
                         OG_TITLE title,
                         OG_DESCRIPTION description,
                         OG_IMAGE image,
-                        SCHEMA_TYPE type,
-                        SCHEMA_JSON json
+                        SCHEMA_TYPE schemaType,
+                        SCHEMA_DESCRIPTION schemaDescription
                     FROM CONTENT_LANG_SEO
                     WHERE ID = :id";
 
@@ -120,8 +119,8 @@
                         OG_TITLE title,
                         OG_DESCRIPTION description,
                         OG_IMAGE image,
-                        SCHEMA_TYPE type,
-                        SCHEMA_JSON json
+                        SCHEMA_TYPE schemaType,
+                        SCHEMA_DESCRIPTION schemaDescription
                     FROM CONTENT_LANG_SEO
                     WHERE FK_CONTENT_LANG = :id";
 
