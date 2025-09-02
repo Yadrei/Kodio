@@ -124,6 +124,14 @@ CREATE TABLE `CONTENT_LANG_SEO` (
   `SCHEMA_DESCRIPTION` VARCHAR(255) NULL              -- optional: JSON-LD précompilé
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `CONTENT_LANG`
+--
+
+INSERT INTO `CONTENT_LANG_SEO` (`ID`, `FK_CONTENT_LANG`, `META_TITLE`, `META_DESCRIPTION`, `CANONICAL_URL`, `ROBOTS_INDEX`, `ROBOTS_FOLLOW`, `OG_TITLE`, `OG_DESCRIPTION`, `OG_IMAGE`, `SCHEMA_TYPE`, `SCHEMA_DESCRIPTION`) VALUES
+(1, 1, 'Page d''accueil du site', 'Meta description globale', NULL, 1, 1, 'Open Graph Title', 'OpenGraph Description', NULL, 'WebPage', 'Schema Description'),
+(2, 2, 'Page de contact du site', 'Meta description globale', NULL, 1, 1, 'Open Graph Title', 'OpenGraph Description', NULL, 'ContactPage', 'Schema Description');
+
 
 -- --------------------------------------------------------
 
