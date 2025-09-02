@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 25/11/2023
-	    @Dernière modification: 01/01/2024
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class LibraryController 
@@ -45,6 +45,8 @@
 
 			if ($_SERVER["REQUEST_METHOD"] !== "POST")
 				throw new Exception(BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_FILES["images"]) || !isset($_POST['folder'])) 
 				throw new Exception(FIELD_NOT_FOUND);

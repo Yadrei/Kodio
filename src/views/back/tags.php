@@ -15,7 +15,11 @@
 						<h5 class="modal-title" id="add-modal">Ajouter une étiquette</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<form id="addTag-form">
+					<form id="addTag-form">';
+
+						echo CSRF::Field();
+						
+						echo '
 						<div class="modal-body">
 							<div class="mb-3 form-floating">
 								<input type="text" class="form-control" name="label" id="addLabel" minlength="2" maxlength="20" required>

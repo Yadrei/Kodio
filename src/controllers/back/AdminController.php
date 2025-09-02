@@ -44,6 +44,8 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				throw new Exception(BAD_REQUEST_METHOD);
 
+			CSRF::Check();
+
 			if (!isset($_POST['nickname']) || !isset($_POST['password'])) {
 				header("Location: ".BASE_URL);
 				exit;

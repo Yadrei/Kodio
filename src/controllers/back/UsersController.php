@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour la page des utilisateurs de l'admin
 	    @Author Yves P.
-	    @Version 1.1
+	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 13/08/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class UsersController 
@@ -48,6 +48,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['nickname']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
@@ -172,6 +174,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['id']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);

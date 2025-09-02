@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 12/10/2023
-	    @Dernière modification: 19/10/2023
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class MenuController 
@@ -44,6 +44,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['parent']) || !isset($_POST['label']) || !isset($_POST['language']) || !isset($_POST['content']) || !isset($_POST['ordre']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
@@ -112,6 +114,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				throw new Exception(BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['id']) || !isset($_POST['parent']) || !isset($_POST['label']) || !isset($_POST['language']) || !isset($_POST['content']) || !isset($_POST['ordre']))
 				throw new Exception(FIELD_NOT_FOUND);

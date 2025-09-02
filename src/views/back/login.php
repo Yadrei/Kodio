@@ -4,13 +4,14 @@
     	@Author Yves P.
     	@Version 1.0
     	@Date création: 05/03/2021
-    	@Dernière modification: 09/04/2025
+    	@Dernière modification: 02/09/2025
     */
 
 	ob_start();
 ?>
 
 <form class="form-signin" action="<?php echo BASE_URL ?>private/login" method="post">
+	<?php echo CSRF::Field(); ?>
     <img class="mb-4" src="<?php echo BASE_URL ?>public/images/logo/logo.png" alt="" width="400" height="153">
     <input type="text" class="form-control mb-3" name="nickname" id="nickname" placeholder="Nom d'utilisateur" minlength="4" maxlength="20" required autofocus>
     <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe" minlength="8" required>

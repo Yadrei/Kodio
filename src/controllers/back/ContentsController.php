@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 27/08/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class ContentsController 
@@ -195,6 +195,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				throw new Exception(BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			/*
 				Seul le français est obligatoire, comme c'est la langue de base. On commence donc par checker tous ces éléments là en premier

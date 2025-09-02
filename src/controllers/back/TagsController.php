@@ -54,6 +54,8 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
 
+			CSRF::Check();
+
 			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
