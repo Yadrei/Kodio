@@ -4,17 +4,18 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 14/08/2023
-	    @Dernière modification: 19/03/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class HomeController 
 	{
-		private $contentManager, $menuManager, $referenceDetailManager, $settingManager;
+		private $contentManager, $contentSEOManager, $menuManager, $referenceDetailManager, $settingManager;
 
 		public function __construct()
 		{
 			$this->menuManager = new MenuManager();
 			$this->contentManager = new Content_LangManager();
+			$this->contentSEOManager = new Content_Lang_SEOManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
 			$this->settingManager = new SettingManager();
 		}
@@ -30,6 +31,15 @@
 			$facebook = $this->settingManager->GetSocial("SOC_FB");
 			$twitter = $this->settingManager->GetSocial("SOC_TWT");
 			$instagram = $this->settingManager->GetSocial("SOC_INST");
+			$seo = $this->contentSEOManager->GetSEOByFkContentLang(1);
+
+			$index = ($seo->getRobotsIndex()) ? "index" : "noindex";
+			$follow = ($seo->getRobotsFollow()) ? "follow" : "nofollow";
+
+
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			$domain = $_SERVER['HTTP_HOST'];
+			$fullBaseUrl = $protocol . $domain . BASE_URL;
 
 		    require_once 'src/views/front/home.php';
 		}

@@ -103,7 +103,7 @@
 
 			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 			$domain = $_SERVER['HTTP_HOST'];
-			$fullBaseUrl = $protocol . $domain . BASE_URL;
+			$fullBaseUrl = $protocol.$domain.BASE_URL;
 
 		    require_once 'src/views/front/displayContent.php';
 		}
