@@ -2,19 +2,20 @@
 	/* 
 		Contrôleur pour le contenu à afficher
 	    @Author Yves P.
-	    @Version 1.2
+	    @Version 1.0
 	    @Date création: 08/10/2023
-	    @Dernière modification: 18/06/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class ContentController 
 	{
-		private $contentManager, $commentManager, $menuManager, $referenceDetailManager, $settingManager;
+		private $contentManager, $contentSEOManager, $commentManager, $menuManager, $referenceDetailManager, $settingManager;
 
 		public function __construct()
 		{
 			$this->menuManager = new MenuManager();
 			$this->contentManager = new Content_LangManager();
+			$this->contentSEOManager = new Content_Lang_SEOManager();
 			$this->commentManager = new CommentManager();
 			$this->referenceDetailManager = new Reference_DetailManager();
 			$this->settingManager = new SettingManager();
@@ -95,6 +96,14 @@
 			$facebook = $this->settingManager->GetSocial("SOC_FB");
 			$twitter = $this->settingManager->GetSocial("SOC_TWT");
 			$instagram = $this->settingManager->GetSocial("SOC_INST");
+			$seo = $this->contentSEOManager->GetSEOByFkContentLang($content->getId());
+
+			$index = ($seo->getRobotsIndex()) ? "index" : "noindex";
+			$follow = ($seo->getRobotsFollow()) ? "follow" : "nofollow";
+
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			$domain = $_SERVER['HTTP_HOST'];
+			$fullBaseUrl = $protocol . $domain . BASE_URL;
 
 		    require_once 'src/views/front/displayContent.php';
 		}

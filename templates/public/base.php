@@ -3,8 +3,8 @@
 	<head>
 	    <meta charset="UTF-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="Optez pour une solution légère, simple, personnalisée et efficace pour avoir votre propre site internet">
-    	<meta name="robots" content="noindex, nofollow"> <!-- index, follow en ligne -->
+		<meta name="description" content="<?php echo $seo->getMetaDescription(); ?>">
+    	<meta name="robots" content="<?php echo $index.', '.$follow; ?>">
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="theme-color" content="#ffffff">
         <meta name="author" content="Shoku Studio">
@@ -14,16 +14,16 @@
         <link rel="icon" type="image/png" sizes="16x16" href="<?php echo BASE_URL ?>public/images/favicons/favicon-16x16.png">
         <link rel="apple-touch-icon" sizes="180x180" href="<?php echo BASE_URL ?>public/images/favicons/apple-touch-icon.png">
         <link rel="manifest" href="<?php echo BASE_URL ?>public/images/favicons/site.webmanifest">
-        <link rel="canonical" href="https://www.shoku.be">
+        <link rel="canonical" href="<?php echo $domain; ?>">
 
-        <meta property="og:title" content="Création de sites web personnalisés à Huy - Shoku Studio">
-        <meta property="og:description" content="Des sites web rapides, légers, respectueux de votre vie privée, conçus pour s’adapter à vos besoins spécifiques.">
-        <meta property="og:image" content="https://www.shoku.be/<?php echo BASE_URL ?>public/images/logos/logo.png">
-        <meta property="og:url" content="https://www.shoku.be">
+        <meta property="og:title" content="<?php echo $seo->getTitle(); ?>">
+        <meta property="og:description" content="<?php echo $seo->getDescription(); ?>">
+        <meta property="og:image" content="<?php echo $fullBaseUrl; ?>public/images/logos/logo.png">
+		<meta property="og:url" content="<?php echo $fullBaseUrl; ?>">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="fr_BE">
 		
-	    <title>Kodio</title>
+	    <title><?php echo $seo->getMetaTitle(); ?></title>
 
 	    <!-- Inclusion des fichiers CSS de Bootstrap -->
 	    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,13 +36,14 @@
 		<script type="application/ld+json">
             {
             "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Chi Bi",
-            "url": "https://www.chibi.red",
-            "description": "Communauté francophone autour de Dynasty Warriors et des Trois Royaumes.",
+            "@type": "<?php echo $seo->getSchemaType(); ?>",
+            "name": "Kodio",
+            "url": "<?php echo $domain; ?>",
+            "description": "<?php echo $seo->getSchemaDescription(); ?>",
             "publisher": {
                 "@type": "Organization",
-                "name": "Shoku Studio"
+                "name": "Shoku Studio",
+				"url": "<?php echo $domain; ?>"
             }
         }
         </script>
