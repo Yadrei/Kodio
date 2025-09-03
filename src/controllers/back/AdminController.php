@@ -52,13 +52,9 @@
 			}
 
 			// Nettoyage des données
-			$nickname = htmlspecialchars($_POST['nickname']);
-			$nickname = stripslashes($nickname);
-			$nickname = trim($nickname);
+			$nickname = Validator::text($_POST['nickname']);
 
-			$password = htmlspecialchars($_POST['password']);
-			$password = stripslashes($password);
-			$password = trim($password);
+			$password = trim($_POST['password']);
 
 			if (empty($nickname))
 				throw new Exception(NICKNAME_EMPTY);
@@ -72,6 +68,10 @@
 			if (strlen($password) < 8)
 				throw new Exception(PASSWORD_TOO_SHORT);
 
+			if (!RateLimiter::check('login', $nickname, 5, 300)) {
+				$waitTime = RateLimiter::getWaitTime('login', $nickname, 5, 300);
+				throw new Exception("Trop de tentatives. Veuillez attendre {$waitTime} secondes.");
+			}
 
 			// On crée un User, plus facile à gérer
 			$userCon = new User (
@@ -97,6 +97,8 @@
 				$_SESSION['id'] = $userDB->getId();
 				$_SESSION['user'] = $userDB->getNickname();
 				$_SESSION['role'] = $userDB->getRole();
+
+				RateLimiter::reset('login', $nickname);
 
 				header('Location: ./home');
 				exit;
