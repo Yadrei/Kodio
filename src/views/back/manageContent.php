@@ -235,8 +235,8 @@
 					</select>
 				</div>
 				<div class="mb-3">
-					<label class="form-label" for="images" >Image d'entête</label>
-					<input type="file" class="form-control" name="images[]" id="images" accept="image/*">
+					<label class="form-label" for="image" >Image d'entête</label>
+					<input type="file" class="form-control" name="image" id="image" accept="image/*">
 				</div>
 				<div class="mb-3">
 					<p class="form-label">Étiquettes</p>

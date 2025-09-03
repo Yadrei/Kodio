@@ -48,27 +48,23 @@
         }
 
         $allowedTypes = array("image/webp", "image/jpg", "image/jpeg", "image/png");
-
-        $results = [];
         
-        foreach ($_FILES["images"]["tmp_name"] as $key => $tmpName) {
-            $fileName = $_FILES["images"]["name"][$key];
-            $fileType = $_FILES["images"]["type"][$key];
-            $fileSize = $_FILES["images"]["size"][$key];
+        if (!empty($_FILES["image"]["tmp_name"])) {
+            $tmpName = $_FILES["image"]["tmp_name"];
+            $fileName = $_FILES["image"]["name"];
+            $fileType = $_FILES["image"]["type"];
+            $fileSize = $_FILES["image"]["size"];
 
             // Vérifier le type de fichier
-            if (!in_array($fileType, $allowedTypes)) {
-                echo "Le fichier $fileName n'est pas une image valide.<br>";
-                continue;
-            }
+            if (!in_array($fileType, $allowedTypes)) 
+                throw New Exception( "Le fichier $fileName n'est pas une image valide.");
 
             // Vérifier la taille du fichier
             $maxFileSize = 2 * 1024 * 1024; // 2 Mo
 
-            if ($fileSize > $maxFileSize) {
-                echo "Le fichier $fileName dépasse la taille maximale autorisée.<br>";
-                continue;
-            }
+            if ($fileSize > $maxFileSize)
+                throw New Exception("Le fichier $fileName dépasse la taille maximale autorisée.");
+
 
             // Créer une image à partir du fichier
             $sourceImage = imagecreatefromstring(file_get_contents($tmpName));
@@ -93,10 +89,10 @@
             imagedestroy($sourceImage);
             imagedestroy($resizedImage);
 
-            $results[] = $webpFileName;
+            return $webpFileName;
         }
 
-        return $results;
+        return null;
     }
 
     function DeleteImage($dossier, $nomImage) 

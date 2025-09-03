@@ -257,7 +257,7 @@
 			$contentId = (isset($_POST['contentId'])) ? Sanitize($_POST['contentId']) : null;
 
             // On récupère l'image d'entête
-            if (!empty($_FILES['images']['tmp_name'][0]))
+            if (!empty($_FILES['image']['tmp_name']))
                 $image = ProcessImages("heading");
             else
                 $image = null;
@@ -297,7 +297,7 @@
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
-                    'image' => (!is_null($image)) ? $image[0] : $image,
+                    'image' => $image,
                     'datePublication' => (isset($_POST['datePublication'])) ? new DateTime($_POST['datePublication']) : null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],
