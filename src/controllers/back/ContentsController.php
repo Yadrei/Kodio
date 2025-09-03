@@ -167,6 +167,15 @@
 			$twitter = $this->settingManager->GetSocial("SOC_TWT");
 			$instagram = $this->settingManager->GetSocial("SOC_INST");
 
+			$seo = $this->contentSEOManager->GetSEOByFkContentLang($content->getId());
+
+			$index = ($seo->getRobotsIndex()) ? "index" : "noindex";
+			$follow = ($seo->getRobotsFollow()) ? "follow" : "nofollow";
+
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
+			$domain = $_SERVER['HTTP_HOST'];
+			$fullBaseUrl = $protocol.$domain.BASE_URL;
+
             require_once 'src/views/back/preview.php';
         }
 
@@ -240,7 +249,6 @@
 
 			// On vérifie que les données sont correctes
 			$verifChamps = [
-				"content" => ["min" => 4, "max" => 100],
 				"metaTitle" => ["min" => 10, "max" => 50],
 				"metaDescription" => ["min" => 10, "max" => 200]
 			];
