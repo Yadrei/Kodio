@@ -1,40 +1,4 @@
 <?php
-
-    function GenerateRandomPassword($length = 15) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $password = '';
-
-        for ($i = 1; $i <= $length; $i++)
-            $password .= $characters[rand(0, strlen($characters) - 1)];
-
-        return $password;
-    }
-
-    function Sanitize($input) {
-        return trim(stripslashes(htmlspecialchars($input)));
-    }
-
-    function Slugify($text)
-    {
-        // Remplacez les caractères spéciaux 
-        $text = str_replace(['é', 'è', 'ë', 'à', 'ç', '\'', ' '], ['e', 'e', 'e', 'a', 'c', '-', '-'], $text);
-
-        // Remplacez les espaces par des tirets
-        //$text = str_replace(' ', '-', $text);
-
-        // Convertissez en minuscules
-        $text = strtolower($text);
-
-        // Supprimez tous les caractères non alphanumériques et non des tirets
-        $text = preg_replace('/[^a-z0-9-]/', '', $text);
-
-        // On supprime les éventuels - et ! qui ont été généré en début/fin de chaine
-        $text = trim($text, '-');
-        $text = trim($text, ' ');
-
-        return $text;
-    }
-
     function ProcessImages($uploadFolder)
     {
         $destinationFolder = "public/images/";

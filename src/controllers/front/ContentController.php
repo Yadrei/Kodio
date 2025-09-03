@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 08/10/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class ContentController 
@@ -38,10 +38,10 @@
 			if (empty($_POST['text']))
 			$response = array('status' => false, 'message' => TEXT_EMPTY);
 
-			$contentId = $_POST['contentId'];
-			$nickname = Sanitize($_POST['nickname']);
-			$email = Sanitize($_POST['email']);
-			$text = Sanitize($_POST['text']);
+			$contentId = Validator::integer($_POST['contentId']);
+			$nickname = Validator::sanitize($_POST['nickname']);
+			$email = Validator::email($_POST['email']);
+			$text = Validator::sanitize($_POST['text']);
 
 			$token = bin2hex(random_bytes(32));
 

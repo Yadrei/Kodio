@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 12/10/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class MenuController 
@@ -62,11 +62,11 @@
 			if (empty($_POST['language']))
 				$response = array('status' => false, 'message' => NO_LANGUAGE);
 
-			$parent = (int)$_POST['parent'];
-			$label = Sanitize($_POST['label']);
-			$language = Sanitize($_POST['language']);
-			$content = (int)$_POST['content'];
-			$ordre = (int)$_POST['ordre'];
+			$parent = Validator::integer($_POST['parent']);
+			$label = Validator::sanitize($_POST['label']);
+			$language = Validator::sanitize($_POST['language']);
+			$content = Validator::integer($_POST['content']);
+			$ordre = Validator::integer($_POST['ordre']);
 
 			if (empty($response)) {
 				$menu = new Menu (
@@ -135,12 +135,12 @@
 			if ($_POST['language'] == "DEFAULT")
 				throw new Exception(NO_LANGUAGE);
 
-			$id = (int)$_POST['id'];
-			$parent = (int)$_POST['parent'];
-			$label = Sanitize($_POST['label']);
-			$language = Sanitize($_POST['language']);
-			$content = (int)$_POST['content'];
-			$ordre = (int)$_POST['ordre'];
+			$id = Validator::integer($_POST['id']);
+			$parent = Validator::integer($_POST['parent']);
+			$label = Validator::sanitize($_POST['label']);
+			$language = Validator::sanitize($_POST['language']);
+			$content = Validator::integer($_POST['content']);
+			$ordre = Validator::integer($_POST['ordre']);
 
 			$menu = new Menu (
 			[

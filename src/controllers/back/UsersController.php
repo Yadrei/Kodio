@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class UsersController 
@@ -54,10 +54,10 @@
 			if (!isset($_POST['nickname']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$nickname = Sanitize($_POST['nickname']);
-			$password = Sanitize($_POST['password']);
-			$email = Sanitize($_POST['email']);
-			$role = Sanitize($_POST['role']);
+			$nickname = Validator::sanitize($_POST['nickname']);
+			$password = Validator::password($_POST['password']);
+			$email = Validator::email($_POST['email']);
+			$role = Validator::sanitize($_POST['role']);
 
 			if (empty($nickname))
 				$response = array('status' => false, 'message' => NICKNAME_EMPTY);
@@ -132,7 +132,7 @@
 				$response = array('status' => false, 'message' => ID_NOT_NUMERIC);
 
 			if (empty($response)) {
-				$password = GenerateRandomPassword();
+				$password = Validator::RandomPassword();
 
 		    	$user = new User (
 					[
@@ -180,8 +180,8 @@
 			if (!isset($_POST['id']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$id = Sanitize($_POST['id']);
-			$role = Sanitize($_POST['role']);
+			$id = Validator::integer($_POST['id']);
+			$role = Validator::sanitize($_POST['role']);
 
 			if (empty($role))
 				$response = array('status' => false, 'message' => ROLE_EMPTY);
@@ -224,7 +224,7 @@
 			if (!isset($_POST['user']))
 				throw new Exception(CRITICAL_ERROR);
 
-			$user = Sanitize($_POST['user']);
+			$user = Validator::integer($_POST['user']);
 
 			if ($user == $_SESSION['id'])
 				throw new Exception(PERMISSIONS_NOT_ALLOWED);
