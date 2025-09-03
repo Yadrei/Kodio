@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 17/11/2023
-	    @Dernière modification: 18/06/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class TagsController 
@@ -59,9 +59,9 @@
 			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$label = Sanitize($_POST['label']);
-			$textColor = Sanitize($_POST['textColor']);
-			$bgColor = Sanitize($_POST['bgColor']);
+			$label = Validator::sanitize($_POST['label']);
+			$textColor = Validator::sanitize($_POST['textColor']);
+			$bgColor = Validator::sanitize($_POST['bgColor']);
 
 			if (empty($label))
 				$response = array('status' => false, 'message' => TAG_LABEL_EMPTY);
@@ -129,10 +129,10 @@
 			if (!isset($_POST['label']) || !isset($_POST['textColor']) || !isset($_POST['bgColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
-			$id = Sanitize($_POST['id']);
-			$label = Sanitize($_POST['label']);
-			$textColor = Sanitize($_POST['textColor']);
-			$bgColor = Sanitize($_POST['bgColor']);
+			$id = Validator::integer($_POST['id']);
+			$label = Validator::sanitize($_POST['label']);
+			$textColor = Validator::sanitize($_POST['textColor']);
+			$bgColor = Validator::sanitize($_POST['bgColor']);
 
 			if (empty($label))
 				throw new Exception(TAG_LABEL_EMPTY);
@@ -184,8 +184,8 @@
 			if (!isset($_POST['textColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
-			$id = Sanitize($_POST['id']);
-			$textColor = Sanitize($_POST['textColor']);
+			$id = Validator::integer($_POST['id']);
+			$textColor = Validator::sanitize($_POST['textColor']);
 
 			if (empty($textColor))
 				throw new Exception(TAG_COLOR);
@@ -226,8 +226,8 @@
 			if (!isset($_POST['bgColor']))
 				throw new Exception(FIELD_NOT_FOUND);
 
-			$id = Sanitize($_POST['id']);
-			$bgColor = Sanitize($_POST['bgColor']);
+			$id = Validator::integer($_POST['id']);
+			$bgColor = Validator::sanitize($_POST['bgColor']);
 
 			if (empty($bgColor))
 				throw new Exception(TAG_COLOR);

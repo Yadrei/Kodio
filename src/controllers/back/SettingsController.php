@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour la page de paramètres de l'admin
 	    @Author Yves P.
-	    @Version 1.1
+	    @Version 1.0
 	    @Date création: 18/09/2023
-	    @Dernière modification: 16/08/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class SettingsController 
@@ -49,8 +49,8 @@
 			if (!isset($_POST['language']) || !isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$language = Sanitize($_POST['language']);
-			$key = Sanitize($_POST['key']);
+			$language = Validator::sanitize($_POST['language']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($language))
 				$response = array('status' => false, 'message' => LANGUAGE_LABEL_EMPTY);
@@ -100,7 +100,7 @@
 			if (!isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$key = Sanitize($_POST['key']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($response)) {
 				$langue = new Reference_Detail (
@@ -139,8 +139,8 @@
 			if (!isset($_POST['role']) || !isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$role = Sanitize($_POST['role']);
-			$key = Sanitize($_POST['key']);
+			$role = Validator::sanitize($_POST['role']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($role))
 				$response = array('status' => false, 'message' => ROLE_EMPTY);
@@ -190,7 +190,7 @@
 			if (!isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$key = Sanitize($_POST['key']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($response)) {
 				$role = new Reference_Detail (
@@ -229,8 +229,8 @@
 			if (!isset($_POST['cat']) || !isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$cat = Sanitize($_POST['cat']);
-			$key = Sanitize($_POST['key']);
+			$cat = Validator::sanitize($_POST['cat']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($cat))
 				$response = array('status' => false, 'message' => CATEGORY_EMPTY);
@@ -280,7 +280,7 @@
 			if (!isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
-			$key = Sanitize($_POST['key']);
+			$key = Validator::sanitize($_POST['key']);
 
 			if (empty($response)) {
 				$cat = new Reference_Detail (

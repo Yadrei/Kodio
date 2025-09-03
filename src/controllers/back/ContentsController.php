@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class ContentsController 
@@ -72,7 +72,7 @@
 			if (!isset($_POST['id']))
 				$response = array('status' => false, 'message' => ID_NOT_FOUND);
 
-			$id = Sanitize($_POST['id']);
+			$id = Validator::integer($_POST['id']);
 
 			if (!is_numeric($id))
 				$response = array('status' => false, 'message' => ID_NOT_NUMERIC);
@@ -206,7 +206,7 @@
 				|| !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['ogTitle']['FR']) || !isset($_POST['ogDescription']['FR']) || !isset($_POST['schemaType']['FR']) || !isset($_POST['schemaDescription']['FR']))
 				throw new Exception(ERROR_MAIN_LANGUAGE);
 
-			$author = Sanitize($_POST['author']);
+			$author = Validator::sanitize($_POST['author']);
 
 			/*
 				On parcourt tous les champs passé mais on ne récupère que ceux qui nous intéressent :
@@ -220,23 +220,27 @@
 				if (is_array($base)) {
 					foreach ($base as $language => $value) {
 				        if (!empty($_POST['title'][$language])) {
-				        	$values[$fields][$language] = Sanitize($value);
+				        	$values[$fields][$language] = Validator::sanitize($value);
 
 				        	if ($fields == 'title')
-				        		$values['slug'][$language] = Slugify($value); 
+				        		$values['slug'][$language] = Validator::slug($value); 
+				        }
+
+						if (!empty($_POST['content'][$language])) {
+				        	$values[$fields][$language] = Validator::sanitize($value, 'html');
 				        }
                     }
 				}
             }
 
-			$category = Sanitize($_POST['category']);
+			$category = Validator::sanitize($_POST['category']);
 			
 			if ($category == "DEFAULT")
 				throw new Exception(CATEGORY_DEFAULT.': '.$language);
 
 			// On vérifie que les données sont correctes
 			$verifChamps = [
-				"title" => ["min" => 4, "max" => 100],
+				"content" => ["min" => 4, "max" => 100],
 				"metaTitle" => ["min" => 10, "max" => 50],
 				"metaDescription" => ["min" => 10, "max" => 200]
 			];
@@ -254,7 +258,7 @@
 			}
 
 			// Si on est en mode update, le contentId existe donc on le récupère
-			$contentId = (isset($_POST['contentId'])) ? Sanitize($_POST['contentId']) : null;
+			$contentId = (isset($_POST['contentId'])) ? Validator::integer($_POST['contentId']) : null;
 
             // On récupère l'image d'entête
             if (!empty($_FILES['image']['tmp_name']))
@@ -333,16 +337,16 @@
 					$seoObject = new Content_Lang_SEO([
 						'id' => (isset($_POST['seoId'][$lang])) ? $_POST['seoId'][$lang] : null,
 						'fkContentLang' => $contentLangId,
-						'metaTitle' => Sanitize($_POST['metaTitle'][$lang]),
-						'metaDescription' => Sanitize($_POST['metaDescription'][$lang]),
+						'metaTitle' => Validator::sanitize($_POST['metaTitle'][$lang]),
+						'metaDescription' => Validator::sanitize($_POST['metaDescription'][$lang]),
 						'url' => null,
 						'robotsIndex' => (isset($_POST['robotsIndex'][$lang])) ? 1 : 0,
 						'robotsFollow' => (isset($_POST['robotsFollow'][$lang])) ? 1 : 0,
-						'title' => Sanitize($_POST['ogTitle'][$lang]),
-						'description' => Sanitize($_POST['ogDescription'][$lang]),
+						'title' => Validator::sanitize($_POST['ogTitle'][$lang]),
+						'description' => Validator::sanitize($_POST['ogDescription'][$lang]),
 						'image' => null,
-						'schemaType' => Sanitize($_POST['schemaType'][$lang]),
-						'schemaDescription' => Sanitize($_POST['schemaDescription'][$lang])
+						'schemaType' => Validator::sanitize($_POST['schemaType'][$lang]),
+						'schemaDescription' => Validator::sanitize($_POST['schemaDescription'][$lang])
 					]);
 
 					$seoObjects[] = $seoObject;

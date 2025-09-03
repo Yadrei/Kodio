@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 25/11/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 03/09/2025
   	*/
 
 	class LibraryController 
@@ -54,7 +54,7 @@
 			$uploadFolder = "";
 
 			if (!empty($_POST['folder']))
-				$uploadFolder = Sanitize($_POST['folder']);
+				$uploadFolder = Validator::sanitize($_POST['folder'], 'filename');
 
 			ProcessImages('medias/'.$uploadFolder);
 
