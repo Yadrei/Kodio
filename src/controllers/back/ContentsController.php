@@ -4,12 +4,23 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 18/06/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class ContentsController 
 	{
-		private $v_contentMainManager, $v_contentLangManager, $contentLangManager, $contentHistoManager, $referenceDetailManager, $permissionManager, $tagManager, $contentTagManager, $commentManager, $menuManager, $settingManager;
+		private $v_contentMainManager, 
+				$v_contentLangManager, 
+				$contentLangManager, 
+				$contentHistoManager, 
+				$contentSEOManager,
+				$referenceDetailManager, 
+				$permissionManager, 
+				$tagManager, 
+				$contentTagManager, 
+				$commentManager, 
+				$menuManager, 
+				$settingManager;
 
 		public function __construct()
 		{
@@ -17,6 +28,7 @@
 			$this->v_contentLangManager = new V_Content_LangManager();
 	        $this->contentLangManager = new Content_LangManager();
 	        $this->contentHistoManager = new Content_HManager();
+			$this->contentSEOManager = new Content_Lang_SEOManager();
 	        $this->referenceDetailManager = new Reference_DetailManager();
 	        $this->permissionManager = new PermissionManager();
 	        $this->tagManager = new TagManager();
@@ -123,6 +135,12 @@
             $tags = $this->tagManager->getAllTags();
             $relatedTags = $this->contentTagManager->GetRelatedTags($contentId);
 
+			foreach ($contents as $content) {
+				$id = $content->getId();
+
+				$seo[$id] = $this->contentSEOManager->GetSEOByFkContentLang($id);
+			}
+
 			$action = 'update';
 
 			require_once 'src/views/back/manageContent.php';
@@ -178,11 +196,14 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				throw new Exception(BAD_REQUEST_METHOD);
 
+			CSRF::Check();
+
 			/*
 				Seul le français est obligatoire, comme c'est la langue de base. On commence donc par checker tous ces éléments là en premier
 			*/
 
-			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['cat']['FR']) || !isset($_POST['content']['FR']) || !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['language']['FR']))
+			if (!isset($_POST['author']) || !isset($_POST['title']['FR']) || !isset($_POST['category']) || !isset($_POST['content']['FR']) || !isset($_POST['language']['FR']) 
+				|| !isset($_POST['metaTitle']['FR']) || !isset($_POST['metaDescription']['FR']) || !isset($_POST['ogTitle']['FR']) || !isset($_POST['ogDescription']['FR']) || !isset($_POST['schemaType']['FR']) || !isset($_POST['schemaDescription']['FR']))
 				throw new Exception(ERROR_MAIN_LANGUAGE);
 
 			$author = Sanitize($_POST['author']);
@@ -208,9 +229,10 @@
 				}
             }
 
-			foreach ($values['cat'] as $value)
-				if ($value == "DEFAULT")
-						throw new Exception(CATEGORY_DEFAULT.': '.$language);
+			$category = Sanitize($_POST['category']);
+			
+			if ($category == "DEFAULT")
+				throw new Exception(CATEGORY_DEFAULT.': '.$language);
 
 			// On vérifie que les données sont correctes
 			$verifChamps = [
@@ -235,7 +257,7 @@
 			$contentId = (isset($_POST['contentId'])) ? Sanitize($_POST['contentId']) : null;
 
             // On récupère l'image d'entête
-            if (!empty($_FILES['images']['tmp_name'][0]))
+            if (!empty($_FILES['image']['tmp_name']))
                 $image = ProcessImages("heading");
             else
                 $image = null;
@@ -271,11 +293,11 @@
 					'id' => (isset($values['id'][$lang])) ? $values['id'][$lang] : null,
 					'contentId' => $contentId,
 					'language' => $values['language'][$lang],
-					'category' => $values['cat'][$lang],
+					'category' => $category,
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
-                    'image' => (!is_null($image)) ? $image[0] : $image,
+                    'image' => $image,
                     'datePublication' => (isset($_POST['datePublication'])) ? new DateTime($_POST['datePublication']) : null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],
@@ -286,7 +308,12 @@
 				$contents[] = $object;
 			}
 
-			$mainId = $this->contentLangManager->Save($contents);
+			// Sauvegarder les contenus et récupérer les IDs
+			$result = $this->contentLangManager->Save($contents);
+			
+			// Le résultat contient maintenant mainId et contentLangIds
+			$mainId = $result['mainId'];
+			$contentLangIds = $result['contentLangIds'];
 
             // Sauvegarde des tags liés au contenu
             if (!is_null($tags)) {
@@ -296,7 +323,37 @@
 
                 $this->contentTagManager->Save($tags);
             }
-			
+
+			// NOUVEAU : Sauvegarde des données SEO pour chaque langue
+			if (!empty($contentLangIds)) {
+				$seoManager = new Content_Lang_SEOManager();
+				$seoObjects = [];
+
+				foreach ($contentLangIds as $lang => $contentLangId) {						
+					$seoObject = new Content_Lang_SEO([
+						'id' => (isset($_POST['seoId'][$lang])) ? $_POST['seoId'][$lang] : null,
+						'fkContentLang' => $contentLangId,
+						'metaTitle' => Sanitize($_POST['metaTitle'][$lang]),
+						'metaDescription' => Sanitize($_POST['metaDescription'][$lang]),
+						'url' => null,
+						'robotsIndex' => (isset($_POST['robotsIndex'][$lang])) ? 1 : 0,
+						'robotsFollow' => (isset($_POST['robotsFollow'][$lang])) ? 1 : 0,
+						'title' => Sanitize($_POST['ogTitle'][$lang]),
+						'description' => Sanitize($_POST['ogDescription'][$lang]),
+						'image' => null,
+						'schemaType' => Sanitize($_POST['schemaType'][$lang]),
+						'schemaDescription' => Sanitize($_POST['schemaDescription'][$lang])
+					]);
+
+					$seoObjects[] = $seoObject;
+				}
+
+				// Sauvegarder tous les objets SEO
+				if (!empty($seoObjects)) {
+					$seoManager->Save($seoObjects);
+				}
+			}
+	
             if (isset($values['id']['FR'])) {
                 header("Location: ".BASE_URL."private/content/manage/update/".$contentId);
                 exit;

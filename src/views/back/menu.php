@@ -15,7 +15,11 @@
 						<h5 class="modal-title" id="addMenu-modal">Ajouter un menu</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<form id="addMenu-form">
+					<form id="addMenu-form">';
+
+						echo CSRF::Field();
+
+						echo '
 						<div class="modal-body">
 							<div class="mb-3 form-floating">
 								<select class="form-select" name="parentMenu" id="parentMenu" aria-describedby="parentMenuHelp">
@@ -207,7 +211,11 @@
 								<h5 class="modal-title" id="editing-modal">'.$data->getLabel().'</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<form action="'.BASE_URL.'private/menu/action/update" method="post">
+							<form action="'.BASE_URL.'private/menu/action/update" method="post">';
+
+								echo CSRF::Field();
+
+								echo '
 								<div class="modal-body">
 									<div class="mb-3 form-floating">
 										<select class="form-select" name="parent" id="parent" aria-describedby="parentHelp">';

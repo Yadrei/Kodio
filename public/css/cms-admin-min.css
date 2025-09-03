@@ -36,7 +36,7 @@ header span, header button {
 	line-height: 75px;
 }
 
-h1 {
+h1, h2 {
 	color: #003874;
 	border-bottom: 2px solid #003874;
 }
@@ -64,6 +64,28 @@ h1 {
 .table-responsive a {
 	text-decoration: none;
 }
+
+/* 1- La barre d'onglets sans ligne basse par défaut */
+.nav-tabs { border-bottom: 0; }
+
+/* 2- Onglet actif : au-dessus et sans bordure basse (elle devient transparente) */
+.nav-tabs .nav-link.active {
+  background-color: var(--bs-body-bg);
+  border: 1px solid var(--bs-border-color);
+  border-bottom-color: transparent;
+  position: relative;
+  z-index: 3;
+}
+
+/* 3- Le pane : garde sa bordure complète, mais remonte de 1px sous les tabs */
+.tab-content > .tab-pane {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0 .375rem .375rem .375rem; /* coins comme ton exemple */
+  margin-top: -1px; /* clé : fait passer la bordure sous la barre d'onglets */
+  position: relative;
+  z-index: 1;
+}
+
 
 /*
 table form {

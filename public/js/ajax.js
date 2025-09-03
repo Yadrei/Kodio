@@ -1,9 +1,9 @@
 /*
 	AJAX
 	@Author Yves Ponchelet
-	@Version 1.1
+	@Version 1.0
 	@Creation date: 05/09/2023
-	@Last update: 18/06/2025
+	@Last update: 02/09/2025
 */
 
 $(document).ready(function() {
@@ -53,7 +53,8 @@ $(document).ready(function() {
             label: $('input[name=label]').val(),
             language: $('select[name=language]').val(),
             content: $('select[name=content]').val(),
-            ordre: $('input[name=ordre]').val()
+            ordre: $('input[name=ordre]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -136,7 +137,8 @@ $(document).ready(function() {
 
         var formData = {
             role: $('input[name=role]').val(),
-            key: $('input[name=role-key]').val()
+            key: $('input[name=role-key]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -190,7 +192,8 @@ $(document).ready(function() {
 
         var formData = {
             cat: $('input[name=cat]').val(),
-            key: $('input[name=cat-key]').val()
+            key: $('input[name=cat-key]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -247,7 +250,8 @@ $(document).ready(function() {
             nickname: $('input[name=nickname]').val(),
             password: $('input[name=password]').val(),
             email: $('input[name=email]').val(),
-            role: $('select[name=addUser-role]').val()
+            role: $('select[name=addUser-role]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -276,7 +280,8 @@ $(document).ready(function() {
 
         var formData = {
             id: $('input[name=user-id]').val(),
-            role: $('select[name=updatedRole]').val()
+            role: $('select[name=updatedRole]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -343,7 +348,8 @@ $(document).ready(function() {
         var formData = {
             label: $('input[name=label]').val(),
             textColor: $('input[name=textColor]').val(),
-            bgColor: $('input[name=bgColor]').val()
+            bgColor: $('input[name=bgColor]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({

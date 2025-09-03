@@ -134,6 +134,8 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
 
+			CSRF::Check();
+
 			if (!isset($_POST['role']) || !isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
@@ -221,6 +223,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['cat']) || !isset($_POST['key']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);

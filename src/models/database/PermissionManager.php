@@ -2,9 +2,9 @@
 	/*
 		Class for the DB requests for Permissions
 		@Author Yves Ponchelet
-		@Version 1.0
+		@Version 1.1
 		@Creation: 29/12/2021
-		@Last update: 27/09/2023
+		@Last update: 13/08/2025
 	*/
 
 	class PermissionManager 
@@ -29,6 +29,14 @@
 		}
 
 		// Public methods
+		public function Add(int $userId) {
+			$query = $this->db->prepare('INSERT INTO PERMISSIONS (FK_USER, ALLOW_ADMIN, ALLOW_ADD, ALLOW_UPDATE, ALLOW_DELETE) VALUES (:user, 0, 0, 0, 0)');
+
+			$query->bindValue(':user', $userId, PDO::PARAM_INT);
+
+			$query->execute();
+		}
+
 		public function Save(Permission $permission) {
 			if ($permission -> IsValid())
 				$this -> Update($permission);
@@ -36,10 +44,10 @@
 				throw new Exception("Erreure critique !");
 		}
 
-		public function getPermissions($id) {
+		public function getPermissions(int $userId) {
 			$query = $this->db->prepare('SELECT FK_USER user, ALLOW_ADMIN allowAccess, ALLOW_ADD allowAdd, ALLOW_UPDATE allowUpdate, ALLOW_DELETE allowDelete FROM PERMISSIONS WHERE FK_USER = :user');
 
-		  	$query->bindParam(':user', $id, PDO::PARAM_INT);
+		  	$query->bindParam(':user', $userId, PDO::PARAM_INT);
 			$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Permission');
 			$query->execute();
 

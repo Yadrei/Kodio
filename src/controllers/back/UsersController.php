@@ -2,9 +2,9 @@
 	/* 
 		Contrôleur pour la page des utilisateurs de l'admin
 	    @Author Yves P.
-	    @Version 1.1
+	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 14/05/2025
+	    @Dernière modification: 02/09/2025
   	*/
 
 	class UsersController 
@@ -49,6 +49,8 @@
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
 
+			CSRF::Check();
+
 			if (!isset($_POST['nickname']) || !isset($_POST['password']) || !isset($_POST['email']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);
 
@@ -83,7 +85,7 @@
 				[
 					'nickname' => $nickname,
 					'email' => $email,
-					'passwordAdmin' => password_hash($password, PASSWORD_DEFAULT),
+					'passwordHash' => password_hash($password, PASSWORD_DEFAULT),
 					'role' => $role
 				]);
 
@@ -95,7 +97,9 @@
 				*/
 
 				try {
-					$this->userManager->Save($user);
+					$userId = $this->userManager->Save($user);
+
+					$this->permissionManager->Add($userId);
 
 				    $response = array('status' => true, 'message' => USER_SUCCESS);
 
@@ -133,7 +137,7 @@
 		    	$user = new User (
 					[
 						'id' => $id,
-						'passwordAdmin' => password_hash($password, PASSWORD_DEFAULT)
+						'passwordHash' => password_hash($password, PASSWORD_DEFAULT)
 					]);
 
 		    	try {
@@ -170,6 +174,8 @@
 
 			if ($_SERVER['REQUEST_METHOD'] !== 'POST')
 				$response = array('status' => false, 'message' => BAD_REQUEST_METHOD);
+
+			CSRF::Check();
 
 			if (!isset($_POST['id']) || !isset($_POST['role']))
 				$response = array('status' => false, 'message' => FIELD_NOT_FOUND);

@@ -2,17 +2,17 @@
 	/*
 		Class Manager pour les relations avec la DB sur la table CONTENT_H
 		@Author Yves Ponchelet
-		@Version 1.0
+		@Version 1.1
 		@Creation: 14/09/2023
-		@Last update: 15/10/2023
+		@Last update: 13/08/2025
 	*/
 
 	class Content_HManager 
 	{
 		private $db;
 
-		public function __construct() {
-			$this->db = (new Database())->getConnection();
+		public function __construct(?PDO $pdo = null) {
+			$this->db = $pdo ?: (new Database())->getConnection();
 		}
 
 		public function getHistorique($id) {
@@ -35,6 +35,42 @@
 			}
 
 			return $listContent;
+		}
+
+		// Snapshot d'une version de CONTENT_LANG dans CONTENT_H
+		public function LogFromContentLangId(int $contentLangId, string $action, ?int $userId = null): void
+		{
+			$sql = "
+				INSERT INTO CONTENT_H
+					(ID_CONTENT, ID_CONTENT_LANG, R_LANG, R_CAT, TITLE, CONTENT, META_TITLE, META_DESCRIPTION, SLUG, DTE, ACTION)
+				SELECT
+					FK_CONTENT, ID, R_LANG, R_CAT, TITLE, CONTENT, META_TITLE, META_DESCRIPTION, SLUG, NOW(), :action
+				FROM CONTENT_LANG
+				WHERE ID = :id";
+
+			$q = $this->db->prepare($sql);
+			$q->bindValue(':action', $action, PDO::PARAM_STR);
+			$q->bindValue(':id', $contentLangId, PDO::PARAM_INT);
+
+			$q->execute();
+		}
+
+		// Variante bulk pour un FK_CONTENT (utile quand tu supprimes FR => toutes les langues)
+		public function LogAllByMainId(int $mainContentId, string $action): void
+		{
+			$sql = "
+				INSERT INTO CONTENT_H
+					(ID_CONTENT, ID_CONTENT_LANG, R_LANG, R_CAT, TITLE, CONTENT, META_TITLE, META_DESCRIPTION, SLUG, DTE, ACTION)
+				SELECT
+					FK_CONTENT, ID, R_LANG, R_CAT, TITLE, CONTENT, META_TITLE, META_DESCRIPTION, SLUG, NOW(), :action
+				FROM CONTENT_LANG
+				WHERE FK_CONTENT = :fk";
+
+			$q = $this->db->prepare($sql);
+			$q->bindValue(':action', $action, PDO::PARAM_STR);
+			$q->bindValue(':fk', $mainContentId, PDO::PARAM_INT);
+
+			$q->execute();
 		}
 
 		public function Recuperation($id, $author) {

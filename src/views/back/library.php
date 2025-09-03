@@ -15,7 +15,11 @@
                             <h5 class="modal-title" id="image-modal">Ajouter une image</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form id="addImage-form" action="'.BASE_URL.'private/library/addImage" method="post" enctype="multipart/form-data">
+                        <form id="addImage-form" action="'.BASE_URL.'private/library/addImage" method="post" enctype="multipart/form-data">';
+
+                            echo CSRF::Field();
+
+                            echo '
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
                                     <input type="text" class="form-control" name="folder" id="folder" aria-describedby="folderHelp">

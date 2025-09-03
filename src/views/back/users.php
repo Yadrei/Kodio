@@ -20,6 +20,11 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<form id="addUser-form">
+					';
+
+					echo CSRF::Field();
+
+					echo '
 						<div class="modal-body">
 							<div class="mb-3 form-floating">
 								<input type="text" class="form-control" name="nickname" id="nickname" minlength="4" maxlength="20" required>
@@ -81,7 +86,10 @@
 					<td>'.$user->getEmail().'</td>
 					<td>'.$user->getRole()->getLabel().'</td>
 					<td>
-						<form class="row row-cols-2-auto g-1" id="newRole">
+						<form class="row row-cols-2-auto g-1" id="newRole">';
+							echo CSRF::Field();
+
+							echo '
 							<div class="col-10">
 								<select class="form-select form-select-sm" name="updatedRole" id="updatedRole" required>
 									<option value="" selected disabled>Choisir un nouveau rôle</option>';
