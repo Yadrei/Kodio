@@ -137,7 +137,8 @@ $(document).ready(function() {
 
         var formData = {
             role: $('input[name=role]').val(),
-            key: $('input[name=role-key]').val()
+            key: $('input[name=role-key]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({
@@ -191,7 +192,8 @@ $(document).ready(function() {
 
         var formData = {
             cat: $('input[name=cat]').val(),
-            key: $('input[name=cat-key]').val()
+            key: $('input[name=cat-key]').val(),
+            csrf_token: $('input[name=csrf_token]').val()
         };
 
         $.ajax({

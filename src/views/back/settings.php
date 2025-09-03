@@ -116,7 +116,11 @@
 								<h5 class="modal-title" id="addCategory-modal">Ajouter une catégorie</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<form id="addCategory-form">
+							<form id="addCategory-form">';
+
+								echo CSRF::Field();
+
+								echo '
 								<div class="modal-body">
 									<div class="mb-3 form-floating">
 										<input type="text" class="form-control" name="cat" id="cat" minlength="4" maxlength="50" required>
@@ -181,7 +185,11 @@
 								<h5 class="modal-title" id="addRole-modal">Ajouter un rôle</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<form id="addRole-form">
+							<form id="addRole-form">';
+
+								echo CSRF::Field();
+
+								echo '
 								<div class="modal-body">
 									<div class="mb-3 form-floating">
 										<input type="text" class="form-control" name="role" id="role" minlength="4" maxlength="50" required>
