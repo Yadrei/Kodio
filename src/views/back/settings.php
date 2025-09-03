@@ -116,12 +116,12 @@
 								<h5 class="modal-title" id="addCategory-modal">Ajouter une catégorie</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<form id="addCategory-form">';
+							<form id="addCategory-form">
+								<div class="modal-body">';
 
-								echo CSRF::Field();
+									echo CSRF::Field();
 
-								echo '
-								<div class="modal-body">
+									echo '
 									<div class="mb-3 form-floating">
 										<input type="text" class="form-control" name="cat" id="cat" minlength="4" maxlength="50" required>
 										<label for="cat">Intitulé</label>
@@ -158,7 +158,7 @@
 						<td class="col-3">';
 
 							if ($permissionsLogged->getAllowDelete())
-								echo '<a href="#" class="m-1 delete-category" data-key="'.$cat->getClef().'" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
+								echo '<a href="#" class="m-1 delete-category" data-key="'.$cat->getClef().'" data-bs-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
 							else
 								echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
 
@@ -185,12 +185,12 @@
 								<h5 class="modal-title" id="addRole-modal">Ajouter un rôle</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
-							<form id="addRole-form">';
+							<form id="addRole-form">
+								<div class="modal-body">';
 
-								echo CSRF::Field();
+									echo CSRF::Field();
 
-								echo '
-								<div class="modal-body">
+									echo '
 									<div class="mb-3 form-floating">
 										<input type="text" class="form-control" name="role" id="role" minlength="4" maxlength="50" required>
 										<label for="role">Rôle</label>
@@ -227,7 +227,7 @@
 						<td class="col-3">';
 
 							if ($permissionsLogged->getAllowDelete())
-								echo '<a href="#" class="m-1 delete-role" data-key="'.$role->getClef().'" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
+								echo '<a href="#" class="m-1 delete-role" data-key="'.$role->getClef().'" data-bs-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
 							else
 								echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
 
@@ -295,7 +295,7 @@
 						<td class="col-3">';
 
 							if ($permissionsLogged->getAllowDelete())
-								echo '<a href="#" class="m-1 delete-language" data-key="'.$langue->getClef().'" data-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
+								echo '<a href="#" class="m-1 delete-language" data-key="'.$langue->getClef().'" data-bs-toggle="tooltip" title="Supprimer" role="button"><span class="feather-15 red" data-feather="trash-2"></span></a>';
 							else
 								echo '<span class="feather-15 disabled m-1" data-feather="trash-2"></span>';
 

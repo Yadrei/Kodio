@@ -9,7 +9,7 @@
 		echo '
 		<button type="button" class="btn btn-light-blue btn-sm my-3" data-bs-toggle="modal" data-bs-target="#addUser-modal">Ajouter un utilisateur</button>
 		<div class="alert alert-success alert-dismissible fade" id="alert-success" role="alert">
-			<button type="button" class="btn-close close" data-dismiss="alert" aria-label="Fermer"></button>
+			<button type="button" class="btn-close close" data-bs-dismiss="alert" aria-label="Fermer"></button>
 			<span id="alert-text"></span>
 		</div>
 		<div class="modal fade" id="addUser-modal" tabindex="-1" aria-labelledby="user-modal" aria-hidden="true">

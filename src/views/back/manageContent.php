@@ -17,7 +17,7 @@
 ?>
 
 <nav>
-	<ul class="nav nav-tabs border border-0" role="tablist">
+	<ul class="nav nav-tabs border border-0" id="contentLangTabs" role="tablist">
 	<?php
 		foreach ($langues as $langue) {
 			if ($langue->getClef() === "FR") {

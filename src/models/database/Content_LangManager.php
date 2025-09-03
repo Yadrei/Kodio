@@ -61,10 +61,11 @@
 
 		private function Update(Content_Lang $content) {
             if (is_null($content->getImage())) {
-                $query = $this->db->prepare('UPDATE CONTENT_LANG SET TITLE = :title, CONTENT = :content, META_TITLE = :metaTitle, META_DESCRIPTION = :metaDescription, SLUG = :slug, DATE_MOD = NOW(), IS_PUBLISHED = :published WHERE ID = :id');
+                $query = $this->db->prepare('UPDATE CONTENT_LANG SET R_CAT = :category, TITLE = :title, CONTENT = :content, META_TITLE = :metaTitle, META_DESCRIPTION = :metaDescription, SLUG = :slug, DATE_MOD = NOW(), IS_PUBLISHED = :published WHERE ID = :id');
 
                 $query->bindValue(':id', $content->getId(), PDO::PARAM_INT);
                 $query->bindValue(':title', $content->getTitle(), PDO::PARAM_STR);
+				$query->bindValue(':category', $content->getCategory(), PDO::PARAM_STR);
                 $query->bindValue(':content', $content->getContent(), PDO::PARAM_STR);
                 $query->bindValue(':metaTitle', $content->getMetaTitle(), PDO::PARAM_STR);
                 $query->bindValue(':metaDescription', $content->getMetaDescription(), PDO::PARAM_STR);
@@ -72,10 +73,11 @@
                 $query->bindValue(':published', $content->getPublished(), PDO::PARAM_BOOL);
             }
 			else {
-                $query = $this->db->prepare('UPDATE CONTENT_LANG SET TITLE = :title, CONTENT = :content, HEADING_IMAGE = :image, META_TITLE = :metaTitle, META_DESCRIPTION = :metaDescription, SLUG = :slug, DATE_MOD = NOW(), IS_PUBLISHED = :published WHERE ID = :id');
+                $query = $this->db->prepare('UPDATE CONTENT_LANG SET R_CAT = :category, TITLE = :title, CONTENT = :content, HEADING_IMAGE = :image, META_TITLE = :metaTitle, META_DESCRIPTION = :metaDescription, SLUG = :slug, DATE_MOD = NOW(), IS_PUBLISHED = :published WHERE ID = :id');
 
                 $query->bindValue(':id', $content->getId(), PDO::PARAM_INT);
                 $query->bindValue(':title', $content->getTitle(), PDO::PARAM_STR);
+				$query->bindValue(':category', $content->getCategory(), PDO::PARAM_STR);
                 $query->bindValue(':content', $content->getContent(), PDO::PARAM_STR);
                 $query->bindValue(':image', $content->getImage(), PDO::PARAM_STR);
                 $query->bindValue(':metaTitle', $content->getMetaTitle(), PDO::PARAM_STR);
