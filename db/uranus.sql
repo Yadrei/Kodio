@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `COMMENTS` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `NICKNAME` varchar(25) NOT NULL,
   `FK_CONTENT` int NOT NULL,
   `CONTENT` text NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `COMMENTS` (
 --
 
 CREATE TABLE `CONTENT` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `DATE_CRE` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -46,9 +46,9 @@ CREATE TABLE `CONTENT` (
 -- Déchargement des données de la table `CONTENT`
 --
 
-INSERT INTO `CONTENT` (`ID`, `DATE_CRE`) VALUES
-(1, '2025-02-10 17:00:28'),
-(2, '2025-02-10 17:00:28');
+INSERT INTO `CONTENT` (`DATE_CRE`) VALUES
+('2025-02-10 17:00:28'),
+('2025-02-10 17:00:28');
 
 -- --------------------------------------------------------
 
@@ -57,7 +57,7 @@ INSERT INTO `CONTENT` (`ID`, `DATE_CRE`) VALUES
 --
 
 CREATE TABLE `CONTENT_H` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `ID_CONTENT` int NOT NULL,
   `ID_CONTENT_LANG` int NOT NULL,
   `R_LANG` varchar(10) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE `CONTENT_H` (
 --
 
 CREATE TABLE `CONTENT_LANG` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `FK_CONTENT` int NOT NULL,
   `R_LANG` varchar(10) NOT NULL,
   `R_CAT` varchar(10) NOT NULL,
@@ -99,9 +99,9 @@ CREATE TABLE `CONTENT_LANG` (
 -- Déchargement des données de la table `CONTENT_LANG`
 --
 
-INSERT INTO `CONTENT_LANG` (`ID`, `FK_CONTENT`, `R_LANG`, `R_CAT`, `FK_AUTHOR`, `TITLE`, `CONTENT`, `HEADING_IMAGE`, `META_TITLE`, `META_DESCRIPTION`, `DATE_PUBLICATION`, `SLUG`, `DATE_CRE`, `DATE_MOD`, `IS_PUBLISHED`) VALUES
-(1, 1, 'FR', 'SYSTEM', 1, 'Accueil site', NULL, '', 'Page d''accueil du site', 'Meta description globale', NULL, 'accueil', '2025-02-10 17:00:28', NULL, 1),
-(2, 2, 'FR', 'SYSTEM', 1, 'Contact site', NULL, '', 'Page de contact du site', 'Meta description contact', NULL, 'contact', '2025-02-10 17:00:28', NULL, 1);
+INSERT INTO `CONTENT_LANG` (`FK_CONTENT`, `R_LANG`, `R_CAT`, `FK_AUTHOR`, `TITLE`, `CONTENT`, `HEADING_IMAGE`, `META_TITLE`, `META_DESCRIPTION`, `DATE_PUBLICATION`, `SLUG`, `DATE_CRE`, `DATE_MOD`, `IS_PUBLISHED`) VALUES
+(1, 'FR', 'SYSTEM', 1, 'Accueil site', NULL, '', 'Page d''accueil du site', 'Meta description globale', NULL, 'accueil', '2025-02-10 17:00:28', NULL, 1),
+(2, 'FR', 'SYSTEM', 1, 'Contact site', NULL, '', 'Page de contact du site', 'Meta description contact', NULL, 'contact', '2025-02-10 17:00:28', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,7 @@ INSERT INTO `CONTENT_LANG` (`ID`, `FK_CONTENT`, `R_LANG`, `R_CAT`, `FK_AUTHOR`, 
 --
 
 CREATE TABLE `CONTENT_LANG_SEO` (
-  `ID` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `ID` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `FK_CONTENT_LANG` INT NOT NULL,
   `META_TITLE` VARCHAR(80) NOT NULL,
   `META_DESCRIPTION` VARCHAR(200) NOT NULL,
@@ -128,9 +128,29 @@ CREATE TABLE `CONTENT_LANG_SEO` (
 -- Déchargement des données de la table `CONTENT_LANG`
 --
 
-INSERT INTO `CONTENT_LANG_SEO` (`ID`, `FK_CONTENT_LANG`, `META_TITLE`, `META_DESCRIPTION`, `CANONICAL_URL`, `ROBOTS_INDEX`, `ROBOTS_FOLLOW`, `OG_TITLE`, `OG_DESCRIPTION`, `OG_IMAGE`, `SCHEMA_TYPE`, `SCHEMA_DESCRIPTION`) VALUES
-(1, 1, 'Page d''accueil du site', 'Meta description globale', NULL, 1, 1, 'Open Graph Title', 'OpenGraph Description', NULL, 'WebPage', 'Schema Description'),
-(2, 2, 'Page de contact du site', 'Meta description globale', NULL, 1, 1, 'Open Graph Title', 'OpenGraph Description', NULL, 'ContactPage', 'Schema Description');
+INSERT INTO `CONTENT_LANG_SEO` (`FK_CONTENT_LANG`, `META_TITLE`, `META_DESCRIPTION`, `CANONICAL_URL`, `ROBOTS_INDEX`, `ROBOTS_FOLLOW`, `OG_TITLE`, `OG_DESCRIPTION`, `OG_IMAGE`, `SCHEMA_TYPE`, `SCHEMA_DESCRIPTION`) VALUES
+(1,
+ '{{SITE_NAME}} – {{ACTIVITE_PRINCIPALE}} à {{VILLE}} | Devis gratuit',
+ 'Entreprise {{ACTIVITE_PRINCIPALE}} à {{VILLE}}. Services: {{SERVICE_1}}, {{SERVICE_2}}, {{SERVICE_3}}. Devis gratuit, intervention rapide, satisfaction client prouvée.',
+ 'https://www.exemple.com/',
+ 1, 1,
+ '{{ACTIVITE_PRINCIPALE}} à {{VILLE}} – {{SITE_NAME}}',
+ 'Prestations professionnelles à {{VILLE}} et alentours: {{SERVICE_1}}, {{SERVICE_2}}, {{SERVICE_3}}. Devis gratuit, réponse sous 24 h.',
+ '/public/images/og/accueil-fr.jpg',
+ 'WebPage',
+ 'Présentation de {{SITE_NAME}}, services {{ACTIVITE_PRINCIPALE}} et zone d’intervention autour de {{VILLE}}.'
+),
+(2,
+ 'Contact {{SITE_NAME}} – {{VILLE}} | Devis et rendez-vous',
+ 'Contactez-nous pour un devis ou une question. Téléphone, email et horaires. Intervention à {{VILLE}} et environs. Réponse rapide.',
+ 'https://www.exemple.com/contact',
+ 1, 1,
+ 'Contact – {{SITE_NAME}} à {{VILLE}}',
+ 'Formulaire de contact, téléphone, email et horaires pour joindre {{SITE_NAME}}. Devis gratuit, réponse sous 24 h.',
+ '/public/images/og/contact-fr.jpg',
+ 'ContactPage',
+ 'Informations de contact de {{SITE_NAME}} pour {{VILLE}} et alentours.'
+);
 
 
 -- --------------------------------------------------------
@@ -140,7 +160,7 @@ INSERT INTO `CONTENT_LANG_SEO` (`ID`, `FK_CONTENT_LANG`, `META_TITLE`, `META_DES
 --
 
 CREATE TABLE `J_CONTENT_TAGS` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `FK_CONTENT` int NOT NULL,
   `FK_TAG` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -152,7 +172,7 @@ CREATE TABLE `J_CONTENT_TAGS` (
 --
 
 CREATE TABLE `MENU` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `PARENT_ID` int DEFAULT NULL,
   `R_LANG` varchar(10) NOT NULL,
   `FK_CONTENT` int DEFAULT NULL,
@@ -242,7 +262,7 @@ INSERT INTO `REFERENCES_T` (`REF`, `LABEL`) VALUES
 --
 
 CREATE TABLE `SETTINGS` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `R_SETTING` varchar(10) NOT NULL,
   `VALUE` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -251,13 +271,13 @@ CREATE TABLE `SETTINGS` (
 -- Déchargement des données de la table `SETTINGS`
 --
 
-INSERT INTO `SETTINGS` (`ID`, `R_SETTING`, `VALUE`) VALUES
-(1, 'MAINT', ''),
-(2, 'COM', ''),
-(3, 'COOKIES', '1'),
-(4, 'SOC_FB', 'https://www.facebook.com/'),
-(5, 'SOC_INST', 'https://www.instagram.com/'),
-(6, 'SOC_TWT', '');
+INSERT INTO `SETTINGS` (`R_SETTING`, `VALUE`) VALUES
+('MAINT', ''),
+('COM', ''),
+('COOKIES', '1'),
+('SOC_FB', 'https://www.facebook.com/'),
+('SOC_INST', 'https://www.instagram.com/'),
+('SOC_TWT', '');
 
 -- --------------------------------------------------------
 
@@ -266,7 +286,7 @@ INSERT INTO `SETTINGS` (`ID`, `R_SETTING`, `VALUE`) VALUES
 --
 
 CREATE TABLE `TAGS` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `LABEL` varchar(20) NOT NULL,
   `TXT_COLOR` varchar(7) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `BG_COLOR` varchar(7) NOT NULL
@@ -279,7 +299,7 @@ CREATE TABLE `TAGS` (
 --
 
 CREATE TABLE `USERS` (
-  `ID` int NOT NULL,
+  `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `NICKNAME` varchar(20) NOT NULL,
   `EMAIL` varchar(100) NOT NULL,
   `PASSWORD_HASH` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -292,8 +312,8 @@ CREATE TABLE `USERS` (
 -- Déchargement des données de la table `USERS`
 --
 
-INSERT INTO `USERS` (`ID`, `NICKNAME`, `EMAIL`, `PASSWORD_HASH`, `R_ROLE`, `DATE_CRE`) VALUES
-(1, 'Yves', 'yves.ponchelet@shoku.be', '$2y$10$ftpM1Y4d0djxnz0Q.b0NbOgfDpyYnGHM6Z//rD/b7Vpog38Hha0wS', 'WEB', '2023-10-22 19:21:19');
+INSERT INTO `USERS` (`NICKNAME`, `EMAIL`, `PASSWORD_HASH`, `R_ROLE`, `DATE_CRE`) VALUES
+('Poncyv', 'yves.ponchelet@shoku.be', '$2y$10$HDM82eaLxJuZUEFNSO7Xy.xQm5fqIA6jQbScRajdWxOeRVpRJyYz6', 'WEB', '2025-09-04 13:21:19');
 
 -- --------------------------------------------------------
 
@@ -357,22 +377,14 @@ CREATE VIEW `V_CONTENT_MAIN`  AS SELECT `C`.`ID` AS `ID`, `C`.`FK_CONTENT` AS `F
 -- Index pour la table `COMMENTS`
 --
 ALTER TABLE `COMMENTS`
-  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `UQ_TOKEN` (`TOKEN`),
   ADD KEY `CONST_COMMENT_STATUS` (`R_STATUS`),
   ADD KEY `IDX_FK_CONTENT` (`FK_CONTENT`,`DTE`);
 
 --
--- Index pour la table `CONTENT`
---
-ALTER TABLE `CONTENT`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- Index pour la table `CONTENT_H`
 --
 ALTER TABLE `CONTENT_H`
-  ADD PRIMARY KEY (`ID`),
   ADD KEY `IDX_H_ID_CONTENT` (`ID_CONTENT`),
   ADD KEY `IDX_H_LANG` (`ID_CONTENT_LANG`),
   ADD KEY `IDX_H_DTE` (`DTE`),
@@ -382,7 +394,6 @@ ALTER TABLE `CONTENT_H`
 -- Index pour la table `CONTENT_LANG`
 --
 ALTER TABLE `CONTENT_LANG`
-  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `UQ_CONTENT_LANG` (`FK_CONTENT`,`R_LANG`),
   ADD UNIQUE KEY `UQ_SLUG_LANG` (`R_LANG`,`SLUG`),
   ADD KEY `CONST_MAIN_CONTENT` (`FK_CONTENT`),
@@ -402,7 +413,6 @@ ALTER TABLE `CONTENT_LANG_SEO`
 -- Index pour la table `J_CONTENT_TAGS`
 --
 ALTER TABLE `J_CONTENT_TAGS`
-  ADD PRIMARY KEY (`ID`),
   ADD KEY `CONST_J_FK_CONTENT` (`FK_CONTENT`),
   ADD KEY `CONST_J_FK_TAG` (`FK_TAG`);
 
@@ -410,7 +420,6 @@ ALTER TABLE `J_CONTENT_TAGS`
 -- Index pour la table `MENU`
 --
 ALTER TABLE `MENU`
-  ADD PRIMARY KEY (`ID`),
   ADD KEY `CONST_PARENT_ID` (`PARENT_ID`),
   ADD KEY `CONST_MENU_LANGUAGE` (`R_LANG`);
 
@@ -440,83 +449,17 @@ ALTER TABLE `REFERENCES_T`
 -- Index pour la table `SETTINGS`
 --
 ALTER TABLE `SETTINGS`
-  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `UQ_SETTING` (`R_SETTING`),
   ADD KEY `CONST_SETTING` (`R_SETTING`);
-
---
--- Index pour la table `TAGS`
---
-ALTER TABLE `TAGS`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- Index pour la table `USERS`
 --
 ALTER TABLE `USERS`
-  ADD PRIMARY KEY (`ID`),
   ADD UNIQUE KEY `UQ_EMAIL` (`EMAIL`) USING BTREE,
   ADD UNIQUE KEY `UQ_NICKNAME` (`NICKNAME`),
   ADD UNIQUE KEY `UQ_SINGLE_WEB` (`WEB_ONLY`),
   ADD KEY `CONST_USER_ROLE` (`R_ROLE`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `COMMENTS`
---
-ALTER TABLE `COMMENTS`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `CONTENT`
---
-ALTER TABLE `CONTENT`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `CONTENT_H`
---
-ALTER TABLE `CONTENT_H`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
--- AUTO_INCREMENT pour la table `CONTENT_LANG`
---
-ALTER TABLE `CONTENT_LANG`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT pour la table `J_CONTENT_TAGS`
---
-ALTER TABLE `J_CONTENT_TAGS`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `MENU`
---
-ALTER TABLE `MENU`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `SETTINGS`
---
-ALTER TABLE `SETTINGS`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `TAGS`
---
-ALTER TABLE `TAGS`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `USERS`
---
-ALTER TABLE `USERS`
-  MODIFY `ID` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Contraintes pour les tables déchargées
@@ -578,4 +521,4 @@ ALTER TABLE `SETTINGS`
 ALTER TABLE `USERS`
   ADD CONSTRAINT `CONST_USER_ROLE` FOREIGN KEY (`R_ROLE`) REFERENCES `REFERENCES_D` (`CLEF`),
   ADD CONSTRAINT `CHECK_WEB_BELONGS_TO_YVES`
-  CHECK (`R_ROLE` <> 'WEB' OR UPPER(`NICKNAME`) = 'YVES');
+  CHECK (`R_ROLE` <> 'WEB' OR UPPER(`NICKNAME`) = 'PONCYV');
