@@ -17,6 +17,29 @@
 	
 	session_start();
 
+	/**
+	 * Headers de sécurité modernes, simples et efficaces
+	 * Compatible avec tous les serveurs mutualisés
+	 * Ne casse pas les fonctionnalités du CMS
+	 */
+
+	// 1. Protection contre le clickjacking (iframe malicieuse)
+	header("X-Frame-Options: SAMEORIGIN");
+
+	// 2. Empêche le navigateur de deviner le type de fichier
+	header("X-Content-Type-Options: nosniff");
+
+	// 3. Contrôle les informations envoyées aux sites externes
+	header("Referrer-Policy: strict-origin-when-cross-origin");
+
+	// 4. CSP minimale moderne (remplace X-XSS-Protection)
+	header("Content-Security-Policy: frame-ancestors 'self'; base-uri 'self';");
+
+	// 5. [OPTIONNEL] Si votre site est en HTTPS uniquement
+	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+		// Force HTTPS pour 6 mois (sans includeSubDomains pour éviter les problèmes)
+		header("Strict-Transport-Security: max-age=15552000");
+
 	try {		
 		// Chargement automatique des classes
 		require_once 'config/config.ini.php';
