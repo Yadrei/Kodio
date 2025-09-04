@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 04/05/2020
-	    @Dernière modification: 09/05/2025
+	    @Dernière modification: 04/09/2025
   	*/
 
 	define("BASE_URL_LOCAL", "/Kodio/");
@@ -49,9 +49,6 @@
 
 	// Tableau pour les retours ajax
 	$response = array();
-
-	// Fonctions globale de traitements divers
-	require_once 'config/functions.php';
 
 	loadEnv(__DIR__.'/../.env'); // charge les variables avant toute autre logique
 
@@ -126,4 +123,21 @@
 	define("UNKNOWN_USER", "Utilisateur inconnu");
 	define("USER_SUCCESS", "Utilisateur ajouté avec succès");
 	define("WRONG_LENGTH_TRANSLATE", "Un des champs de traduction est trop court ou trop long"); // Attention, texte aussi à modifié légèrement dans controller backend 'Contents' en cas de traduction
+
+	function loadEnv(string $path): void {
+        if (!file_exists($path))
+            throw new RuntimeException(".env file not found at: $path");
+
+        $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            if ($line === '' || str_starts_with($line, '#'))
+                continue;
+
+            [$key, $value] = explode('=', $line, 2);
+            $_ENV[trim($key)] = trim($value);
+        }
+    }
 ?>
