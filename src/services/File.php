@@ -1,5 +1,11 @@
 <?php
-    // Fichier: src/services/SimpleUpload.php
+    /* 
+		Classe pour gérer l'upload de fichiers divers
+		@Author Yves P.
+		@Version 1.0
+		@Date Création: 04/09/2025
+		@Dernière modification: 04/09/2025
+	*/
 
     class File {
         // Configuration
@@ -39,17 +45,90 @@
                     mkdir($targetDir, 0755, true);
             }
             
-            if ($extension === 'pdf')                
+            // Traiter selon le type
+            if ($extension === 'pdf')
                 return self::uploadPDF($file['tmp_name'], $targetDir); // Les PDF ne sont pas convertis
-            else
-                return self::uploadAndConvertImage($file['tmp_name'], $extension, $targetDir); / Les images sont converties en WebP
+            else 
+                return self::uploadAndConvertImage($file['tmp_name'], $extension, $targetDir); // Les images sont converties en WebP
+        }
+
+        public static function uploadMultiple($files, $folder = '') {
+            $results = [
+                'success' => [],
+                'errors' => [],
+                'total' => 0
+            ];
+            
+            // Vérifier si c'est un tableau de fichiers
+            if (!isset($files['tmp_name']))
+                throw new Exception("Aucun fichier à uploader");
+            
+            // Si c'est un seul fichier, le traiter directement
+            if (!is_array($files['tmp_name'])) {
+                try {
+                    $result = self::upload($files, $folder);
+                    $results['success'][] = $result;
+                    $results['total'] = 1;
+                } catch (Exception $e) {
+                    $results['errors'][] = [
+                        'file' => $files['name'],
+                        'error' => $e->getMessage()
+                    ];
+                    $results['total'] = 1;
+                }
+
+                return $results;
+            }
+            
+            // Traiter plusieurs fichiers
+            $count = count($files['tmp_name']);
+            $results['total'] = $count;
+            
+            for ($i = 0; $i < $count; $i++) {
+                // Reconstruire le tableau $_FILES pour chaque fichier
+                $singleFile = [
+                    'name' => $files['name'][$i],
+                    'type' => $files['type'][$i],
+                    'tmp_name' => $files['tmp_name'][$i],
+                    'error' => $files['error'][$i],
+                    'size' => $files['size'][$i]
+                ];
+                
+                // Ignorer les slots vides
+                if ($singleFile['error'] === UPLOAD_ERR_NO_FILE)
+                    continue;
+                
+                // Vérifier les erreurs d'upload PHP
+                if ($singleFile['error'] !== UPLOAD_ERR_OK) {
+                    $results['errors'][] = [
+                        'file' => $singleFile['name'],
+                        'error' => null
+                    ];
+
+                    continue;
+                }
+                
+                // Essayer d'uploader le fichier
+                try {
+                    $uploadResult = self::upload($singleFile, $folder);
+                    $uploadResult['original_name'] = $singleFile['name']; // Garder le nom original
+                    $results['success'][] = $uploadResult;
+                } catch (Exception $e) {
+                    $results['errors'][] = [
+                        'file' => $singleFile['name'],
+                        'error' => $e->getMessage()
+                    ];
+                }
+            }
+            
+            return $results;
         }
         
         private static function uploadAndConvertImage($tmpPath, $originalExt, $targetDir) {
             // Vérifier que c'est vraiment une image
             $imageInfo = @getimagesize($tmpPath);
 
-            if ($imageInfo === false) 
+            if ($imageInfo === false)
                 throw new Exception("Fichier image invalide");
             
             $sourceWidth = $imageInfo[0];

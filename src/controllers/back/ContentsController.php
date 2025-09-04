@@ -269,8 +269,14 @@
 			$contentId = (isset($_POST['contentId'])) ? Validator::integer($_POST['contentId']) : null;
 
             // On récupère l'image d'entête
-            if (!empty($_FILES['image']['tmp_name']))
-                $image = ProcessImages("heading");
+            if (!empty($_FILES['image'])){
+				try {
+					$image = File::upload($_FILES['image'], 'heading');
+				} catch (Exception $e) {
+					throw new Exception('Erreur upload image');
+				}
+				//$image =  ProcessImages("heading");
+			}
             else
                 $image = null;
 
@@ -309,7 +315,7 @@
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
-                    'image' => $image,
+                    'image' => $image['name'],
                     'datePublication' => (isset($_POST['datePublication'])) ? new DateTime($_POST['datePublication']) : null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],

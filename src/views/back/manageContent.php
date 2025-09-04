@@ -37,7 +37,7 @@
 	?>
 	</ul>
 </nav>
-<form class="mb-3" action="<?php echo BASE_URL ?>private/content/action/save" method="post">
+<form class="mb-3" action="<?php echo BASE_URL ?>private/content/action/save" method="post" enctype="multipart/form-data">
 	<?php echo CSRF::Field(); ?>
 	<input type="hidden" name="author" id="author" value="<?php echo $_SESSION['id'] ?>">
 	<?php
