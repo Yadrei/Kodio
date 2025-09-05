@@ -32,7 +32,7 @@
 		}
 
 		public function IsValid() {
-			return !(empty($this->ref) || empty($this->libelle))
+			return !(empty($this->ref) || empty($this->libelle));
 		}
 
 		// Setters
@@ -59,8 +59,8 @@
 			return $this->ref;
 		}
 
-		public function getTitle() {
-			return $this->title;
+		public function getLibelle() {
+			return $this->libelle;
 		}
 	}
 ?>
