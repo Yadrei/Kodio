@@ -105,10 +105,10 @@
 			$domain = $_SERVER['HTTP_HOST'];
 			$fullBaseUrl = $protocol.$domain.BASE_URL;
 
-			if (empty($seo->getImage()) || !file_exists('public/images/seo/'.$seo->getImage()))
+			if (empty($seo->getImage()) || !file_exists($seo->getImage()))
 				$ogImage = $fullBaseUrl . 'public/images/logos/logo.png';
 			else
-				$ogImage = $fullBaseUrl . 'public/images/heading/' . $seo->getImage();
+				$ogImage = $fullBaseUrl.$seo->getImage();
 
 		    require_once 'src/views/front/displayContent.php';
 		}
