@@ -18,7 +18,7 @@
 
         <meta property="og:title" content="<?php echo $seo->getTitle(); ?>">
         <meta property="og:description" content="<?php echo $seo->getDescription(); ?>">
-        <meta property="og:image" content="<?php echo $fullBaseUrl; ?>public/images/logos/logo.png">
+        <meta property="og:image" content="<?php echo $ogImage ?>">
 		<meta property="og:url" content="<?php echo $fullBaseUrl; ?>">
         <meta property="og:type" content="website">
         <meta property="og:locale" content="fr_BE">
