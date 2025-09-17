@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 14/08/2023
-	    @Dernière modification: 02/09/2025
+	    @Dernière modification: 17/09/2025
   	*/
 
 	class HomeController 
@@ -40,6 +40,8 @@
 			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 			$domain = $_SERVER['HTTP_HOST'];
 			$fullBaseUrl = $protocol . $domain . BASE_URL;
+
+			$ogImage = $fullBaseUrl . 'public/images/logos/logo.png';
 
 		    require_once 'src/views/front/home.php';
 		}

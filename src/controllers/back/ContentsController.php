@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 16/08/2023
-	    @Dernière modification: 03/09/2025
+	    @Dernière modification: 17/09/2025
   	*/
 
 	class ContentsController 
@@ -315,7 +315,7 @@
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
-                    'image' => $image['name'],
+                    'image' => 'public/images/heading/'.$image['name'],
                     'datePublication' => (isset($_POST['datePublication'])) ? new DateTime($_POST['datePublication']) : null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],
@@ -358,7 +358,7 @@
 						'robotsFollow' => (isset($_POST['robotsFollow'][$lang])) ? 1 : 0,
 						'title' => Validator::sanitize($_POST['ogTitle'][$lang]),
 						'description' => Validator::sanitize($_POST['ogDescription'][$lang]),
-						'image' => null,
+						'image' => 'public/images/heading/'.$image['name'],
 						'schemaType' => Validator::sanitize($_POST['schemaType'][$lang]),
 						'schemaDescription' => Validator::sanitize($_POST['schemaDescription'][$lang])
 					]);

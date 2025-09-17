@@ -4,7 +4,7 @@
 	    @Author Yves P.
 	    @Version 1.0
 	    @Date création: 08/10/2023
-	    @Dernière modification: 03/09/2025
+	    @Dernière modification: 17/09/2025
   	*/
 
 	class ContentController 
@@ -104,6 +104,11 @@
 			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 			$domain = $_SERVER['HTTP_HOST'];
 			$fullBaseUrl = $protocol.$domain.BASE_URL;
+
+			if (empty($seo->getImage()) || !file_exists($seo->getImage()))
+				$ogImage = $fullBaseUrl . 'public/images/logos/logo.png';
+			else
+				$ogImage = $fullBaseUrl.$seo->getImage();
 
 		    require_once 'src/views/front/displayContent.php';
 		}
