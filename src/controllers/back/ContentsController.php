@@ -269,7 +269,7 @@
 			$contentId = (isset($_POST['contentId'])) ? Validator::integer($_POST['contentId']) : null;
 
             // On récupère l'image d'entête
-            if (!empty($_FILES['image'])){
+            if (!empty($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK){
 				try {
 					$image = File::upload($_FILES['image'], 'heading');
 				} catch (Exception $e) {
@@ -316,7 +316,7 @@
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
                     'image' => 'public/images/heading/'.$image['name'],
-                    'datePublication' => (isset($_POST['datePublication'])) ? new DateTime($_POST['datePublication']) : null,
+                    'datePublication' => null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],
 					'slug' => $values['slug'][$lang],
