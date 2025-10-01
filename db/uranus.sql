@@ -186,7 +186,7 @@ CREATE TABLE `MENU` (
 
 INSERT INTO `MENU` (`R_LANG`, `LABEL`, `ORDRE`) VALUES
 ('FR', 'Accueil', '1'),
-('FR', 'Contact', '2');
+('FR', 'Contact', '100');
 
 -- --------------------------------------------------------
 
