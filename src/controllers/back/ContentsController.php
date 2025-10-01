@@ -315,7 +315,7 @@
 					'author' => $author,
 					'title' => $values['title'][$lang],
 					'content' => $values['content'][$lang],
-                    'image' => 'public/images/heading/'.$image['name'],
+                    'image' => (!is_null($image)) ? 'public/images/heading/'.$image['name'] : null,
                     'datePublication' => null,
 					'metaTitle' => $values['metaTitle'][$lang],
 					'metaDescription' => $values['metaDescription'][$lang],
@@ -358,7 +358,7 @@
 						'robotsFollow' => (isset($_POST['robotsFollow'][$lang])) ? 1 : 0,
 						'title' => Validator::sanitize($_POST['ogTitle'][$lang]),
 						'description' => Validator::sanitize($_POST['ogDescription'][$lang]),
-						'image' => 'public/images/heading/'.$image['name'],
+						'image' => (!is_null($image)) ? 'public/images/heading/'.$image['name'] : null,
 						'schemaType' => Validator::sanitize($_POST['schemaType'][$lang]),
 						'schemaDescription' => Validator::sanitize($_POST['schemaDescription'][$lang])
 					]);
