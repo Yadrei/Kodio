@@ -180,6 +180,14 @@ CREATE TABLE `MENU` (
   `ORDRE` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `MENU`
+--
+
+INSERT INTO `MENU` (`R_LANG`, `LABEL`, `ORDRE`) VALUES
+('FR', 'Accueil', '1'),
+('FR', 'Contact', '2');
+
 -- --------------------------------------------------------
 
 --
